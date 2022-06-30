@@ -1,0 +1,9 @@
+D:/C++/Lucy Framework V5/build/CMakeFiles/Experimental.dir
+D:/C++/Lucy Framework V5/build/CMakeFiles/Nightly.dir
+D:/C++/Lucy Framework V5/build/CMakeFiles/Continuous.dir
+D:/C++/Lucy Framework V5/build/CMakeFiles/NightlyMemoryCheck.dir
+D:/C++/Lucy Framework V5/build/CMakeFiles/main.dir
+D:/C++/Lucy Framework V5/build/CMakeFiles/PACKAGE.dir
+D:/C++/Lucy Framework V5/build/CMakeFiles/RUN_TESTS.dir
+D:/C++/Lucy Framework V5/build/CMakeFiles/ALL_BUILD.dir
+D:/C++/Lucy Framework V5/build/CMakeFiles/ZERO_CHECK.dir
