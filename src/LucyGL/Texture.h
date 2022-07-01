@@ -32,7 +32,8 @@ namespace lgl {
 		void SetFilteringMode(TextureFilteringMode mag = FilterMode_None, TextureFilteringMode min = FilterMode_None);
 
 		void Bind();
-		void BindUnit(const unsigned int unit);
 		void UnBind();
 	};
+
+	void BindTextureUnit(const TextureId id, const unsigned int uint);
 }

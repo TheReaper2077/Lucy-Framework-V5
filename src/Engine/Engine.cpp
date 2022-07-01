@@ -59,6 +59,7 @@ void lucy::Engine::Mainloop() {
 
 	while (!events.IsQuittable()) {
 		events.Update();
+
 		timestep.Update();
 
 		if (events.IsWindowResized()) {
@@ -72,6 +73,7 @@ void lucy::Engine::Mainloop() {
 		vertexarray->BindVertexBuffer(vertexbuffer, vertexarray->stride);
 
 		lgl::DrawIndexed(lgl::TRIANGLE, vertices.size()*1.5, lgl::UNSIGNED_INT, nullptr);
+		// renderer->RenderQuads(shader, vertexarray)
 
 		SDL_GL_SwapWindow(sdl_window);
 	}

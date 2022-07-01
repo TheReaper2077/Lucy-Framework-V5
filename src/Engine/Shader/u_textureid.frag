@@ -15,12 +15,12 @@ in vec2 uv7;
 
 uniform sampler2D u_textures[32];
 
-uniform float u_textureid;
+uniform int u_textureid;
 
 vec4 GetColor() {
 	vec4 tex_color;
 
-	switch (int(u_textureid)) {
+	switch (u_textureid) {
 		case 0:
 			tex_color = texture(u_textures[0], uv0);
 		case 1:

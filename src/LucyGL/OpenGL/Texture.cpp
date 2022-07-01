@@ -92,10 +92,10 @@ void lgl::Texture::Bind() {
 	glBindTexture(Map(texture_mode), id);
 }
 
-void lgl::Texture::BindUnit(const unsigned int unit) {
-	glBindTextureUnit(unit, id);
-}
-
 void lgl::Texture::UnBind() {
 	glBindTexture(Map(texture_mode), 0);
+}
+
+void lgl::BindTextureUnit(const TextureId id, const unsigned int uint) {
+	glBindTextureUnit(uint, id);
 }
