@@ -22,7 +22,8 @@ void lgl::Texture::LoadFile(const char* filename) {
 	SetWrapMode(WrapMode_MIRRORED_REPEAT, WrapMode_MIRRORED_REPEAT);
 	SetFilteringMode(FilterMode_NEAREST, FilterMode_NEAREST);
 
-	auto* data = stbi_load(filename, &width, &height, &channels, 0);
+	unsigned char* data = nullptr;
+	if (filename) data = stbi_load(filename, &width, &height, &channels, 0);
 		
 	if (!data) {
 		static uint8_t default_data[] = {

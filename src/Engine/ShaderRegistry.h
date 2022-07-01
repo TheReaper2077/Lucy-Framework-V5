@@ -19,7 +19,7 @@ namespace lucy {
 	};
 
 	class ShaderRegistry {
-		std::unordered_map<ShaderFlag, lgl::Shader> shader_registry;
+		std::unordered_map<ShaderFlag, lgl::Shader*> shader_registry;
 
 	public:
 		ShaderRegistry();

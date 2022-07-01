@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "Primitives.h"
+#include "ShaderRegistry.h"
 
 namespace lucy {
 	class Renderer {
@@ -13,6 +14,8 @@ namespace lucy {
 		lgl::UniformBuffer* uniformbuffer = nullptr;
 
 	public:
+		ShaderRegistry shaderregistry;
+
 		void SetModel(const glm::mat4& model);
 		void SetView(const glm::mat4& view);
 		void SetProjection(const glm::mat4& projection);

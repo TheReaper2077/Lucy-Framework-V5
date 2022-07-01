@@ -17,7 +17,7 @@ namespace lucy::Vertex {
 		return &vertexbuffer;
 	}
 
-	#define SET_VERTEXARRAY(...) lgl::VertexArray* GetVertexArray() { static lgl::VertexArray vertexarray(__VA_ARGS__); }
+	#define SET_VERTEXARRAY(...) static lgl::VertexArray* VertexArray() { static lgl::VertexArray vertexarray(__VA_ARGS__); return &vertexarray; }
 
 	enum Index {
 		position = 0,
@@ -95,7 +95,7 @@ namespace lucy::Vertex {
 
 		SET_VERTEXARRAY({
 			{ Index::position, 3, lgl::FLOAT },
-			{ Index::color, 4, lgl::FLOAT },
+			{ Index::uv0, 2, lgl::FLOAT },
 			{ Index::textureid, 1, lgl::FLOAT },
 		})
 	};

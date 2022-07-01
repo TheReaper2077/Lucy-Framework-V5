@@ -19,9 +19,6 @@
     <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\TimeStep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\Vertex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="D:\C++\Lucy Framework V5\src\LucyGL\OpenGL\DrawCall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

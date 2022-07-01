@@ -36,9 +36,26 @@ void lucy::Engine::Mainloop() {
 	texture->Bind();
 	texture->LoadFile("D:\\C++\\Lucy Framework V4\\assets\\Gold.PNG");
 
+	texture->BindUnit(1);
+
 	renderer.SetOrtho(0, window.size.x, window.size.y, 0, -1, 1);
 
-	std::vector<lucy::Vertex::P1UV1T1>
+	auto* shader = renderer.shaderregistry.GetShader(ShaderFlag::TEXTUREID);
+	shader->Bind();
+
+	lgl::VertexBuffer* vertexbuffer = new lgl::VertexBuffer();
+
+	using Vertex = lucy::Vertex::P1UV1T1;
+
+	std::vector<Vertex> vertices;
+	auto* vertexarray = Vertex::VertexArray();
+
+	Primitives::QuadIndexed(vertices, { 100, 100, 0 }, { 100, 100 }, { 0, 0 }, { 1, 1 }, 1);
+	Primitives::QuadIndexed(vertices, { 300, 300, 0 }, { 100, 100 }, { 0, 0 }, { 1, 1 }, 1);
+
+	vertexbuffer->Bind();
+	vertexbuffer->Allocate(sizeof(decltype(vertices[0]))*vertices.size());
+	vertexbuffer->AddDataDynamic(vertices.data(), sizeof(decltype(vertices[0]))*vertices.size());
 
 	while (!events.IsQuittable()) {
 		events.Update();
@@ -49,7 +66,12 @@ void lucy::Engine::Mainloop() {
 			window.size = events.GetWindowSize();
 		}
 
-		
+		shader->Bind();
+		vertexarray->Bind();
+		vertexarray->BindIndexBuffer(Primitives::GetQuadIndices(vertices.size()));
+		vertexarray->BindVertexBuffer(vertexbuffer, vertexarray->stride);
+
+		lgl::DrawIndexed(lgl::TRIANGLE, vertices.size()*1.5, lgl::UNSIGNED_INT, nullptr);
 
 		SDL_GL_SwapWindow(sdl_window);
 	}
