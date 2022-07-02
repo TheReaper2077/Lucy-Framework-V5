@@ -1,5 +1,28 @@
 #include "Renderer.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glad/glad.h>
+
+bool lucy::TextureStore::SlotAvaliable() {
+	return (next_unit <= 8);
+}
+
+uint32_t lucy::TextureStore::Get(lgl::Texture* texture) {
+	if (texture_unit_map.find(texture->id) == texture_unit_map.end()) {
+		assert(SlotAvaliable());
+		texture_unit_map[texture->id] = std::pair(next_unit++, texture);
+	}
+
+	return texture_unit_map[texture->id].first;
+}
+
+void lucy::TextureStore::Bind() {
+	for (auto& pair: texture_unit_map) {
+		// glActiveTexture(GL_TEXTURE0 + pair.second.first);
+		// pair.second.second->Bind();
+		lgl::BindTextureUnit(pair.first, pair.second.first);
+	}
+}
+
 
 lucy::Renderer::Renderer() {
 	uniformbuffer = new lgl::UniformBuffer();
@@ -43,16 +66,25 @@ void lucy::Renderer::SetOrtho(const float left, const float right, const float t
 	SetProjection(glm::ortho<float>(left, right, top, bottom, near, far));
 }
 
-void lucy::Renderer::RenderQuads(lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, int vertexcount) {
+void lucy::Renderer::RenderQuads(lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount) {
 	Render(lgl::TRIANGLE, shader, vertexarray, vertexbuffer, Primitives::GetQuadIndices(vertexcount), vertexcount*1.5);
 }
 
-void lucy::Renderer::RenderTextureIdQuads(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, int vertexcount) {
+void lucy::Renderer::RenderQuads(lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount, TextureStore& texture_store) {
+	Render(lgl::TRIANGLE, shader, vertexarray, vertexbuffer, Primitives::GetQuadIndices(vertexcount), vertexcount*1.5, texture_store);
+}
+
+void lucy::Renderer::RenderTextureIdQuads(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount, TextureStore& texture_store) {
+	auto* shader = shaderregistry.GetShader(ShaderFlag::TEXTUREID);
+	RenderQuads(shader, vertexarray, vertexbuffer, vertexcount, texture_store);
+}
+
+void lucy::Renderer::RenderTextureIdQuads(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount) {
 	auto* shader = shaderregistry.GetShader(ShaderFlag::TEXTUREID);
 	RenderQuads(shader, vertexarray, vertexbuffer, vertexcount);
 }
 
-void lucy::Renderer::RenderUniformTextureIdQuads(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, int vertexcount, int textureid) {
+void lucy::Renderer::RenderUniformTextureIdQuads(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount, int textureid) {
 	auto* shader = shaderregistry.GetShader(ShaderFlag::U_TEXTUREID);
 	shader->Bind();
 	shader->SetUniformi("u_textureid", textureid);
@@ -60,7 +92,7 @@ void lucy::Renderer::RenderUniformTextureIdQuads(lgl::VertexArray* vertexarray, 
 	RenderQuads(shader, vertexarray, vertexbuffer, vertexcount);
 }
 
-void lucy::Renderer::RenderUniformColor(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, int vertexcount, const glm::vec4& color) {
+void lucy::Renderer::RenderUniformColor(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount, const glm::vec4& color) {
 	auto* shader = shaderregistry.GetShader(ShaderFlag::U_COLOR);
 	shader->Bind();
 	shader->SetUniformVec4("u_color", &color[0]);
@@ -68,7 +100,7 @@ void lucy::Renderer::RenderUniformColor(lgl::VertexArray* vertexarray, lgl::Vert
 	RenderQuads(shader, vertexarray, vertexbuffer, vertexcount);
 }
 
-void lucy::Renderer::RenderColor(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, int vertexcount) {
+void lucy::Renderer::RenderColor(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount) {
 	auto* shader = shaderregistry.GetShader(ShaderFlag::COLOR);
 
 	RenderQuads(shader, vertexarray, vertexbuffer, vertexcount);
@@ -83,10 +115,8 @@ void lucy::Renderer::Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::
 	lgl::DrawIndexed(primitive, count, lgl::UNSIGNED_INT, nullptr);
 }
 
-void lucy::Renderer::Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, int first, int count, std::vector<lgl::TextureId>& textures) {
-	for (int i = 0; i < textures.size(); i++) {
-		lgl::BindTextureUnit(textures[i], i);
-	}
+void lucy::Renderer::Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, int first, int count, TextureStore& textures) {
+	textures.Bind();
 
 	Render(primitive, shader, vertexarray, vertexbuffer, first, count);
 }
@@ -99,10 +129,8 @@ void lucy::Renderer::Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::
 	lgl::Draw(primitive, first, count);
 }
 
-void lucy::Renderer::Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, lgl::IndexBuffer* indexbuffer, int count, std::vector<lgl::TextureId>& textures) {
-	for (int i = 0; i < textures.size(); i++) {
-		lgl::BindTextureUnit(textures[i], i);
-	}
+void lucy::Renderer::Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, lgl::IndexBuffer* indexbuffer, int count, TextureStore& textures) {
+	textures.Bind();
 
 	Render(primitive, shader, vertexarray, vertexbuffer, indexbuffer, count);
 }

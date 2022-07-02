@@ -8,7 +8,7 @@
 #include <assert.h>
 
 lgl::VertexArray::VertexArray(std::vector<VertexArrayAttribDescriptor> layouts) {
-	glGenVertexArrays(1, &this->id);
+	glGenVertexArrays(1, &id);
 	
 	Bind();
 
@@ -16,25 +16,39 @@ lgl::VertexArray::VertexArray(std::vector<VertexArrayAttribDescriptor> layouts) 
 	uint32_t elem_relativeoffset = 0;
 
 	for (auto& attrib: layouts) {
-		glVertexArrayAttribFormat(this->id, attrib.idx, attrib.size, Map(attrib.type), false, relativeoffset);
-		glVertexArrayAttribBinding(this->id, attrib.idx, 0);
-		glEnableVertexArrayAttrib(this->id, attrib.idx);
+		glVertexArrayAttribBinding(id, attrib.idx, 0);
+		glEnableVertexArrayAttrib(id, attrib.idx);
 
-		switch(Map(attrib.type)) {
-			case GL_FLOAT:
+		switch (attrib.type) {
+			case FLOAT:
+				glVertexArrayAttribFormat(id, attrib.idx, attrib.size, Map(attrib.type), false, relativeoffset);
+				break;
+			case BYTE:case UNSIGNED_BYTE:case INT:
+				glVertexArrayAttribIFormat(id, attrib.idx, attrib.size, Map(attrib.type), relativeoffset);
+				break;
+			default:
+				assert(false);
+		}
+
+		switch(attrib.type) {
+			case FLOAT:
 				relativeoffset += sizeof(GLfloat)*attrib.size;
 				break;
 			
-			case GL_FIXED:
+			case FIXED:
 				relativeoffset += sizeof(GLfixed)*attrib.size;
 				break;
 			
-			case GL_BYTE:
+			case BYTE:
 				relativeoffset += sizeof(GLbyte)*attrib.size;
 				break;
 			
-			case GL_UNSIGNED_BYTE:
+			case UNSIGNED_BYTE:
 				relativeoffset += sizeof(GLubyte)*attrib.size;
+				break;
+
+			case INT:
+				relativeoffset += sizeof(GLint)*attrib.size;
 				break;
 			
 			default:

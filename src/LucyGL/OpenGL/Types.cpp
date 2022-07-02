@@ -14,6 +14,7 @@ const unsigned int lgl::Map(const Type type) {
 		{ lgl::INT, GL_INT },
 		{ lgl::UNSIGNED_INT, GL_UNSIGNED_INT },
 		{ lgl::FLOAT, GL_FLOAT },
+		{ lgl::FIXED, GL_FIXED },
 		{ lgl::UNSIGNED_INT_24_8, GL_UNSIGNED_INT_24_8 }
 	)
 }

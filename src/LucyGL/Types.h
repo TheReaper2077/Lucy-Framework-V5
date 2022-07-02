@@ -9,6 +9,7 @@ namespace lgl {
 		INT,
 		UNSIGNED_INT,
 		FLOAT,
+		FIXED,
 
 		UNSIGNED_INT_24_8,
 	};

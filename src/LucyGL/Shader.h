@@ -32,5 +32,6 @@ namespace lgl {
 		bool SetUniformMat4(std::string uniform, const float* matrix);
 		bool SetUniformArray(std::string uniform, size_t count, const float* v);
 		bool SetUniformArray(std::string uniform, size_t count, const unsigned int* v);
+		bool SetUniformArray(std::string uniform, size_t count, const int* v);
 	};
 }

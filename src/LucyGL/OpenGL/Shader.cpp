@@ -123,3 +123,10 @@ bool lgl::Shader::SetUniformArray(std::string uniform, size_t count, const unsig
 
 	return (location > 0);
 }
+
+bool lgl::Shader::SetUniformArray(std::string uniform, size_t count, const int *v) {
+	auto location = GetUniformLoc(uniform);
+	glUniform1iv(location, count, v);
+
+	return (location > 0);
+}

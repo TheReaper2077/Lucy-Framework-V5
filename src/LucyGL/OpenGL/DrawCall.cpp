@@ -114,6 +114,7 @@ bool lgl::DrawIndexed(Primitive mode, int count, Type type, void* indices) {
 
 bool lgl::MultiDrawIndexed(Primitive mode, int count, Type type, void* indices) {
 	assert(false);
+	return false;
 }
 
 bool lgl::Draw(Primitive mode, int first, int count) {
