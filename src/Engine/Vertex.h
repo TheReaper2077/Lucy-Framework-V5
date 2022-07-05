@@ -23,94 +23,45 @@ namespace lucy::Vertex {
 		position = 0,
 		color,
 		normal,
-		textureid,
-
-		uv0,
-		uv1,
-		uv2,
-		uv3,
-		uv4,
-		uv5,
-		uv6,
-		uv7,
-
-		uvw0,
-		uvw1,
-		uvw2,
-		uvw3,
-		uvw4,
-		uvw5,
-		uvw6,
-		uvw7,
+		tex,
+		idx,
+		uv,
 
 		Index_COUNT
 	};
 
-	struct P1 {
-		glm::vec3 position;
-
-		SET_VERTEXARRAY({
-			{ Index::position, 3, lgl::FLOAT },
-		})
-	};
-
-
-	struct P1C1 {
-		glm::vec3 position;
-		glm::vec4 color;
-		
-		SET_VERTEXARRAY({
-			{ Index::position, 3, lgl::FLOAT },
-			{ Index::color, 4, lgl::FLOAT },
-		})
-	};
-
-
-	struct P1UV1 {
-		glm::vec3 position;
-		glm::vec2 uv;
-
-		SET_VERTEXARRAY({
-			{ Index::position, 3, lgl::FLOAT },
-			{ Index::uv0, 2, lgl::FLOAT },
-		})
-	};
-
-	struct P1C1UV1 {
-		glm::vec3 position;
-		glm::vec4 color;
-		glm::vec2 uv;
-	
-		SET_VERTEXARRAY({
-			{ Index::position, 3, lgl::FLOAT },
-			{ Index::color, 4, lgl::FLOAT },
-			{ Index::uv0, 2, lgl::FLOAT },
-		})
-	};
-
-	struct P1UV1T1 {
-		glm::vec3 position;
-		glm::vec2 uv;
-		float id;
-
-		SET_VERTEXARRAY({
-			{ Index::position, 3, lgl::FLOAT },
-			{ Index::uv0, 2, lgl::FLOAT },
-			{ Index::textureid, 1, lgl::FLOAT },
-		})
-	};
-
-	struct P1C1UV1T1 {
-		glm::vec3 position;
-		glm::vec4 color;
-		glm::vec2 uv;
-		float id;
-
-		SET_VERTEXARRAY({
-			{ Index::position, 3, lgl::FLOAT },
-			{ Index::color, 4, lgl::FLOAT },
-			{ Index::uv0, 2, lgl::FLOAT },
-			{ Index::textureid, 1, lgl::FLOAT },
-		})
-	};
+	struct P1;
+	struct P1C1;
+	struct P1N1;
+	struct P1C1N1;
+	struct P1UV1;
+	struct P1C1UV1;
+	struct P1N1UV1;
+	struct P1C1N1UV1;
+	struct P1I1;
+	struct P1C1I1;
+	struct P1N1I1;
+	struct P1C1N1I1;
+	struct P1UV1I1;
+	struct P1C1UV1I1;
+	struct P1N1UV1I1;
+	struct P1C1N1UV1I1;
+	struct P1T1;
+	struct P1C1T1;
+	struct P1N1T1;
+	struct P1C1N1T1;
+	struct P1UV1T1;
+	struct P1C1UV1T1;
+	struct P1N1UV1T1;
+	struct P1C1N1UV1T1;
+	struct P1I1T1;
+	struct P1C1I1T1;
+	struct P1N1I1T1;
+	struct P1C1N1I1T1;
+	struct P1UV1I1T1;
+	struct P1C1UV1I1T1;
+	struct P1N1UV1I1T1;
+	struct P1C1N1UV1I1T1;
 }
+
+#include "VertexPermutations.h"

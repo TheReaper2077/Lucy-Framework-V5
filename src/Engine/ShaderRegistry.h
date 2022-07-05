@@ -14,6 +14,7 @@ namespace lucy {
 		PBR_U_TEXTUREID,
 		PBR_COLOR,
 		PBR_U_COLOR,
+		TEXTUREARRAY,
 
 		ShaderFlag_COUNT
 	};

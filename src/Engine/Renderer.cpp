@@ -2,28 +2,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glad/glad.h>
 
-bool lucy::TextureStore::SlotAvaliable() {
-	return (next_unit <= 8);
-}
-
-uint32_t lucy::TextureStore::Get(lgl::Texture* texture) {
-	if (texture_unit_map.find(texture->id) == texture_unit_map.end()) {
-		assert(SlotAvaliable());
-		texture_unit_map[texture->id] = std::pair(next_unit++, texture);
-	}
-
-	return texture_unit_map[texture->id].first;
-}
-
-void lucy::TextureStore::Bind() {
-	for (auto& pair: texture_unit_map) {
-		// glActiveTexture(GL_TEXTURE0 + pair.second.first);
-		// pair.second.second->Bind();
-		lgl::BindTextureUnit(pair.first, pair.second.first);
-	}
-}
-
-
 lucy::Renderer::Renderer() {
 	uniformbuffer = new lgl::UniformBuffer();
 

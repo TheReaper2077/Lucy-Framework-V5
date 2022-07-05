@@ -3,6 +3,7 @@ C:/Program Files/CMake/share/cmake-3.23/Modules/CMakeCInformation.cmake
 C:/Program Files/CMake/share/cmake-3.23/Modules/CMakeCXXInformation.cmake
 C:/Program Files/CMake/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake
 C:/Program Files/CMake/share/cmake-3.23/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake/share/cmake-3.23/Modules/CMakeFindDependencyMacro.cmake
 C:/Program Files/CMake/share/cmake-3.23/Modules/CMakeGenericSystem.cmake
 C:/Program Files/CMake/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake
 C:/Program Files/CMake/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake
@@ -41,6 +42,8 @@ C:/Users/krishnadev/vcpkg/installed/x64-windows/share/sdl2/SDL2Targets.cmake
 C:/Users/krishnadev/vcpkg/installed/x64-windows/share/sdl2/SDL2mainTargets-debug.cmake
 C:/Users/krishnadev/vcpkg/installed/x64-windows/share/sdl2/SDL2mainTargets-release.cmake
 C:/Users/krishnadev/vcpkg/installed/x64-windows/share/sdl2/SDL2mainTargets.cmake
+C:/Users/krishnadev/vcpkg/installed/x64-windows/share/stduuid/stduuid-config.cmake
+C:/Users/krishnadev/vcpkg/installed/x64-windows/share/stduuid/stduuid-targets.cmake
 C:/Users/krishnadev/vcpkg/scripts/buildsystems/vcpkg.cmake
 D:/C++/Lucy Framework V5/CMakeLists.txt
 D:/C++/Lucy Framework V5/build/CMakeFiles/3.23.2/CMakeCCompiler.cmake

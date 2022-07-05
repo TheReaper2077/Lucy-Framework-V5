@@ -4,15 +4,16 @@ layout (location = 0) in vec3 v_position;
 layout (location = 1) in vec4 v_color;
 layout (location = 2) in vec3 v_normal;
 layout (location = 3) in float v_textureid;
+layout (location = 4) in float v_idx;
 
-layout (location = 4) in vec2 v_uv0;
-layout (location = 5) in vec2 v_uv1;
-layout (location = 6) in vec2 v_uv2;
-layout (location = 7) in vec2 v_uv3;
-layout (location = 8) in vec2 v_uv4;
-layout (location = 9) in vec2 v_uv5;
-layout (location = 10) in vec2 v_uv6;
-layout (location = 11) in vec2 v_uv7;
+layout (location = 5) in vec2 v_uv0;
+layout (location = 6) in vec2 v_uv1;
+layout (location = 7) in vec2 v_uv2;
+layout (location = 8) in vec2 v_uv3;
+layout (location = 9) in vec2 v_uv4;
+layout (location = 10) in vec2 v_uv5;
+layout (location = 11) in vec2 v_uv6;
+layout (location = 12) in vec2 v_uv7;
 
 layout (std140, binding = 0) uniform ProjectionMatrix {
     mat4 model;
@@ -23,6 +24,7 @@ layout (std140, binding = 0) uniform ProjectionMatrix {
 out vec3 normal;
 out vec4 color;
 out float textureid;
+out float idx;
 
 out vec2 uv0;
 out vec2 uv1;
@@ -37,6 +39,7 @@ void main() {
 	normal = mat3(transpose(inverse(model))) * v_normal;
 	color = v_color;
 	textureid = v_textureid;
+	idx = v_idx;
 	uv0 = v_uv0;
 	uv1 = v_uv1;
 	uv2 = v_uv2;

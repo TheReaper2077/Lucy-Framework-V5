@@ -28,6 +28,9 @@ target_link_libraries(main PRIVATE glm::glm)
 find_package(glad CONFIG REQUIRED)
 target_link_libraries(main PRIVATE glad::glad)
 
+find_package(stduuid CONFIG REQUIRED)
+target_link_libraries(main PRIVATE stduuid)
+
 target_link_libraries(main PRIVATE)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

@@ -331,6 +331,9 @@ glad_DIR:PATH=C:/Users/krishnadev/vcpkg/installed/x64-windows/share/glad
 //The directory containing a CMake configuration file for glm.
 glm_DIR:PATH=C:/Users/krishnadev/vcpkg/installed/x64-windows/share/glm
 
+//The directory containing a CMake configuration file for stduuid.
+stduuid_DIR:PATH=C:/Users/krishnadev/vcpkg/installed/x64-windows/share/stduuid
+
 
 ########################
 # INTERNAL cache entries

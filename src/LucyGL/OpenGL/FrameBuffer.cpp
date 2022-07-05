@@ -81,7 +81,7 @@ void lgl::FrameBuffer::AttachTexture2D(Attachment attachment, TextureMode target
 void lgl::FrameBuffer::AttachTexture2D(Attachment attachment, Texture* texture, int level) {
 	assert(texture != nullptr);
 
-	AttachTexture2D(attachment, texture->texture_mode, texture->id, level);
+	AttachTexture2D(attachment, texture->mode, texture->id, level);
 }
 
 void lgl::FrameBuffer::SetDrawAttachments(const std::vector<Attachment>& attachments) {

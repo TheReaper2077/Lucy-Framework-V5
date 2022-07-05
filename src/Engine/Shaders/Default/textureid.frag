@@ -3,6 +3,7 @@
 in vec3 normal;
 in vec4 color;
 in float textureid;
+in float idx;
 
 in vec2 uv0;
 in vec2 uv1;

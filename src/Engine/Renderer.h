@@ -5,19 +5,9 @@
 
 #include "Primitives.h"
 #include "ShaderRegistry.h"
+#include "TextureStore.h"
 
 namespace lucy {
-	struct TextureStore {
-	private:
-		unsigned int next_unit = 0;
-		std::unordered_map<lgl::TextureId, std::pair<uint32_t, lgl::Texture*>> texture_unit_map;
-
-	public:
-		void Bind();
-		bool SlotAvaliable();
-		uint32_t Get(lgl::Texture* texture);
-	};
-
 	class Renderer {
 		glm::mat4 model;
 		glm::mat4 view;

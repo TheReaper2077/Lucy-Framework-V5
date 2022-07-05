@@ -32,14 +32,6 @@ void lucy::Engine::Mainloop() {
 	auto& window = registry.store<Window>();
 	auto& renderer = registry.store<Renderer>();
 
-	auto* texture = new lgl::Texture();
-	texture->Bind();
-	texture->LoadFile("D:\\C++\\Lucy Framework V4\\assets\\Gold.PNG");
-
-	auto* texture_2 = new lgl::Texture();
-	texture_2->Bind();
-	texture_2->LoadFile(nullptr);
-
 	renderer.SetOrtho(0, window.size.x, window.size.y, 0, -1, 1);
 
 	lgl::VertexBuffer* vertexbuffer = new lgl::VertexBuffer();
@@ -49,30 +41,18 @@ void lucy::Engine::Mainloop() {
 	std::vector<Vertex> vertices;
 	auto* vertexarray = Vertex::VertexArray();
 
-	texture->UnBind();
-
-	Primitives::QuadIndexed(vertices, { 100, 100, 0 }, { 100, 100 }, { 0, 0 }, { 1, 1 }, 0);
-	Primitives::QuadIndexed(vertices, { 300, 300, 0 }, { 100, 100 }, { 0, 0 }, { 1, 1 }, 1);
-	Primitives::QuadIndexed(vertices, { 500, 100, 0 }, { 100, 100 }, { 0, 0 }, { 1, 1 }, 0);
-
 	vertexbuffer->Bind();
 	vertexbuffer->Allocate(sizeof(decltype(vertices[0]))*vertices.size());
 	vertexbuffer->AddDataDynamic(vertices.data(), sizeof(decltype(vertices[0]))*vertices.size());
 
-	texture->BindUnit(0);
-	texture_2->BindUnit(1);
-
 	while (!events.IsQuittable()) {
 		events.Update();
-
 		timestep.Update();
 
 		if (events.IsWindowResized()) {
 			window.pos = events.GetWindowPos();
 			window.size = events.GetWindowSize();
 		}
-
-		renderer.RenderTextureIdQuads(vertexarray, vertexbuffer, vertices.size());
 
 		SDL_GL_SwapWindow(sdl_window);
 	}

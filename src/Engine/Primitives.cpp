@@ -1,105 +1,5 @@
 #include "Primitives.h"
 
-void lucy::Primitives::Quad(std::vector<Vertex::P1>& vertices, const glm::vec3& position, const glm::vec2& size) {
-	vertices.reserve(6 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x - size.x, position.y - size.y, 0 }});
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x - size.x, position.y + size.y, 0 }});
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x + size.x, position.y + size.y, 0 }});
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x + size.x, position.y + size.y, 0 }});
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x + size.x, position.y - size.y, 0 }});
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x - size.x, position.y - size.y, 0 }});
-}
-
-void lucy::Primitives::Quad(std::vector<Vertex::P1C1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
-	vertices.reserve(6 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x - size.x, position.y - size.y, 0 }, color });
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x - size.x, position.y + size.y, 0 }, color });
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x + size.x, position.y + size.y, 0 }, color });
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x + size.x, position.y + size.y, 0 }, color });
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x + size.x, position.y - size.y, 0 }, color });
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x - size.x, position.y - size.y, 0 }, color });
-}
-
-void lucy::Primitives::Quad(std::vector<Vertex::P1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int id) {
-	vertices.reserve(6 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x - size.x, position.y + size.y, 0 }, { uv0.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x + size.x, position.y - size.y, 0 }, { uv1.x, uv0.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }, (float)id });
-}
-
-void lucy::Primitives::Quad(std::vector<Vertex::P1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1) {
-	vertices.reserve(6 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }});
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x - size.x, position.y + size.y, 0 }, { uv0.x, uv1.y }});
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }});
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }});
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x + size.x, position.y - size.y, 0 }, { uv1.x, uv0.y }});
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }});
-}
-
-void lucy::Primitives::Quad(std::vector<Vertex::P1C1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const glm::vec4& color, const unsigned int id) {
-	vertices.reserve(6 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x - size.x, position.y - size.y, 0 }, color, { uv0.x, uv0.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x - size.x, position.y + size.y, 0 }, color, { uv0.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x + size.x, position.y + size.y, 0 }, color, { uv1.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x + size.x, position.y + size.y, 0 }, color, { uv1.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x + size.x, position.y - size.y, 0 }, color, { uv1.x, uv0.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x - size.x, position.y - size.y, 0 }, color, { uv0.x, uv0.y }, (float)id });
-}
-
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int id) {
-	vertices.reserve(4 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x - size.x, position.y + size.y, 0 }, { uv0.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1UV1T1 {{ position.x + size.x, position.y - size.y, 0 }, { uv1.x, uv0.y }, (float)id });
-}
-
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1) {
-	vertices.reserve(4 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }});
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x - size.x, position.y + size.y, 0 }, { uv0.x, uv1.y }});
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }});
-	vertices.emplace_back(lucy::Vertex::P1UV1 {{ position.x + size.x, position.y - size.y, 0 }, { uv1.x, uv0.y }});
-}
-
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const glm::vec4& color, const unsigned int id) {
-	vertices.reserve(4 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x - size.x, position.y - size.y, 0 }, color, { uv0.x, uv0.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x - size.x, position.y + size.y, 0 }, color, { uv0.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x + size.x, position.y + size.y, 0 }, color, { uv1.x, uv1.y }, (float)id });
-	vertices.emplace_back(lucy::Vertex::P1C1UV1T1 {{ position.x + size.x, position.y - size.y, 0 }, color, { uv1.x, uv0.y }, (float)id });
-}
-
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
-	vertices.reserve(4 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x - size.x, position.y - size.y, 0 }, color });
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x - size.x, position.y + size.y, 0 }, color });
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x + size.x, position.y + size.y, 0 }, color });
-	vertices.emplace_back(lucy::Vertex::P1C1 {{ position.x + size.x, position.y - size.y, 0 }, color });
-}
-
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1>& vertices, const glm::vec3& position, const glm::vec2& size) {
-	vertices.reserve(4 + vertices.size());
-
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x - size.x, position.y - size.y, 0 }});
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x - size.x, position.y + size.y, 0 }});
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x + size.x, position.y + size.y, 0 }});
-	vertices.emplace_back(lucy::Vertex::P1 {{ position.x + size.x, position.y - size.y, 0 }});
-}
-
 lgl::IndexBuffer* lucy::Primitives::GetWireQuadIndices(int vertexcount) {
 	static lgl::IndexBuffer indexbuffer;
 	static int indexcount;
@@ -158,4 +58,134 @@ lgl::IndexBuffer* lucy::Primitives::GetQuadIndices(int vertexcount) {
 	}
 
 	return &indexbuffer;
+}
+
+
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1>& vertices, const glm::vec3& position, const glm::vec2& size) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1 {{ position.x - size.x, position.y - size.y, 0 }});
+	vertices.emplace_back(Vertex::P1 {{ position.x - size.x, position.y + size.y, 0 }});
+	vertices.emplace_back(Vertex::P1 {{ position.x + size.x, position.y + size.y, 0 }});
+	vertices.emplace_back(Vertex::P1 {{ position.x + size.x, position.y - size.y, 0 }});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1C1 {{ position.x - size.x, position.y - size.y, 0 }, color});
+	vertices.emplace_back(Vertex::P1C1 {{ position.x - size.x, position.y + size.y, 0 }, color});
+	vertices.emplace_back(Vertex::P1C1 {{ position.x + size.x, position.y + size.y, 0 }, color});
+	vertices.emplace_back(Vertex::P1C1 {{ position.x + size.x, position.y - size.y, 0 }, color});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1UV1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }});
+	vertices.emplace_back(Vertex::P1UV1 {{ position.x - size.x, position.y + size.y, 0 }, { uv0.x, uv1.y }});
+	vertices.emplace_back(Vertex::P1UV1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }});
+	vertices.emplace_back(Vertex::P1UV1 {{ position.x + size.x, position.y - size.y, 0 }, { uv1.x, uv0.y }});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1C1UV1 {{ position.x - size.x, position.y - size.y, 0 }, color, { uv0.x, uv0.y }});
+	vertices.emplace_back(Vertex::P1C1UV1 {{ position.x - size.x, position.y + size.y, 0 }, color, { uv0.x, uv1.y }});
+	vertices.emplace_back(Vertex::P1C1UV1 {{ position.x + size.x, position.y + size.y, 0 }, color, { uv1.x, uv1.y }});
+	vertices.emplace_back(Vertex::P1C1UV1 {{ position.x + size.x, position.y - size.y, 0 }, color, { uv1.x, uv0.y }});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1I1>& vertices, const glm::vec3& position, const glm::vec2& size, const unsigned int idx) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1I1 {{ position.x - size.x, position.y - size.y, 0 }, (float)idx});
+	vertices.emplace_back(Vertex::P1I1 {{ position.x - size.x, position.y + size.y, 0 }, (float)idx});
+	vertices.emplace_back(Vertex::P1I1 {{ position.x + size.x, position.y + size.y, 0 }, (float)idx});
+	vertices.emplace_back(Vertex::P1I1 {{ position.x + size.x, position.y - size.y, 0 }, (float)idx});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1I1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const unsigned int idx) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1C1I1 {{ position.x - size.x, position.y - size.y, 0 }, color, (float)idx});
+	vertices.emplace_back(Vertex::P1C1I1 {{ position.x - size.x, position.y + size.y, 0 }, color, (float)idx});
+	vertices.emplace_back(Vertex::P1C1I1 {{ position.x + size.x, position.y + size.y, 0 }, color, (float)idx});
+	vertices.emplace_back(Vertex::P1C1I1 {{ position.x + size.x, position.y - size.y, 0 }, color, (float)idx});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1I1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int idx) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1UV1I1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }, (float)idx});
+	vertices.emplace_back(Vertex::P1UV1I1 {{ position.x - size.x, position.y + size.y, 0 }, { uv0.x, uv1.y }, (float)idx});
+	vertices.emplace_back(Vertex::P1UV1I1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }, (float)idx});
+	vertices.emplace_back(Vertex::P1UV1I1 {{ position.x + size.x, position.y - size.y, 0 }, { uv1.x, uv0.y }, (float)idx});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1I1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int idx) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1C1UV1I1 {{ position.x - size.x, position.y - size.y, 0 }, color, { uv0.x, uv0.y }, (float)idx});
+	vertices.emplace_back(Vertex::P1C1UV1I1 {{ position.x - size.x, position.y + size.y, 0 }, color, { uv0.x, uv1.y }, (float)idx});
+	vertices.emplace_back(Vertex::P1C1UV1I1 {{ position.x + size.x, position.y + size.y, 0 }, color, { uv1.x, uv1.y }, (float)idx});
+	vertices.emplace_back(Vertex::P1C1UV1I1 {{ position.x + size.x, position.y - size.y, 0 }, color, { uv1.x, uv0.y }, (float)idx});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const unsigned int tex) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1T1 {{ position.x - size.x, position.y - size.y, 0 }, (float)tex});
+	vertices.emplace_back(Vertex::P1T1 {{ position.x - size.x, position.y + size.y, 0 }, (float)tex});
+	vertices.emplace_back(Vertex::P1T1 {{ position.x + size.x, position.y + size.y, 0 }, (float)tex});
+	vertices.emplace_back(Vertex::P1T1 {{ position.x + size.x, position.y - size.y, 0 }, (float)tex});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const unsigned int tex) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1C1T1 {{ position.x - size.x, position.y - size.y, 0 }, color, (float)tex});
+	vertices.emplace_back(Vertex::P1C1T1 {{ position.x - size.x, position.y + size.y, 0 }, color, (float)tex});
+	vertices.emplace_back(Vertex::P1C1T1 {{ position.x + size.x, position.y + size.y, 0 }, color, (float)tex});
+	vertices.emplace_back(Vertex::P1C1T1 {{ position.x + size.x, position.y - size.y, 0 }, color, (float)tex});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1UV1T1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }, (float)tex});
+	vertices.emplace_back(Vertex::P1UV1T1 {{ position.x - size.x, position.y + size.y, 0 }, { uv0.x, uv1.y }, (float)tex});
+	vertices.emplace_back(Vertex::P1UV1T1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }, (float)tex});
+	vertices.emplace_back(Vertex::P1UV1T1 {{ position.x + size.x, position.y - size.y, 0 }, { uv1.x, uv0.y }, (float)tex});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1C1UV1T1 {{ position.x - size.x, position.y - size.y, 0 }, color, { uv0.x, uv0.y }, (float)tex});
+	vertices.emplace_back(Vertex::P1C1UV1T1 {{ position.x - size.x, position.y + size.y, 0 }, color, { uv0.x, uv1.y }, (float)tex});
+	vertices.emplace_back(Vertex::P1C1UV1T1 {{ position.x + size.x, position.y + size.y, 0 }, color, { uv1.x, uv1.y }, (float)tex});
+	vertices.emplace_back(Vertex::P1C1UV1T1 {{ position.x + size.x, position.y - size.y, 0 }, color, { uv1.x, uv0.y }, (float)tex});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1I1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const unsigned int idx, const unsigned int tex) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1I1T1 {{ position.x - size.x, position.y - size.y, 0 }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1I1T1 {{ position.x - size.x, position.y + size.y, 0 }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1I1T1 {{ position.x + size.x, position.y + size.y, 0 }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1I1T1 {{ position.x + size.x, position.y - size.y, 0 }, (float)idx, (float)tex});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1I1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const unsigned int idx, const unsigned int tex) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1C1I1T1 {{ position.x - size.x, position.y - size.y, 0 }, color, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1C1I1T1 {{ position.x - size.x, position.y + size.y, 0 }, color, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1C1I1T1 {{ position.x + size.x, position.y + size.y, 0 }, color, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1C1I1T1 {{ position.x + size.x, position.y - size.y, 0 }, color, (float)idx, (float)tex});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1I1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int idx, const unsigned int tex) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1UV1I1T1 {{ position.x - size.x, position.y - size.y, 0 }, { uv0.x, uv0.y }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1UV1I1T1 {{ position.x - size.x, position.y + size.y, 0 }, { uv0.x, uv1.y }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1UV1I1T1 {{ position.x + size.x, position.y + size.y, 0 }, { uv1.x, uv1.y }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1UV1I1T1 {{ position.x + size.x, position.y - size.y, 0 }, { uv1.x, uv0.y }, (float)idx, (float)tex});
+}
+void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1I1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int idx, const unsigned int tex) {
+	vertices.reserve(4 + vertices.size());
+
+	vertices.emplace_back(Vertex::P1C1UV1I1T1 {{ position.x - size.x, position.y - size.y, 0 }, color, { uv0.x, uv0.y }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1C1UV1I1T1 {{ position.x - size.x, position.y + size.y, 0 }, color, { uv0.x, uv1.y }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1C1UV1I1T1 {{ position.x + size.x, position.y + size.y, 0 }, color, { uv1.x, uv1.y }, (float)idx, (float)tex});
+	vertices.emplace_back(Vertex::P1C1UV1I1T1 {{ position.x + size.x, position.y - size.y, 0 }, color, { uv1.x, uv0.y }, (float)idx, (float)tex});
 }
