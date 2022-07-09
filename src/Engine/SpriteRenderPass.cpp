@@ -1,5 +1,6 @@
 #include "SpriteRenderPass.h"
 #include <iostream>
+#include <Structures/Structures.h>
 #include <Components/Components.h>
 
 using TexVertex = lucy::Vertex::P1UV1I1;
@@ -13,8 +14,6 @@ void lucy::SpriteRenderPass::FirstInit() {
 void lucy::SpriteRenderPass::Init() {
 	
 }
-
-lgl::Texture* null_texture = nullptr;
 
 template <>
 void lucy::SpriteRenderPass::Flush<ColorVertex>() {
@@ -56,6 +55,8 @@ void lucy::SpriteRenderPass::Flush<TexColorVertex>() {
 
 
 void lucy::SpriteRenderPass::Render() {
+	static lgl::Texture* null_texture = nullptr;
+
 	using namespace lucy::Components;
 
 	if (null_texture == nullptr) {

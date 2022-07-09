@@ -1,9 +1,11 @@
 #pragma once
 
-#include "Mesh.h"
+#include <Structures/Structures.h>
 
 namespace lucy::Components {
 	struct MeshRenderer {
 		Mesh* mesh = nullptr;
+
+
 	};
 }

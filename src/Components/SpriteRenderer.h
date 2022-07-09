@@ -2,7 +2,7 @@
 
 #include <LucyGL/API.h>
 #include <glm/glm.hpp>
-#include "Sprite.h"
+#include <Structures/Structures.h>
 
 namespace lucy::Components {
 	struct SpriteRenderer {

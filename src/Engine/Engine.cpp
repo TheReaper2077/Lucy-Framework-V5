@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "SpriteRenderPass.h"
 #include <Components/Components.h>
+#include <Structures/Structures.h>
 
 #include <iostream>
 #include <assert.h>
@@ -41,7 +42,7 @@ void lucy::Engine::Mainloop() {
 
 	renderer.SetOrtho(0, window.size.x, window.size.y, 0, -1, 1);
 
-	lucy::Components::Sprite sprite;
+	lucy::Sprite sprite;
 	
 	auto entity = registry.create();
 	registry.emplace<lucy::Components::Tag>(entity, "Entity");

@@ -92,7 +92,7 @@ lgl::Shader* lucy::ShaderRegistry::Generate(const size_t flags) {
 		fragement_shader += FS_MainFunc(code);
 	}
 
-	std::cout << fragement_shader;
+	// std::cout << fragement_shader;
 
 	shader_registry[flags] = new lgl::Shader(vertex_shader, fragement_shader, false);
 	auto* shader = shader_registry[flags];
