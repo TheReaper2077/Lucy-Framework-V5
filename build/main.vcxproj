@@ -375,6 +375,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\ShaderRegistry.cpp" />
     <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\SpriteRenderPass.cpp" />
     <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\TextureStore.cpp" />
+    <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\TextureVertices.cpp" />
     <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\TimeStep.cpp" />
     <ClCompile Include="D:\C++\Lucy Framework V5\src\LucyGL\OpenGL\DrawCall.cpp" />
     <ClCompile Include="D:\C++\Lucy Framework V5\src\LucyGL\OpenGL\FrameBuffer.cpp" />

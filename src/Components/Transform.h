@@ -10,6 +10,10 @@ namespace lucy::Components {
 		glm::vec3 rotation = glm::vec3(0, 0, 0);
 		glm::vec3 scale = glm::vec3(1, 1, 1);
 
+		Transform(const glm::vec3& translation): translation(translation) {}
+		Transform(const glm::vec3& translation, const glm::vec3& rotation): translation(translation), rotation(rotation) {}
+		Transform(const glm::vec3& translation, const glm::vec3& rotation, const glm::vec3& scale): translation(translation), rotation(rotation), scale(scale) {}
+
 		glm::mat4 GetTranslationMatrix() {
 			return glm::translate(glm::mat4(1.0f), translation);
 		}

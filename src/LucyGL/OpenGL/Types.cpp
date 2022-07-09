@@ -5,6 +5,10 @@
 
 #define MAP(key, ...) static std::map<decltype(key), unsigned int> map = { __VA_ARGS__ }; return map[key];
 
+const lgl::BitFlags COLOR_BUFFER_BIT = GL_COLOR_BUFFER_BIT;
+const lgl::BitFlags DEPTH_BUFFER_BIT = GL_DEPTH_BUFFER_BIT;
+const lgl::BitFlags STENCIL_BUFFER_BIT = GL_STENCIL_BUFFER_BIT;
+
 const unsigned int lgl::Map(const Type type) {
 	MAP(type,
 		{ lgl::BYTE, GL_BYTE },

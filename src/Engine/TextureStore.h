@@ -10,8 +10,9 @@ namespace lucy {
 		std::unordered_map<lgl::TextureId, uint32_t> texture_unit_map;
 
 	public:
-		void Bind();
-		bool SlotAvaliable();
+		void bind();
+		void clear();
+		bool slotavaliable();
 
 		uint32_t operator[](lgl::Texture* texture);
 		uint32_t operator[](lgl::TextureId texture);

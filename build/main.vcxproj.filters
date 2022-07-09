@@ -28,6 +28,9 @@
     <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\TextureStore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\TextureVertices.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\C++\Lucy Framework V5\src\Engine\TimeStep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

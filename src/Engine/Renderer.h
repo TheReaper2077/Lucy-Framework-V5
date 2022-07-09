@@ -26,6 +26,9 @@ namespace lucy {
 
 		void RenderQuads(lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount);
 		void RenderQuads(lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount, TextureStore& texture_store);
+		void RenderQuads(const size_t shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount);
+		void RenderQuads(const size_t shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount, TextureStore& texture_store);
+
 		void RenderTextureIdQuads(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount, TextureStore& texture_store);
 		void RenderTextureIdQuads(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount);
 		void RenderUniformTextureIdQuads(lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, size_t vertexcount, int textureid);
@@ -36,6 +39,10 @@ namespace lucy {
 		void Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, lgl::IndexBuffer* indexbuffer, int count);
 		void Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, int first, int count, TextureStore& textures);
 		void Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, lgl::IndexBuffer* indexbuffer, int count, TextureStore& textures);
+
+		void Clear();
+		void Clear(const glm::vec4& color);
+		void Clear(const glm::vec3& color);
 
 		Renderer();
 		~Renderer();

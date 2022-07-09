@@ -6,24 +6,21 @@
 
 namespace lucy {
 	enum ShaderFlag {
-		TEXTUREID = 1,
-		U_TEXTUREID,
-		COLOR,
-		U_COLOR,
-		PBR_TEXTUREID,
-		PBR_U_TEXTUREID,
-		PBR_COLOR,
-		PBR_U_COLOR,
-		TEXTUREARRAY,
+		TEXTURE = 1 << 0,
+		TEXTUREARRAY = 1 << 1,
 
-		ShaderFlag_COUNT
+		MIX = 1 << 2,
+		COLOR = 1 << 3,
+		PBR = 1 << 4,
+		UNIFORM = 1 << 5,
 	};
 
 	class ShaderRegistry {
-		std::unordered_map<ShaderFlag, lgl::Shader*> shader_registry;
+		std::unordered_map<size_t, lgl::Shader*> shader_registry;
 
 	public:
 		ShaderRegistry();
-		lgl::Shader* GetShader(ShaderFlag flags);
+		lgl::Shader* GetShader(const size_t flags);
+		lgl::Shader* Generate(const size_t flags);
 	};
 }

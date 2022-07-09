@@ -116,4 +116,10 @@ namespace lgl {
 	};
 
 	const unsigned int Map(const Attachment atachment);
+
+	using BitFlags = unsigned int;
+
+	extern const BitFlags COLOR_BUFFER_BIT;
+	extern const BitFlags DEPTH_BUFFER_BIT;
+	extern const BitFlags STENCIL_BUFFER_BIT;
 }

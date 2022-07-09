@@ -2,6 +2,8 @@
 #include "Window.h"
 
 #include "Renderer.h"
+#include "SpriteRenderPass.h"
+#include <Components/Components.h>
 
 #include <iostream>
 #include <assert.h>
@@ -32,18 +34,24 @@ void lucy::Engine::Mainloop() {
 	auto& window = registry.store<Window>();
 	auto& renderer = registry.store<Renderer>();
 
+	SpriteRenderPass spriterenderpass;
+
+	spriterenderpass.FirstInit();
+	spriterenderpass.Init();
+
 	renderer.SetOrtho(0, window.size.x, window.size.y, 0, -1, 1);
 
-	lgl::VertexBuffer* vertexbuffer = new lgl::VertexBuffer();
+	lucy::Components::Sprite sprite;
+	
+	auto entity = registry.create();
+	registry.emplace<lucy::Components::Tag>(entity, "Entity");
+	registry.emplace<lucy::Components::Transform>(entity, glm::vec3(100, 100, 0), glm::vec3(0, 0, 45), glm::vec3(100, 100, 100));
+	registry.emplace<lucy::Components::SpriteRenderer>(entity, sprite);
 
-	using Vertex = lucy::Vertex::P1UV1T1;
-
-	std::vector<Vertex> vertices;
-	auto* vertexarray = Vertex::VertexArray();
-
-	vertexbuffer->Bind();
-	vertexbuffer->Allocate(sizeof(decltype(vertices[0]))*vertices.size());
-	vertexbuffer->AddDataDynamic(vertices.data(), sizeof(decltype(vertices[0]))*vertices.size());
+	auto entity2 = registry.create();
+	registry.emplace<lucy::Components::Tag>(entity2, "Entity2");
+	registry.emplace<lucy::Components::Transform>(entity2, glm::vec3(200, 200, 0), glm::vec3(0, 0, 0), glm::vec3(100, 100, 100));
+	registry.emplace<lucy::Components::SpriteRenderer>(entity2);
 
 	while (!events.IsQuittable()) {
 		events.Update();
@@ -53,6 +61,19 @@ void lucy::Engine::Mainloop() {
 			window.pos = events.GetWindowPos();
 			window.size = events.GetWindowSize();
 		}
+
+		renderer.Clear({ 0, 0, 0, 0 });
+
+		auto& transform = registry.get<lucy::Components::Transform>(entity);
+		auto& spriterenderer = registry.get<lucy::Components::SpriteRenderer>(entity);
+
+		transform.rotation.z += timestep.GetTimeStep();
+
+		if (transform.rotation.z >= 360) {
+			transform.rotation.z = 0;
+		}
+
+		spriterenderpass.Render();
 
 		SDL_GL_SwapWindow(sdl_window);
 	}
