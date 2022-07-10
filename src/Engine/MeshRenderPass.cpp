@@ -11,7 +11,7 @@ void lucy::MeshRenderPass::Init() {
 	
 }
 
-void lucy::MeshRenderPass::Render() {
+void lucy::MeshRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 	lighting_entities.clear();
 	material_entities.clear();
 

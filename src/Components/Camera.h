@@ -23,5 +23,8 @@ namespace lucy {
 		float fov = 45;
 		float c_near = 0.001, c_far = 1000;
 		float sensitivity = 0.1;
+
+		Camera() {}
+		Camera(bool enable): enable(enable) {}
 	};
 }

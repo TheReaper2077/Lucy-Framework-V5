@@ -58,10 +58,10 @@ void lucy::Engine::Mainloop() {
 	registry.emplace<lucy::Transform>(entity2, glm::vec3(200, 200, 0), glm::vec3(0, 0, 0), glm::vec3(100, 100, 100));
 	registry.emplace<lucy::SpriteRenderer>(entity2);
 
-	auto camera = registry.create();
-	registry.emplace<lucy::Tag>(camera, "Entity2");
-	registry.emplace<lucy::Transform>(camera, glm::vec3(200, 200, 0), glm::vec3(0, 0, 0), glm::vec3(100, 100, 100));
-	registry.emplace<lucy::SpriteRenderer>(camera);
+	auto camera_entity = registry.create();
+	registry.emplace<lucy::Tag>(camera_entity, "CameraFPS");
+	registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 0));
+	registry.emplace<lucy::Camera>(camera_entity, true);
 
 	while (!events.IsQuittable()) {
 		events.Update();

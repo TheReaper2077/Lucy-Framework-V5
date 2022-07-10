@@ -13,6 +13,6 @@ namespace lucy {
 		virtual void FirstInit() = 0;
 
 		virtual void Init() = 0;
-		virtual void Render() = 0;
+		virtual void Render(lgl::FrameBuffer* framebuffer) = 0;
 	};
 }

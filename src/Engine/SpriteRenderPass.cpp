@@ -54,7 +54,9 @@ void lucy::SpriteRenderPass::Flush<TexColorVertex>() {
 }
 
 
-void lucy::SpriteRenderPass::Render() {
+void lucy::SpriteRenderPass::Render(lgl::FrameBuffer* framebuffer) {
+	if (framebuffer != nullptr) framebuffer->Bind();
+
 	static lgl::Texture* null_texture = nullptr;
 
 	if (null_texture == nullptr) {
@@ -82,4 +84,24 @@ void lucy::SpriteRenderPass::Render() {
 
 	Flush<TexVertex>();
 	Flush<ColorVertex>();
+
+	if (framebuffer != nullptr) framebuffer->UnBind();
+}
+
+void lucy::SpriteRenderPass::Render(Camera& camera) {
+	if (!camera.enable) return;
+
+	renderer.SetProjection(camera.projection);
+	renderer.SetView(camera.view);
+	renderer.SetModel(glm::mat4(1.0f));
+
+	Render(camera.framebuffer);
+}
+
+void lucy::SpriteRenderPass::Render() {
+	for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
+		if (!camera.enable) continue;
+
+		Render(camera);
+	}
 }

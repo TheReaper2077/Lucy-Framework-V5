@@ -2,6 +2,7 @@
 
 #include "RenderPass.h"
 #include "TextureStore.h"
+#include <Components/Components.h>
 
 namespace lucy {
 	class SpriteRenderPass: public RenderPass {
@@ -36,6 +37,8 @@ namespace lucy {
 
 		void FirstInit() override;
 		void Init() override;
-		void Render() override;
+		void Render(lgl::FrameBuffer* framebuffer) override;
+		void Render(Camera& camera);
+		void Render();
 	};
 }
