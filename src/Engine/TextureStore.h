@@ -12,6 +12,7 @@ namespace lucy {
 	public:
 		void bind();
 		void clear();
+		int size();
 		bool slotavaliable();
 
 		uint32_t operator[](lgl::Texture* texture);

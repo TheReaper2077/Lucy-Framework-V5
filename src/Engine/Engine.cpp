@@ -43,16 +43,25 @@ void lucy::Engine::Mainloop() {
 	renderer.SetOrtho(0, window.size.x, window.size.y, 0, -1, 1);
 
 	lucy::Sprite sprite;
+
+	sprite.texture = new lgl::Texture();
+	sprite.texture->Bind();
+	sprite.texture->LoadTexture("D:\\C++\\Lucy Framework V5\\assets\\Redstone.PNG");
 	
 	auto entity = registry.create();
-	registry.emplace<lucy::Components::Tag>(entity, "Entity");
-	registry.emplace<lucy::Components::Transform>(entity, glm::vec3(100, 100, 0), glm::vec3(0, 0, 45), glm::vec3(100, 100, 100));
-	registry.emplace<lucy::Components::SpriteRenderer>(entity, sprite);
+	registry.emplace<lucy::Tag>(entity, "Entity");
+	registry.emplace<lucy::Transform>(entity, glm::vec3(100, 100, 0), glm::vec3(0, 0, 45), glm::vec3(100, 100, 100));
+	registry.emplace<lucy::SpriteRenderer>(entity, sprite);
 
 	auto entity2 = registry.create();
-	registry.emplace<lucy::Components::Tag>(entity2, "Entity2");
-	registry.emplace<lucy::Components::Transform>(entity2, glm::vec3(200, 200, 0), glm::vec3(0, 0, 0), glm::vec3(100, 100, 100));
-	registry.emplace<lucy::Components::SpriteRenderer>(entity2);
+	registry.emplace<lucy::Tag>(entity2, "Entity2");
+	registry.emplace<lucy::Transform>(entity2, glm::vec3(200, 200, 0), glm::vec3(0, 0, 0), glm::vec3(100, 100, 100));
+	registry.emplace<lucy::SpriteRenderer>(entity2);
+
+	auto camera = registry.create();
+	registry.emplace<lucy::Tag>(camera, "Entity2");
+	registry.emplace<lucy::Transform>(camera, glm::vec3(200, 200, 0), glm::vec3(0, 0, 0), glm::vec3(100, 100, 100));
+	registry.emplace<lucy::SpriteRenderer>(camera);
 
 	while (!events.IsQuittable()) {
 		events.Update();
@@ -65,8 +74,8 @@ void lucy::Engine::Mainloop() {
 
 		renderer.Clear({ 0, 0, 0, 0 });
 
-		auto& transform = registry.get<lucy::Components::Transform>(entity);
-		auto& spriterenderer = registry.get<lucy::Components::SpriteRenderer>(entity);
+		auto& transform = registry.get<Transform>(entity);
+		auto& spriterenderer = registry.get<SpriteRenderer>(entity);
 
 		transform.rotation.z += timestep.GetTimeStep();
 

@@ -7,6 +7,6 @@ namespace lucy {
 		glm::vec2 pos = { 50, 50 };
 		glm::vec2 size = { 1280, 640 };
 
-		std::string title = "Lucy Framework V4";
+		std::string title = "Lucy Framework V5";
 	};
 }

@@ -19,7 +19,7 @@ namespace lucy::Vertex {
 
 	#define SET_VERTEXARRAY(...) static lgl::VertexArray* VertexArray() { static lgl::VertexArray vertexarray(__VA_ARGS__); return &vertexarray; }
 
-	enum Index {
+	enum Attrib {
 		position = 0,
 		color,
 		normal,

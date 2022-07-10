@@ -4,7 +4,7 @@
 #include <stduuid/uuid.h>
 #include <string>
 
-namespace lucy::Components {
+namespace lucy {
 	struct Tag {
 		std::string name = "";
 		std::string id = uuids::to_string(uuids::uuid_system_generator{}());

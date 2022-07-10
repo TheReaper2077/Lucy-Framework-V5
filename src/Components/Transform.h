@@ -4,11 +4,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-namespace lucy::Components {
+namespace lucy {
 	struct Transform {
-		glm::vec3 translation = glm::vec3(0, 0, 0);
-		glm::vec3 rotation = glm::vec3(0, 0, 0);
-		glm::vec3 scale = glm::vec3(1, 1, 1);
+		glm::vec3 translation = { 0, 0, 0 };
+		glm::vec3 rotation = { 0, 0, 0 };
+		glm::vec3 scale = { 1, 1, 1 };
 
 		Transform(const glm::vec3& translation): translation(translation) {}
 		Transform(const glm::vec3& translation, const glm::vec3& rotation): translation(translation), rotation(rotation) {}

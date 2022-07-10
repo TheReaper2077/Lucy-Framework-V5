@@ -47,7 +47,7 @@ namespace lucy {
 		bool IsKeyPressed(SDL_Scancode scancode);
 		bool IsKeyPressed(const std::vector<SDL_Scancode>& scancodes);
 		bool IsKeyToggled(SDL_Scancode scancode);
-		bool IsKeyChord(const std::vector<SDL_Scancode>& scancode);
+		bool IsKeyChord(const std::vector<SDL_Scancode>& scancodes);
 
 		bool IsQuittable();
 		bool IsWindowResized();

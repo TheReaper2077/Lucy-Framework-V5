@@ -9,7 +9,7 @@ namespace lucy {
 		SDL_Window* sdl_window;
 		SDL_GLContext sdl_context;
 
-		Registry& registry = Registry::GetInstance();
+		Registry& registry = Registry::Instance();
 
 	public:
 		void Init();

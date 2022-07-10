@@ -20,6 +20,10 @@ void lucy::TextureStore::clear() {
 	next_unit = 0;
 }
 
+int lucy::TextureStore::size() {
+	return texture_unit_map.size();
+}
+
 uint32_t lucy::TextureStore::operator[](lgl::TextureId texture) {
 	if (texture_unit_map.find(texture) == texture_unit_map.end()) {
 		assert(slotavaliable());

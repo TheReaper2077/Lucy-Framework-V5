@@ -6,8 +6,8 @@
 namespace lucy {
 	class RenderPass {
 	protected:
-		Renderer& renderer = Registry::GetInstance().store<Renderer>();
-		Registry& registry = Registry::GetInstance();
+		Renderer& renderer = Registry::Instance().store<Renderer>();
+		Registry& registry = Registry::Instance();
 
 	public:
 		virtual void FirstInit() = 0;

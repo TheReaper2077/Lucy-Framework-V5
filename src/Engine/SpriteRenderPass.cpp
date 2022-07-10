@@ -57,8 +57,6 @@ void lucy::SpriteRenderPass::Flush<TexColorVertex>() {
 void lucy::SpriteRenderPass::Render() {
 	static lgl::Texture* null_texture = nullptr;
 
-	using namespace lucy::Components;
-
 	if (null_texture == nullptr) {
 		null_texture = new lgl::Texture();
 		null_texture->Bind();

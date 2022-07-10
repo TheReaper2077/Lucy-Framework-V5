@@ -20,7 +20,7 @@ namespace lucy {
 			return get<T>(singleton_instances[typeid(T).hash_code()]);
 		}
 
-		static Registry& GetInstance() {
+		static Registry& Instance() {
 			static Registry instance;
 			return instance;
 		}
