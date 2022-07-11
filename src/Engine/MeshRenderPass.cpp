@@ -12,6 +12,8 @@ void lucy::MeshRenderPass::Init() {
 }
 
 void lucy::MeshRenderPass::Render(lgl::FrameBuffer* framebuffer) {
+	if (framebuffer != nullptr) framebuffer->Bind();
+
 	lighting_entities.clear();
 	material_entities.clear();
 
@@ -25,5 +27,20 @@ void lucy::MeshRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 			renderer.Render(mesh->primitive, nullptr, mesh->vertexarray, mesh->vertexbuffer, mesh->indexbuffer, mesh->indexcount);
 		}
 	}
+
+	if (framebuffer != nullptr) framebuffer->UnBind();
 }
 
+void lucy::MeshRenderPass::RenderMesh(Entity entity) {
+	auto& transform = registry.get<Transform>(entity);
+	auto& meshrenderer = registry.get<MeshRenderer>(entity);
+	auto* mesh = meshrenderer.mesh;
+
+	renderer.SetModel(transform.GetModel());
+
+	if (mesh->indexbuffer) {
+		renderer.Render(mesh->primitive, nullptr, mesh->vertexarray, mesh->vertexbuffer, mesh->indexbuffer, mesh->indexcount);
+	} else {
+		renderer.Render(mesh->primitive, nullptr, mesh->vertexarray, mesh->vertexbuffer, 0, mesh->vertexcount);
+	}
+}

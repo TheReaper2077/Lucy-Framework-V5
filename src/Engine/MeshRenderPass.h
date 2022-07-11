@@ -15,5 +15,6 @@ namespace lucy {
 		void FirstInit() override;
 		void Init() override;
 		void Render(lgl::FrameBuffer* framebuffer) override;
+		void RenderMesh(Entity entity);
 	};
 }

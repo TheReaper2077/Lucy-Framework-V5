@@ -46,7 +46,7 @@ void lucy::Engine::Mainloop() {
 	sprite.texture = new lgl::Texture();
 	sprite.texture->Bind();
 	sprite.texture->LoadTexture("D:\\C++\\Lucy Framework V5\\assets\\Redstone.PNG");
-	
+
 	auto entity = registry.create();
 	registry.emplace<lucy::Tag>(entity, "Entity");
 	registry.emplace<lucy::Transform>(entity, glm::vec3(0, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 1));
@@ -87,7 +87,7 @@ void lucy::Engine::Mainloop() {
 		auto& transform = registry.get<Transform>(entity);
 		auto& spriterenderer = registry.get<SpriteRenderer>(entity);
 
-		transform.rotation.z += timestep.GetTimeStep();
+		transform.rotation.z += timestep.dt;
 
 		if (transform.rotation.z >= 360) {
 			transform.rotation.z = 0;

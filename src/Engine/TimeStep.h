@@ -2,6 +2,7 @@
 
 namespace lucy {
 	class TimeStep {
+	public:
 		double dt;
 		double fixed_dt;
 
