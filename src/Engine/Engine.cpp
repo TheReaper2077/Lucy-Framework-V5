@@ -5,6 +5,7 @@
 #include "SpriteRenderPass.h"
 #include <Components/Components.h>
 #include <Structures/Structures.h>
+#include <System/CameraSystem.h>
 
 #include <iostream>
 #include <assert.h>
@@ -40,8 +41,6 @@ void lucy::Engine::Mainloop() {
 	spriterenderpass.FirstInit();
 	spriterenderpass.Init();
 
-	renderer.SetOrtho(0, window.size.x, window.size.y, 0, -1, 1);
-
 	lucy::Sprite sprite;
 
 	sprite.texture = new lgl::Texture();
@@ -50,18 +49,26 @@ void lucy::Engine::Mainloop() {
 	
 	auto entity = registry.create();
 	registry.emplace<lucy::Tag>(entity, "Entity");
-	registry.emplace<lucy::Transform>(entity, glm::vec3(100, 100, 0), glm::vec3(0, 0, 45), glm::vec3(100, 100, 100));
+	registry.emplace<lucy::Transform>(entity, glm::vec3(0, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 1));
 	registry.emplace<lucy::SpriteRenderer>(entity, sprite);
 
 	auto entity2 = registry.create();
 	registry.emplace<lucy::Tag>(entity2, "Entity2");
-	registry.emplace<lucy::Transform>(entity2, glm::vec3(200, 200, 0), glm::vec3(0, 0, 0), glm::vec3(100, 100, 100));
+	registry.emplace<lucy::Transform>(entity2, glm::vec3(1, 1, 2), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
 	registry.emplace<lucy::SpriteRenderer>(entity2);
 
 	auto camera_entity = registry.create();
 	registry.emplace<lucy::Tag>(camera_entity, "CameraFPS");
-	registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 0));
+	registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 1));
 	registry.emplace<lucy::Camera>(camera_entity, true);
+
+	CameraSystem camerasystem;
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDepthFunc(GL_LESS);
+	glDepthMask(GL_TRUE);
 
 	while (!events.IsQuittable()) {
 		events.Update();
@@ -72,7 +79,10 @@ void lucy::Engine::Mainloop() {
 			window.size = events.GetWindowSize();
 		}
 
+		camerasystem.Update();
+
 		renderer.Clear({ 0, 0, 0, 0 });
+		glViewport(0, 0, window.size.x, window.size.y);
 
 		auto& transform = registry.get<Transform>(entity);
 		auto& spriterenderer = registry.get<SpriteRenderer>(entity);

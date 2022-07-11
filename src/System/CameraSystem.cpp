@@ -6,6 +6,7 @@
 #include <Components/Components.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 static auto& registry = lucy::Registry::Instance();
 static auto& timestep = registry.store<lucy::TimeStep>();
@@ -28,29 +29,58 @@ void lucy::CameraSystem::Update() {
 			camera.projection = glm::perspective(glm::radians(camera.fov), (float)camera.width / camera.height, camera.c_near, camera.c_far);
 		}
 
-		if (events.IsButtonPressed(SDL_BUTTON_MIDDLE)) {
-			auto pos = events.GetCursorPos();
+		FPSView(entity);
+	}
+}
 
-			if (camera.first_mouse) {
-				camera.lastx = pos.x;
-				camera.lasty = pos.y;
-				camera.first_mouse = false;
-			}
+void lucy::CameraSystem::FPSView(Entity entity) {
+	auto& transform = registry.get<Transform>(entity);
+	auto& camera = registry.get<Camera>(entity);
 
-			transform.rotation.y -= (pos.x - camera.lastx) * camera.sensitivity;
-			transform.rotation.x += (camera.lasty - pos.y) * camera.sensitivity;
+	if (events.IsButtonPressed(SDL_BUTTON_MIDDLE)) {
+		auto pos = events.GetCursorPos();
 
+		if (camera.first_mouse) {
 			camera.lastx = pos.x;
 			camera.lasty = pos.y;
-		} else {
-			camera.first_mouse = true;
+			camera.first_mouse = false;
 		}
 
-		const auto& quaternion = transform.GetRotationQuat();
+		transform.rotation.y -= (pos.x - camera.lastx) * camera.sensitivity;
+		transform.rotation.x += (camera.lasty - pos.y) * camera.sensitivity;
 
-		camera.front = glm::normalize(quaternion * camera.world_front);
-		camera.up = glm::normalize(quaternion * camera.world_up);
-
-		camera.view = glm::lookAt(transform.translation, transform.translation + camera.front, camera.up);
+		camera.lastx = pos.x;
+		camera.lasty = pos.y;
+	} else {
+		camera.first_mouse = true;
 	}
+
+	const auto& quaternion = transform.GetRotationQuat();
+
+	camera.front = glm::normalize(quaternion * camera.world_front);
+	camera.up = glm::normalize(quaternion * camera.world_up);
+
+	if (events.IsButtonPressed(SDL_BUTTON_MIDDLE)) {
+		const auto& dt = timestep.GetTimeStep();
+		const float speed = 0.5 * dt;
+
+		if (events.IsKeyPressed(SDL_SCANCODE_W))
+			transform.translation += camera.front * speed;
+		if (events.IsKeyPressed(SDL_SCANCODE_S))
+			transform.translation -= camera.front * speed;
+		if (events.IsKeyPressed(SDL_SCANCODE_A))
+			transform.translation -= glm::normalize(glm::cross(camera.front, camera.up)) * speed;
+		if (events.IsKeyPressed(SDL_SCANCODE_D))
+			transform.translation += glm::normalize(glm::cross(camera.front, camera.up)) * speed;
+		if (events.IsKeyPressed(SDL_SCANCODE_LSHIFT))
+			transform.translation -= camera.up * speed;
+		if (events.IsKeyPressed(SDL_SCANCODE_SPACE))
+			transform.translation += camera.up * speed;
+	}
+
+	camera.view = glm::lookAt(transform.translation, transform.translation + camera.front, camera.up);
+}
+
+void lucy::CameraSystem::EditorView(Entity entity) {
+	
 }
