@@ -29,8 +29,10 @@ namespace lucy {
 		
 		template <typename T>
 		void Flush();
+		void Flush();
 
 		TextureStore texture_store;
+		lgl::Shader* shader = nullptr;
 
 	public:
 		SpriteRenderPass() {}

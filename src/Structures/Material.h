@@ -23,5 +23,9 @@ namespace lucy {
 		lgl::Texture* normal_map = nullptr;
 
 		int illum_model;
+
+		lgl::Shader* shader = nullptr;
+
+		bool use_shader = false;
 	};
 }

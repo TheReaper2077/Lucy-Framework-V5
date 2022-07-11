@@ -21,47 +21,39 @@ namespace lucy::Vertex {
 
 	enum Attrib {
 		position = 0,
-		color,
-		normal,
-		tex,
-		idx,
-		uv,
+		color = 1,
+		normal = 2,
+		tex = 3,
+		uv = 4,
+		uvw = 5,
 
 		Index_COUNT
 	};
 
 	struct P1;
 	struct P1C1;
-	struct P1N1;
 	struct P1C1N1;
-	struct P1UV1;
-	struct P1C1UV1;
-	struct P1N1UV1;
-	struct P1C1N1UV1;
-	struct P1I1;
-	struct P1C1I1;
-	struct P1N1I1;
-	struct P1C1N1I1;
-	struct P1UV1I1;
-	struct P1C1UV1I1;
-	struct P1N1UV1I1;
-	struct P1C1N1UV1I1;
-	struct P1T1;
-	struct P1C1T1;
-	struct P1N1T1;
 	struct P1C1N1T1;
-	struct P1UV1T1;
-	struct P1C1UV1T1;
-	struct P1N1UV1T1;
+	struct P1C1N1UV1;
 	struct P1C1N1UV1T1;
-	struct P1I1T1;
-	struct P1C1I1T1;
-	struct P1N1I1T1;
-	struct P1C1N1I1T1;
-	struct P1UV1I1T1;
-	struct P1C1UV1I1T1;
-	struct P1N1UV1I1T1;
-	struct P1C1N1UV1I1T1;
+	struct P1C1N1UVW1;
+	struct P1C1N1UVW1T1;
+	struct P1C1T1;
+	struct P1C1UV1;
+	struct P1C1UV1T1;
+	struct P1C1UVW1;
+	struct P1C1UVW1T1;
+	struct P1N1;
+	struct P1N1T1;
+	struct P1N1UV1;
+	struct P1N1UV1T1;
+	struct P1N1UVW1;
+	struct P1N1UVW1T1;
+	struct P1T1;
+	struct P1UV1;
+	struct P1UV1T1;
+	struct P1UVW1;
+	struct P1UVW1T1;
 }
 
 #include "VertexPermutations.h"

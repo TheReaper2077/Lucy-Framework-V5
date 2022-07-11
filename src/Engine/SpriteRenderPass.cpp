@@ -3,9 +3,20 @@
 #include <Structures/Structures.h>
 #include <Components/Components.h>
 
-using TexVertex = lucy::Vertex::P1UV1I1;
+using TexVertex = lucy::Vertex::P1UV1T1;
 using ColorVertex = lucy::Vertex::P1C1;
-using TexColorVertex = lucy::Vertex::P1C1UV1I1;
+using TexColorVertex = lucy::Vertex::P1C1UV1T1;
+
+static enum ShaderStates {
+	TEXTURE,
+	TEXTURE_COLOR,
+	TEXTURE_UCOLOR,
+	UTEXTURE,
+	UTEXTURE_COLOR,
+	UTEXTURE_UCOLOR,
+	COLOR,
+	UCOLOR,
+};
 
 void lucy::SpriteRenderPass::FirstInit() {
 	
@@ -22,7 +33,9 @@ void lucy::SpriteRenderPass::Flush<ColorVertex>() {
 
 	auto* vertexbuffer = AddData(vertices);
 
-	renderer.RenderQuads(COLOR, ColorVertex::VertexArray(), vertexbuffer, vertices.size());
+	shader->SetUniformi("u_type", COLOR);
+
+	renderer.RenderQuads(lgl::TRIANGLE, nullptr, ColorVertex::VertexArray(), vertexbuffer, vertices.size());
 
 	vertices.clear();
 }
@@ -34,7 +47,9 @@ void lucy::SpriteRenderPass::Flush<TexVertex>() {
 
 	auto* vertexbuffer = AddData(vertices);
 
-	renderer.RenderQuads(TEXTURE, TexVertex::VertexArray(), vertexbuffer, vertices.size());
+	shader->SetUniformi("u_type", TEXTURE);
+
+	renderer.RenderQuads(lgl::TRIANGLE, nullptr, TexVertex::VertexArray(), vertexbuffer, vertices.size());
 
 	texture_store.clear();
 	vertices.clear();
@@ -47,15 +62,30 @@ void lucy::SpriteRenderPass::Flush<TexColorVertex>() {
 
 	auto* vertexbuffer = AddData(vertices);
 
-	renderer.RenderQuads(TEXTURE | COLOR, TexColorVertex::VertexArray(), vertexbuffer, vertices.size());
+	shader->SetUniformi("u_type", TEXTURE_COLOR);
+	
+	renderer.RenderQuads(lgl::TRIANGLE, nullptr, TexColorVertex::VertexArray(), vertexbuffer, vertices.size());
 
 	texture_store.clear();
 	vertices.clear();
 }
 
+void lucy::SpriteRenderPass::Flush() {
+	shader->Bind();
+
+	Flush<ColorVertex>();
+	Flush<TexVertex>();
+	Flush<TexColorVertex>();
+
+	shader->UnBind();
+}
+
 
 void lucy::SpriteRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 	if (framebuffer != nullptr) framebuffer->Bind();
+
+	if (shader == nullptr)
+		shader = new lgl::Shader("D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\sprite.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\sprite.frag");
 
 	static lgl::Texture* null_texture = nullptr;
 
@@ -82,8 +112,7 @@ void lucy::SpriteRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 		}
 	}
 
-	Flush<TexVertex>();
-	Flush<ColorVertex>();
+	Flush();
 
 	if (framebuffer != nullptr) framebuffer->UnBind();
 }

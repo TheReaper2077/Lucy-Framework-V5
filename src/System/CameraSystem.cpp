@@ -60,23 +60,21 @@ void lucy::CameraSystem::FPSView(Entity entity) {
 	camera.front = glm::normalize(quaternion * camera.world_front);
 	camera.up = glm::normalize(quaternion * camera.world_up);
 
-	if (events.IsButtonPressed(SDL_BUTTON_MIDDLE)) {
-		const auto& dt = timestep.GetTimeStep();
-		const float speed = 0.5 * dt;
+	const auto& dt = timestep.GetTimeStep();
+	const float speed = 0.5 * dt;
 
-		if (events.IsKeyPressed(SDL_SCANCODE_W))
-			transform.translation += camera.front * speed;
-		if (events.IsKeyPressed(SDL_SCANCODE_S))
-			transform.translation -= camera.front * speed;
-		if (events.IsKeyPressed(SDL_SCANCODE_A))
-			transform.translation -= glm::normalize(glm::cross(camera.front, camera.up)) * speed;
-		if (events.IsKeyPressed(SDL_SCANCODE_D))
-			transform.translation += glm::normalize(glm::cross(camera.front, camera.up)) * speed;
-		if (events.IsKeyPressed(SDL_SCANCODE_LSHIFT))
-			transform.translation -= camera.up * speed;
-		if (events.IsKeyPressed(SDL_SCANCODE_SPACE))
-			transform.translation += camera.up * speed;
-	}
+	if (events.IsKeyPressed(SDL_SCANCODE_W))
+		transform.translation += camera.front * speed;
+	if (events.IsKeyPressed(SDL_SCANCODE_S))
+		transform.translation -= camera.front * speed;
+	if (events.IsKeyPressed(SDL_SCANCODE_A))
+		transform.translation -= glm::normalize(glm::cross(camera.front, camera.up)) * speed;
+	if (events.IsKeyPressed(SDL_SCANCODE_D))
+		transform.translation += glm::normalize(glm::cross(camera.front, camera.up)) * speed;
+	if (events.IsKeyPressed(SDL_SCANCODE_LSHIFT))
+		transform.translation -= camera.up * speed;
+	if (events.IsKeyPressed(SDL_SCANCODE_SPACE))
+		transform.translation += camera.up * speed;
 
 	camera.view = glm::lookAt(transform.translation, transform.translation + camera.front, camera.up);
 }

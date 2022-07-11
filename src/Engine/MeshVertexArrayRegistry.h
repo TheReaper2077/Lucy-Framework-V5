@@ -18,14 +18,6 @@ namespace lucy {
 		MeshVAOAttrib_COUNT
 	};
 
-	enum MeshVAOAttribSize_ {
-		MeshVAOAttribSize_POSITION = 3,
-		MeshVAOAttribSize_NORMAL = 3,
-		MeshVAOAttribSize_COLOR = 4,
-		MeshVAOAttribSize_UV = 2,
-		MeshVAOAttribSize_UVW = 3,
-	};
-
 	enum MeshVAOAttribFlag_ {
 		MeshVAOAttribFlag_POSITION = 1 << MeshVAOAttrib_POSITION,
 		MeshVAOAttribFlag_NORMAL = 1 << MeshVAOAttrib_NORMAL,
@@ -44,12 +36,12 @@ namespace lucy {
 			{ MeshVAOAttrib_UVW, MeshVAOAttribFlag_UVW },
 		};
 
-		std::unordered_map<MeshVAOAttrib_, MeshVAOAttribSize_> MeshVAOAttribSizeMap_= {
-			{ MeshVAOAttrib_POSITION, MeshVAOAttribSize_POSITION },
-			{ MeshVAOAttrib_NORMAL, MeshVAOAttribSize_NORMAL },
-			{ MeshVAOAttrib_COLOR, MeshVAOAttribSize_COLOR },
-			{ MeshVAOAttrib_UV, MeshVAOAttribSize_UV },
-			{ MeshVAOAttrib_UVW, MeshVAOAttribSize_UVW },
+		std::unordered_map<MeshVAOAttrib_, uint32_t> MeshVAOAttribSizeMap_= {
+			{ MeshVAOAttrib_POSITION, 3 },
+			{ MeshVAOAttrib_NORMAL, 3 },
+			{ MeshVAOAttrib_COLOR, 4 },
+			{ MeshVAOAttrib_UV, 2 },
+			{ MeshVAOAttrib_UVW, 3 },
 		};
 		
 	public:
@@ -83,6 +75,12 @@ namespace lucy {
 			assert(attrib < MeshVAOAttrib_COUNT);
 
 			return offset[vertexarray][attrib];
+		}
+		std::array<uint32_t, MeshVAOAttrib_COUNT>& GetOffset(lgl::VertexArray* vertexarray) {
+			return offset[vertexarray];
+		}
+		std::array<bool, MeshVAOAttrib_COUNT>& GetPresent(lgl::VertexArray* vertexarray) {
+			return is_present[vertexarray];
 		}
 		bool IsAttribPresent(lgl::VertexArray* vertexarray, MeshVAOAttrib_ attrib) {
 			assert(attrib < MeshVAOAttrib_COUNT);
