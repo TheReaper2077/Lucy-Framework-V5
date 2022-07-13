@@ -144,6 +144,6 @@ lgl::Shader& lucy::Renderer::GetPBRShader(const std::string& name) {
 	}
 	for (int i = 0; i < point_count; i++) {
 		uniforms += "uniform Light point_light" + std::to_string(i) + ";\n";
-		logic += "	Lo += PointCalculatePBR(N, V, point_light" + std::to_string(i) + ".position, point_light" + std::to_string(i) + ".color);\n"\
+		logic += "	Lo += PointCalculatePBR(N, V, point_light" + std::to_string(i) + ".position, point_light" + std::to_string(i) + ".color);\n";
 	}
 }
