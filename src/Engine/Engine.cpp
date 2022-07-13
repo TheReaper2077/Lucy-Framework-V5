@@ -3,6 +3,7 @@
 
 #include "Renderer.h"
 #include "SpriteRenderPass.h"
+#include "MeshRenderPass.h"
 #include <Components/Components.h>
 #include <Structures/Structures.h>
 #include <System/CameraSystem.h>
@@ -10,6 +11,7 @@
 #include <iostream>
 #include <assert.h>
 #include <SDL2/SDL.h>
+#include <glm/gtx/string_cast.hpp>
 #include <glad/glad.h>
 
 void lucy::Engine::Init() {
@@ -37,9 +39,12 @@ void lucy::Engine::Mainloop() {
 	auto& renderer = registry.store<Renderer>();
 
 	SpriteRenderPass spriterenderpass;
+	MeshRenderPass meshrenderpass;
 
 	spriterenderpass.FirstInit();
 	spriterenderpass.Init();
+	meshrenderpass.FirstInit();
+	meshrenderpass.Init();
 
 	lucy::Sprite sprite;
 
@@ -62,6 +67,34 @@ void lucy::Engine::Mainloop() {
 	registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 1));
 	registry.emplace<lucy::Camera>(camera_entity, true);
 
+	Mesh mesh;
+
+	mesh.positions = {
+		{ -0.5, -0.5, -0.5, },
+		{ 0.5, -0.5, -0.5, },
+		{ 0.5,  0.5, -0.5, },
+		{ 0.5,  0.5, -0.5, },
+		{ -0.5,  0.5, -0.5, },
+		{ -0.5, -0.5, -0.5, },
+	};
+
+	mesh.colors = {
+		{1.0, 1.0, 0.0, 1.0},
+		{1.0, 1.0, 0.0, 1.0},
+		{1.0, 1.0, 0.0, 1.0},
+		{1.0, 1.0, 0.0, 1.0},
+		{1.0, 1.0, 0.0, 1.0},
+		{1.0, 1.0, 0.0, 1.0},
+	};
+
+	mesh.ReCalculateNormals();
+	mesh.Transfer();
+
+	auto mesh_entity = registry.create();
+	registry.emplace<lucy::Tag>(mesh_entity, "Mesh");
+	registry.emplace<lucy::Transform>(mesh_entity, glm::vec3(0, 0, 3));
+	registry.emplace<lucy::MeshRenderer>(mesh_entity, &mesh);
+	
 	CameraSystem camerasystem;
 
 	glEnable(GL_DEPTH_TEST);
@@ -94,6 +127,7 @@ void lucy::Engine::Mainloop() {
 		}
 
 		spriterenderpass.Render();
+		meshrenderpass.Render();
 
 		SDL_GL_SwapWindow(sdl_window);
 	}

@@ -1,19 +1,20 @@
 #include "Mesh.h"
+#include <iostream>
 #include <Engine/ECS.h>
-#include <Engine/MeshVertexArrayRegistry.h>
+#include "MeshVertexArrayRegistry.h"
 
 static auto& registry = lucy::Registry::Instance();
 static auto& vertexarrayregistry = registry.store<lucy::MeshVAORegistry>();
 
 void lucy::Mesh::Transfer() {
-	if (position.size() && !disable_position) flags |= MeshVAOAttribFlag_POSITION;
-	if (normal.size() && !disable_normal) flags |= MeshVAOAttribFlag_NORMAL;
-	if (color.size() && !disable_color) flags |= MeshVAOAttribFlag_COLOR;	
+	if (positions.size() && !disable_position) flags |= MeshVAOAttribFlag_POSITION;
+	if (normals.size() && !disable_normal) flags |= MeshVAOAttribFlag_NORMAL;
+	if (colors.size() && !disable_color) flags |= MeshVAOAttribFlag_COLOR;	
 	if (uv.size() && !disable_uv) flags |= MeshVAOAttribFlag_UV;
 
 	vertexarray = vertexarrayregistry.GetVertexArray(flags);	
 	indexcount = indices.size();
-	vertexcount = position.size();
+	vertexcount = positions.size();
 
 	auto* data = (float*)malloc(vertexcount * vertexarray->stride);
 
@@ -22,10 +23,10 @@ void lucy::Mesh::Transfer() {
 
 	for (int i = 0; i < vertexcount; i++) {
 		if (present_array[MeshVAOAttrib_POSITION]) {
-			if (i < position.size()) {
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_POSITION] + 0] = position[i].x;
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_POSITION] + 1] = position[i].y;
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_POSITION] + 2] = position[i].z;
+			if (i < positions.size()) {
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_POSITION] + 0] = positions[i].x;
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_POSITION] + 1] = positions[i].y;
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_POSITION] + 2] = positions[i].z;
 			} else {
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_POSITION] + 0] = 0;
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_POSITION] + 1] = 0;
@@ -33,10 +34,10 @@ void lucy::Mesh::Transfer() {
 			}
 		}
 		if (present_array[MeshVAOAttrib_NORMAL]) {
-			if (i < normal.size()) {
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_NORMAL] + 0] = normal[i].x;
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_NORMAL] + 1] = normal[i].y;
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_NORMAL] + 2] = normal[i].z;
+			if (i < normals.size()) {
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_NORMAL] + 0] = normals[i].x;
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_NORMAL] + 1] = normals[i].y;
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_NORMAL] + 2] = normals[i].z;
 			} else {
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_NORMAL] + 0] = 0;
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_NORMAL] + 1] = 0;
@@ -44,11 +45,12 @@ void lucy::Mesh::Transfer() {
 			}
 		}
 		if (present_array[MeshVAOAttrib_COLOR]) {
-			if (i < color.size()) {
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 0] = color[i].x;
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 1] = color[i].y;
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 2] = color[i].z;
-				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 3] = color[i].w;
+			if (i < colors.size()) {
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 0] = colors[i].x;
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 1] = colors[i].y;
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 2] = colors[i].z;
+				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 3] = colors[i].w;
+				// std::cout << "hello\n";
 			} else {
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 0] = 0;
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 1] = 0;
@@ -89,4 +91,29 @@ void lucy::Mesh::Transfer() {
 
 	free(data);
 	data = nullptr;
+}
+
+void lucy::Mesh::ReCalculateNormals() {
+	if (primitive != lgl::TRIANGLE) return;
+
+	normals.reserve(int(positions.size() / 3) * 3);
+
+	for (int i = 0; i < positions.size() / 3; i++) {
+		auto normal = glm::cross(positions[1 + 3 * i] - positions[0 + 3 * i], positions[2 + 3 * i] - positions[0 + 3 * i]);
+
+		normals.emplace_back(normal);
+		normals.emplace_back(normal);
+		normals.emplace_back(normal);
+	}
+}
+
+void lucy::Mesh::Clear() {
+	positions.clear();
+	normals.clear();
+	colors.clear();
+	uv.clear();
+	uvw.clear();
+
+	indices.clear();
+	texture_store.clear();
 }

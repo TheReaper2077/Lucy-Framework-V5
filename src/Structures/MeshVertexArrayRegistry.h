@@ -5,13 +5,12 @@
 #include <array>
 #include <assert.h>
 #include <memory>
-#include "Vertex.h"
 
 namespace lucy {
 	enum MeshVAOAttrib_ {
-		MeshVAOAttrib_POSITION,
-		MeshVAOAttrib_NORMAL,
+		MeshVAOAttrib_POSITION = 0,
 		MeshVAOAttrib_COLOR,
+		MeshVAOAttrib_NORMAL,
 		MeshVAOAttrib_UV,
 		MeshVAOAttrib_UVW,
 

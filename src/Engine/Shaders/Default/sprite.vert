@@ -11,6 +11,7 @@ layout (std140, binding = 0) uniform ProjectionMatrix {
     mat4 model;
     mat4 view;
     mat4 projection;
+	vec4 v_view_pos;
 };
 
 out vec3 normal;

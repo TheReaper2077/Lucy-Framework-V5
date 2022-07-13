@@ -2,6 +2,7 @@
 
 #include "Renderer.h"
 #include "ECS.h"
+#include <Components/Components.h>
 
 namespace lucy {
 	class RenderPass {

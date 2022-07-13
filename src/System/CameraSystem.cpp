@@ -77,6 +77,7 @@ void lucy::CameraSystem::FPSView(Entity entity) {
 		transform.translation += camera.up * speed;
 
 	camera.view = glm::lookAt(transform.translation, transform.translation + camera.front, camera.up);
+	camera.position = transform.translation;
 }
 
 void lucy::CameraSystem::EditorView(Entity entity) {

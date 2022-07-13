@@ -122,6 +122,7 @@ void lucy::SpriteRenderPass::Render(Camera& camera) {
 
 	renderer.SetProjection(camera.projection);
 	renderer.SetView(camera.view);
+	renderer.SetViewPos(camera.position);
 	renderer.SetModel(glm::mat4(1.0f));
 
 	Render(camera.framebuffer);

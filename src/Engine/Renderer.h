@@ -11,12 +11,15 @@ namespace lucy {
 		glm::mat4 model;
 		glm::mat4 view;
 		glm::mat4 projection;
+		glm::vec3 view_pos;
+
 		lgl::UniformBuffer* uniformbuffer = nullptr;
 
 	public:
 		void SetModel(const glm::mat4& model);
 		void SetView(const glm::mat4& view);
 		void SetProjection(const glm::mat4& projection);
+		void SetViewPos(const glm::vec3& projection);
 
 		void SetPerspective();
 		void SetOrtho(const float left, const float right, const float top, const float bottom, const float near, const float far);

@@ -8,10 +8,11 @@
 
 namespace lucy {
 	struct Mesh {
-		std::vector<glm::vec3> position;
-		std::vector<glm::vec3> normal;
-		std::vector<glm::vec4> color;
+		std::vector<glm::vec3> positions;
+		std::vector<glm::vec3> normals;
+		std::vector<glm::vec4> colors;
 		std::vector<glm::vec2> uv;
+		std::vector<glm::vec3> uvw;
 
 		std::vector<uint32_t> indices;
 
@@ -34,5 +35,7 @@ namespace lucy {
 		size_t flags;
 
 		void Transfer();
+		void ReCalculateNormals();
+		void Clear();
 	};
 }
