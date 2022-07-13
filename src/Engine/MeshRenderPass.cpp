@@ -7,8 +7,8 @@ void lucy::MeshRenderPass::FirstInit() {
 }
 
 void lucy::MeshRenderPass::Init() {
-	if (shader == nullptr) {
-		shader = new lgl::Shader("D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.frag");
+	if (mesh_shader == nullptr) {
+		mesh_shader = new lgl::Shader("D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.frag");
 	}
 }
 
@@ -18,7 +18,7 @@ void lucy::MeshRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 	lighting_entities.clear();
 	material_entities.clear();
 
-	shader->Bind();
+	mesh_shader->Bind();
 
 	for (auto [entity, tag, transform, meshrenderer]: registry.view<Tag, Transform, MeshRenderer>().each()) {
 		if (meshrenderer.enable_lighting) {
@@ -29,7 +29,7 @@ void lucy::MeshRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 		}
 	}
 
-	shader->UnBind();
+	mesh_shader->UnBind();
 
 	if (framebuffer != nullptr) framebuffer->UnBind();
 }

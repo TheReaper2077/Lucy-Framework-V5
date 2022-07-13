@@ -2,6 +2,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glad/glad.h>
 #include <iostream>
+#include "ECS.h"
+#include "Util.h"
+#include <Components/Components.h>
+
+auto& registry = lucy::Registry::Instance();
 
 lucy::Renderer::Renderer() {
 	uniformbuffer = new lgl::UniformBuffer();
@@ -107,4 +112,38 @@ void lucy::Renderer::Clear(const glm::vec4& color) {
 void lucy::Renderer::Clear(const glm::vec3& color) {
 	glClearColor(color.r, color.g, color.b, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void lucy::Renderer::AddShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename) {
+	shader_src_map[name] = std::pair(vs_filename, fs_filename);
+}
+
+lgl::Shader& lucy::Renderer::GetPBRShader(const std::string& name) {
+	int dir_count = 0, point_count = 0; 
+
+	for (auto [entity, tag, light]: registry.view<Tag, Light>().each()) {
+		dir_count += (light.mode == DIRECTIONAL_LIGHT);
+		point_count += (light.mode == POINT_LIGHT);
+	}
+
+	auto id = name + "_PBR_" + std::to_string(dir_count) + "_" + std::to_string(point_count);
+
+	if (shader_map.find(id) != shader_map.end())
+		return shader_map[id];
+
+	const auto& [vs, fs] = shader_src_map[name];
+
+	auto vs_src = util::ReadFile(vs);
+	auto fs_src = util::ReadFile(fs);
+
+	std::string uniforms, logic;
+
+	for (int i = 0; i < dir_count; i++) {
+		uniforms += "uniform Light dir_light" + std::to_string(i) + ";\n";
+		logic += "	Lo += DirCalculatePBR(N, V, dir_light" + std::to_string(i) + ".position, dir_light" + std::to_string(i) + ".direction, dir_light" + std::to_string(i) + ".color);\n";
+	}
+	for (int i = 0; i < point_count; i++) {
+		uniforms += "uniform Light point_light" + std::to_string(i) + ";\n";
+		logic += "	Lo += PointCalculatePBR(N, V, point_light" + std::to_string(i) + ".position, point_light" + std::to_string(i) + ".color);\n"\
+	}
 }

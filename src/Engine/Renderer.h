@@ -14,6 +14,12 @@ namespace lucy {
 		glm::vec3 view_pos;
 
 		lgl::UniformBuffer* uniformbuffer = nullptr;
+		std::unordered_map<std::string, lgl::Shader> shader_map;
+
+		typedef std::string vertex_src;
+		typedef std::string fragment_src;
+
+		std::unordered_map<std::string, std::pair<vertex_src, fragment_src>> shader_src_map;
 
 	public:
 		void SetModel(const glm::mat4& model);
@@ -35,6 +41,9 @@ namespace lucy {
 		void Clear();
 		void Clear(const glm::vec4& color);
 		void Clear(const glm::vec3& color);
+
+		void AddShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename);
+		lgl::Shader& GetPBRShader(const std::string& name);
 
 		Renderer();
 		~Renderer();

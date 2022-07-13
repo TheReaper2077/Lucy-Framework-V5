@@ -149,10 +149,10 @@ void main() {
 	#define SET_LOGIC
 
 	vec3 ambient = vec3(0.03) * albedo * ao;
-	vec3 color = ambient + Lo;
+	vec3 result = ambient + Lo;
 	
-	color = color / (color + vec3(1.0));
-	color = pow(color, vec3(1.0 / 2.2));
+	result = result / (result + vec3(1.0));
+	result = pow(result, vec3(1.0 / 2.2));
 	
-	gl_FragData[0] = vec4(color, 1.0);
+	gl_FragData[0] = vec4(result, 1.0);
 }

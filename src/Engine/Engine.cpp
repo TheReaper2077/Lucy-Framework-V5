@@ -87,12 +87,12 @@ void lucy::Engine::Mainloop() {
 		{1.0, 1.0, 0.0, 1.0},
 	};
 
-	mesh.ReCalculateNormals();
+	mesh.RecalculateNormals();
 	mesh.Transfer();
 
 	auto mesh_entity = registry.create();
 	registry.emplace<lucy::Tag>(mesh_entity, "Mesh");
-	registry.emplace<lucy::Transform>(mesh_entity, glm::vec3(0, 0, 3));
+	registry.emplace<lucy::Transform>(mesh_entity, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0));
 	registry.emplace<lucy::MeshRenderer>(mesh_entity, &mesh);
 	
 	CameraSystem camerasystem;
@@ -117,13 +117,12 @@ void lucy::Engine::Mainloop() {
 		renderer.Clear({ 0, 0, 0, 0 });
 		glViewport(0, 0, window.size.x, window.size.y);
 
-		auto& transform = registry.get<Transform>(entity);
-		auto& spriterenderer = registry.get<SpriteRenderer>(entity);
+		auto& transform = registry.get<Transform>(mesh_entity);
 
-		transform.rotation.z += timestep.dt;
+		transform.rotation.y += timestep.dt;
 
-		if (transform.rotation.z >= 360) {
-			transform.rotation.z = 0;
+		if (transform.rotation.y >= 360) {
+			transform.rotation.y = 0;
 		}
 
 		spriterenderpass.Render();

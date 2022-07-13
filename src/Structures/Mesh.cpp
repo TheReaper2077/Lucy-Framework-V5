@@ -93,7 +93,7 @@ void lucy::Mesh::Transfer() {
 	data = nullptr;
 }
 
-void lucy::Mesh::ReCalculateNormals() {
+void lucy::Mesh::RecalculateNormals() {
 	if (primitive != lgl::TRIANGLE) return;
 
 	normals.reserve(int(positions.size() / 3) * 3);
@@ -107,7 +107,7 @@ void lucy::Mesh::ReCalculateNormals() {
 	}
 }
 
-void lucy::Mesh::Clear() {
+void lucy::Mesh::ClearData() {
 	positions.clear();
 	normals.clear();
 	colors.clear();

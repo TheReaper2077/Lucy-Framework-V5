@@ -35,7 +35,7 @@ namespace lucy {
 		size_t flags;
 
 		void Transfer();
-		void ReCalculateNormals();
-		void Clear();
+		void RecalculateNormals();
+		void ClearData();
 	};
 }
