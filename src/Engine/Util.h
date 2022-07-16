@@ -4,7 +4,7 @@
 #include <fstream>
 
 namespace lucy::util {
-	std::string ReadFile(const std::string& filename) {
+	std::string read_file(const std::string& filename) {
 		std::string line, text = "";
 		std::fstream file(filename);
 
@@ -17,11 +17,11 @@ namespace lucy::util {
 		return text;
 	}
 
-	bool WriteFile(const std::string& filename, const std::string& source) {
-		return WriteFile(filename, source.c_str());
+	bool write_file(const std::string& filename, const std::string& source) {
+		return write_file(filename, source.c_str());
 	}
 
-	bool WriteFile(const std::string& filename, const char* source) {
+	bool write_file(const std::string& filename, const char* source) {
 		std::ofstream fout(filename.c_str());
 
 		if (!fout.is_open()) return false;
@@ -30,5 +30,12 @@ namespace lucy::util {
 		fout.close();
 
 		return true;
+	}
+
+	void replace_first(std::string& s, std::string const& toReplace, std::string const& replaceWith) {
+		size_t pos = s.find(toReplace);
+		if (pos == std::string::npos) return;
+
+		s.replace(pos, toReplace.length(), replaceWith);
 	}
 }

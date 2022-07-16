@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <LucyGL/API.h>
+#include <LucyGL/LucyGL.h>
 #include <glm/glm.hpp>
 
 namespace lucy::Vertex {

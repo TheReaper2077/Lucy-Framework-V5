@@ -136,23 +136,23 @@ uniform int normal_map_idx;
 #define SET_UNIFORMS
 
 void main() {
-	vec3 N = normal;
+	vec3 N = normalize(normal);
 	vec3 V = normalize(view_pos - frag_pos);
 
 	albedo = material.albedo;
 	ao = material.ao;
 	metallic = material.metallic;
 	roughness = material.roughness;
-	
+
 	vec3 Lo = vec3(0.0);
 
 	#define SET_LOGIC
 
 	vec3 ambient = vec3(0.03) * albedo * ao;
-	vec3 result = ambient + Lo;
+	vec3 color = ambient + Lo;
 	
-	result = result / (result + vec3(1.0));
-	result = pow(result, vec3(1.0 / 2.2));
+	color = color / (color + vec3(1.0));
+	color = pow(color, vec3(1.0 / 2.2));
 	
-	gl_FragData[0] = vec4(result, 1.0);
+	gl_FragData[0] = vec4(1.0);
 }

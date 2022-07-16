@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <LucyGL/API.h>
+#include <LucyGL/LucyGL.h>
 #include <array>
 #include <vector>
 #include <Engine/TextureStore.h>

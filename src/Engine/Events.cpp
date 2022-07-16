@@ -1,7 +1,14 @@
 #include "Events.h"
+#include <imgui_impl_sdl.h>
+#include "ECS.h"
+#include "WindowRegistry.h"
+
+static auto& registry = lucy::Registry::Instance();
 
 void lucy::Events::Update() {
 	while (SDL_PollEvent(&event)) {
+		ImGui_ImplSDL2_ProcessEvent(&event);
+
 		is_quit = (event.type == SDL_QUIT);
 
 		if (event.type == SDL_MOUSEMOTION) {
@@ -47,22 +54,6 @@ void lucy::Events::Update() {
 	}
 }
 
-void lucy::Events::SetWindowPos(const glm::vec2& pos) {
-	window_pos = pos;
-}
-
-void lucy::Events::SetWindowSize(const glm::vec2& size) {
-	window_size = size;
-}
-
-const glm::vec2& lucy::Events::GetWindowPos() {
-	return window_pos;
-}
-
-const glm::vec2& lucy::Events::GetWindowSize() {
-	return window_size;
-}
-
 bool lucy::Events::IsKeyPressed(SDL_Scancode scancode) {
 	return pressed_keys.contains(scancode);
 }
@@ -103,30 +94,46 @@ bool lucy::Events::IsButtonPressed(unsigned int button) {
 	return (pressed_buttons.contains(button));
 }
 
+bool lucy::Events::IsButtonPressedAny() {
+	return (pressed_buttons.size() > 0);
+}
+
 bool lucy::Events::IsButtonToggled(unsigned int button) {
 	return toggled_buttons.contains(button);
+}
+
+const glm::vec3& lucy::Events::GetCursorPosNormalized() {
+	return GetCursorPosNormalized(registry.store<WindowRegistry>()[MAIN_WINDOW]);
 }
 
 const glm::vec3& lucy::Events::GetCursorPos() {
 	return mousepos;
 }
 
-const glm::vec3& lucy::Events::GetCursorPosNormalized() {
+const glm::vec3& lucy::Events::GetCursorPosNormalized(Window* window) {
+	assert(window);
+
 	return glm::vec3 {
-		mousepos.x - window_pos.x / (window_size.x * 0.5) - 1.0,
-		1.0 - ((mousepos.y - window_pos.y) / (window_size.y * 0.5)),
+		mousepos.x - window->pos.x / (window->size.x * 0.5) - 1.0,
+		1.0 - ((mousepos.y - window->pos.y) / (window->size.y * 0.5)),
 		0
 	};
+}
+
+const glm::vec3& lucy::Events::GetRelCursorPosNormalized() {
+	return GetRelCursorPosNormalized(registry.store<WindowRegistry>()[MAIN_WINDOW]);
 }
 
 const glm::vec3& lucy::Events::GetRelCursorPos() {
 	return relmousepos;
 }
 
-const glm::vec3& lucy::Events::GetRelCursorPosNormalized() {
+const glm::vec3& lucy::Events::GetRelCursorPosNormalized(Window* window) {
+	assert(window);
+
 	return glm::vec3 {
-		relmousepos.x - window_pos.x / (window_size.x * 0.5) - 1.0,
-		1.0 - ((relmousepos.y - window_pos.y) / (window_size.y * 0.5)),
+		relmousepos.x - window->pos.x / (window->size.x * 0.5) - 1.0,
+		1.0 - ((relmousepos.y - window->pos.y) / (window->size.y * 0.5)),
 		0
 	};
 }
@@ -137,4 +144,8 @@ const glm::vec3& lucy::Events::GetRelCursorOffset() {
 
 const std::string& lucy::Events::GetDroppedFile() {
 	return dropfilename;
+}
+
+SDL_Event& lucy::Events::GetEvent() {
+	return event;
 }

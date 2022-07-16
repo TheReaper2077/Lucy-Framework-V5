@@ -9,7 +9,7 @@
 auto& registry = lucy::Registry::Instance();
 
 lucy::Renderer::Renderer() {
-	uniformbuffer = new lgl::UniformBuffer();
+	uniformbuffer = lgl::MakeUniformBuffer();
 
 	uniformbuffer->Bind();
 	uniformbuffer->Allocate(sizeof(glm::mat4) * 4);
@@ -46,15 +46,15 @@ void lucy::Renderer::SetProjection(const glm::mat4& projection) {
 void lucy::Renderer::SetViewPos(const glm::vec3& view_pos) {
 	if (this->view_pos == view_pos) return;
 	this->view_pos = view_pos;
-	uniformbuffer->AddDataDynamic(&this->view_pos[0], sizeof(glm::vec3), sizeof(glm::mat4) * 3);
+	uniformbuffer->AddDataDynamic(&this->view_pos[0], sizeof(glm::mat4), sizeof(glm::mat4) * 3);
 }
 
 void lucy::Renderer::SetPerspective() {
 	
 }
 
-void lucy::Renderer::SetOrtho(const float left, const float right, const float top, const float bottom, const float near, const float far) {
-	SetProjection(glm::ortho<float>(left, right, top, bottom, near, far));
+void lucy::Renderer::SetOrtho(const float left, const float right, const float top, const float bottom, const float vnear, const float vfar) {
+	SetProjection(glm::ortho<float>(left, right, top, bottom, vnear, vfar));
 }
 
 void lucy::Renderer::Render(lgl::Primitive primitive, lgl::Shader* shader, lgl::VertexArray* vertexarray, lgl::VertexBuffer* vertexbuffer, lgl::IndexBuffer* indexbuffer, int count) {
@@ -114,36 +114,83 @@ void lucy::Renderer::Clear(const glm::vec3& color) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void lucy::Renderer::AddShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename) {
+void lucy::Renderer::SetShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename) {
 	shader_src_map[name] = std::pair(vs_filename, fs_filename);
 }
 
-lgl::Shader& lucy::Renderer::GetPBRShader(const std::string& name) {
+lgl::Shader* lucy::Renderer::GetPBRShader(const std::string& name) {
 	int dir_count = 0, point_count = 0; 
 
-	for (auto [entity, tag, light]: registry.view<Tag, Light>().each()) {
+	for (auto [entity, tag, transform, light]: registry.view<Tag, Transform, Light>().each()) {
 		dir_count += (light.mode == DIRECTIONAL_LIGHT);
 		point_count += (light.mode == POINT_LIGHT);
 	}
 
 	auto id = name + "_PBR_" + std::to_string(dir_count) + "_" + std::to_string(point_count);
 
-	if (shader_map.find(id) != shader_map.end())
-		return shader_map[id];
+	if (shader_map.find(id) == shader_map.end()) {
+		const auto& [vs, fs] = shader_src_map[name];
 
-	const auto& [vs, fs] = shader_src_map[name];
+		auto vs_src = util::read_file(vs);
+		auto fs_src = util::read_file(fs);
 
-	auto vs_src = util::ReadFile(vs);
-	auto fs_src = util::ReadFile(fs);
+		std::string uniforms, logic;
 
-	std::string uniforms, logic;
+		for (int i = 0; i < dir_count; i++) {
+			std::string dir_light = "dir_light" + std::to_string(i);
+			uniforms += "uniform Light " + dir_light + ";\n";
+			logic += "	Lo += DirCalculatePBR(N, V, " + dir_light + ".position, " + dir_light + ".direction, " + dir_light + ".color);\n";
+		}
+		for (int i = 0; i < point_count; i++) {
+			auto point_light = "point_light" + std::to_string(i);
+			uniforms += "uniform Light " + point_light + ";\n";
+			logic += "	Lo += PointCalculatePBR(N, V, " + point_light + ".position, " + point_light + ".color);\n";
+		}
 
-	for (int i = 0; i < dir_count; i++) {
-		uniforms += "uniform Light dir_light" + std::to_string(i) + ";\n";
-		logic += "	Lo += DirCalculatePBR(N, V, dir_light" + std::to_string(i) + ".position, dir_light" + std::to_string(i) + ".direction, dir_light" + std::to_string(i) + ".color);\n";
+		util::replace_first(fs_src, "#define SET_UNIFORMS", uniforms);
+		util::replace_first(fs_src, "#define SET_LOGIC", logic);
+
+		shader_map[id] = lgl::MakeShader(vs_src, fs_src, false);
 	}
-	for (int i = 0; i < point_count; i++) {
-		uniforms += "uniform Light point_light" + std::to_string(i) + ";\n";
-		logic += "	Lo += PointCalculatePBR(N, V, point_light" + std::to_string(i) + ".position, point_light" + std::to_string(i) + ".color);\n";
+
+	auto* shader = shader_map[id];
+
+	shader->Bind();
+
+	for (auto [entity, tag, transform, light]: registry.view<Tag, Transform, Light>().each()) {
+		if (light.mode == DIRECTIONAL_LIGHT) {
+			auto direction = glm::normalize(transform.GetRotationQuat() * glm::vec3(0, -1.0, 0));
+			auto dir_light = "dir_light" + std::to_string(dir_count);
+
+			dir_count--;
+
+			shader->SetUniformVec3(dir_light + ".position", &transform.translation[0]);
+			shader->SetUniformVec3(dir_light + ".color", &light.color[0]);
+			shader->SetUniformVec3(dir_light + ".direction", &direction[0]);
+		}
+		if (light.mode == POINT_LIGHT) {
+			point_count--;
+
+			auto point_light = "point_light" + std::to_string(point_count);
+
+			shader->SetUniformVec3(point_light + ".position", &transform.translation[0]);
+			shader->SetUniformVec3(point_light + ".color", &light.color[0]);
+		}
 	}
+
+	shader->UnBind();
+
+	assert(dir_count == 0 && point_count == 0);
+
+	return shader;
+}
+
+lgl::Shader* lucy::Renderer::GetShader(const std::string& name) {
+	if (shader_map.find(name) == shader_map.end()) {
+		const auto& [vs, fs] = shader_src_map[name];
+	
+		shader_map[name] = lgl::MakeShader(vs, fs);
+	}
+
+	return shader_map[name];
 }

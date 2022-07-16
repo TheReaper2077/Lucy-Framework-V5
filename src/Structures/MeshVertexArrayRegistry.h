@@ -1,6 +1,6 @@
 #pragma once
 
-#include <LucyGL/API.h>
+#include <LucyGL/LucyGL.h>
 #include <unordered_map>
 #include <array>
 #include <assert.h>
@@ -9,8 +9,8 @@
 namespace lucy {
 	enum MeshVAOAttrib_ {
 		MeshVAOAttrib_POSITION = 0,
-		MeshVAOAttrib_COLOR,
-		MeshVAOAttrib_NORMAL,
+		MeshVAOAttrib_COLOR = 1,
+		MeshVAOAttrib_NORMAL = 2,
 		MeshVAOAttrib_UV,
 		MeshVAOAttrib_UVW,
 

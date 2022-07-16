@@ -56,6 +56,15 @@ lgl::Shader::Shader(const std::string &vs_filename, const std::string &fs_filena
 	glLinkProgram(program);
 }
 
+lgl::Shader::Shader(const std::string &vs_filename, const std::string &fs_filename) {
+	program = glCreateProgram();
+
+	Compile(program, vs_filename, GL_VERTEX_SHADER, true);
+	Compile(program, fs_filename, GL_FRAGMENT_SHADER, true);
+
+	glLinkProgram(program);
+}
+
 void lgl::Shader::Bind() {
 	glUseProgram(program);
 }

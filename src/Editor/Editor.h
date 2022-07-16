@@ -1,11 +1,15 @@
 #pragma once
 
-#include <Engine/Renderer.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
+#include <Engine/ECS.h>
 
 namespace lucy {
 	class Editor {
-		void Init();
-		void Render(Renderer& renderer);
-		void UIRender();
+	public:
+		Editor() {}
+
+		void Init(SDL_Window* sdl_window, SDL_GLContext* sdl_glcontext);
+		void Render();
 	};
 }

@@ -8,6 +8,7 @@ namespace lucy {
 	struct Tag {
 		std::string name = "";
 		std::string id = uuids::to_string(uuids::uuid_system_generator{}());
+		bool hidden = false;
 
 		Tag(const std::string& name, const std::string& id): name(name), id(id) {}
 		Tag(const std::string& name): name(name) {}

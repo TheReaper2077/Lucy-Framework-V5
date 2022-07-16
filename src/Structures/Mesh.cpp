@@ -50,7 +50,6 @@ void lucy::Mesh::Transfer() {
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 1] = colors[i].y;
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 2] = colors[i].z;
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 3] = colors[i].w;
-				// std::cout << "hello\n";
 			} else {
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 0] = 0;
 				data[i * vertexarray->elem_stride + offset_array[MeshVAOAttrib_COLOR] + 1] = 0;
@@ -71,10 +70,10 @@ void lucy::Mesh::Transfer() {
 
 	
 	if (vertexbuffer == nullptr && vertexcount)
-		vertexbuffer = new lgl::VertexBuffer();
+		vertexbuffer = lgl::MakeVertexBuffer();
 
 	if (indexbuffer == nullptr && indexcount)
-		indexbuffer = new lgl::IndexBuffer();
+		indexbuffer = lgl::MakeIndexBuffer();
 
 	if (vertexcount) {
 		vertexbuffer->Bind();
@@ -96,10 +95,12 @@ void lucy::Mesh::Transfer() {
 void lucy::Mesh::RecalculateNormals() {
 	if (primitive != lgl::TRIANGLE) return;
 
+	normals.clear();
+
 	normals.reserve(int(positions.size() / 3) * 3);
 
 	for (int i = 0; i < positions.size() / 3; i++) {
-		auto normal = glm::cross(positions[1 + 3 * i] - positions[0 + 3 * i], positions[2 + 3 * i] - positions[0 + 3 * i]);
+		auto normal = glm::cross(positions[2 + 3 * i] - positions[0 + 3 * i], positions[1 + 3 * i] - positions[0 + 3 * i]);
 
 		normals.emplace_back(normal);
 		normals.emplace_back(normal);

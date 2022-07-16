@@ -16,6 +16,24 @@ add_executable(main ${TARGET_SRC})
 find_package(SDL2 CONFIG REQUIRED)
 target_link_libraries(main PRIVATE SDL2::SDL2 SDL2::SDL2main)
 
+find_package(implot CONFIG REQUIRED)
+target_link_libraries(main PRIVATE implot::implot)
+
+find_package(imgui CONFIG REQUIRED)
+target_link_libraries(main PRIVATE imgui::imgui)
+
+find_package(imguizmo CONFIG REQUIRED)
+target_link_libraries(main PRIVATE imguizmo::imguizmo)
+
+find_package(nlohmann_json CONFIG REQUIRED)
+target_link_libraries(main PRIVATE nlohmann_json nlohmann_json::nlohmann_json)
+
+find_package(assimp CONFIG REQUIRED)
+target_link_libraries(main PRIVATE assimp::assimp)
+
+find_package(yaml-cpp CONFIG REQUIRED)
+target_link_libraries(main PRIVATE yaml-cpp)
+
 find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 target_include_directories(main PRIVATE ${STB_INCLUDE_DIRS})
 

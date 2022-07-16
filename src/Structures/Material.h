@@ -1,17 +1,17 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <LucyGL/API.h>
+#include <LucyGL/LucyGL.h>
 
 namespace lucy {
 	struct Material {		
-		glm::vec3 albedo;
-		glm::vec3 diffuse;
-		glm::vec3 ambient;
-		glm::vec3 specular;
+		glm::vec3 albedo = { 1, 0, 0 };
+		glm::vec3 diffuse = { 0.2, 0.001, 0.8 };
+		glm::vec3 ambient = { 0.5, 0.6, 0.5 };
+		glm::vec3 specular = { 1, 0, 0 };
 
-		float roughness;
-		float metallic;
+		float roughness = 0.6;
+		float metallic = 0.0;
 
 		lgl::Texture* albedo_map = nullptr;
 		lgl::Texture* diffuse_map = nullptr;

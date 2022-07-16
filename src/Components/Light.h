@@ -13,9 +13,14 @@ namespace lucy {
 	};
 
 	struct Light {
-		glm::vec4 color;
+		glm::vec3 color = { 1, 1, 1 };
 		LightMode mode;
 
 		bool enable = true;
+
+		Light() {}
+		Light(const glm::vec3& color): color(color) {}
+		Light(const glm::vec3& color, LightMode mode): color(color), mode(mode) {}
+		Light(LightMode mode): mode(mode) {}
 	};
 }

@@ -10,6 +10,8 @@
 #include <set>
 #include <vector>
 
+#include "Window.h"
+
 namespace lucy {
 	class Events {
 		bool is_quit;
@@ -31,20 +33,13 @@ namespace lucy {
 
 		std::string dropfilename;
 
-		glm::vec2 window_pos;
-		glm::vec2 window_size;
-
 		bool is_window_resized;
 
 	public:
 		void Update();
 
-		void SetWindowPos(const glm::vec2& pos);
-		void SetWindowSize(const glm::vec2& size);
-		const glm::vec2& GetWindowPos();
-		const glm::vec2& GetWindowSize();
-
 		bool IsKeyPressed(SDL_Scancode scancode);
+		bool IsKeyPressedAny(SDL_Scancode scancode);
 		bool IsKeyPressed(const std::vector<SDL_Scancode>& scancodes);
 		bool IsKeyToggled(SDL_Scancode scancode);
 		bool IsKeyChord(const std::vector<SDL_Scancode>& scancodes);
@@ -53,14 +48,18 @@ namespace lucy {
 		bool IsWindowResized();
 
 		bool IsButtonPressed(unsigned int button);
+		bool IsButtonPressedAny();
 		bool IsButtonToggled(unsigned int button);
 
 		const glm::vec3& GetCursorPos();
 		const glm::vec3& GetCursorPosNormalized();
+		const glm::vec3& GetCursorPosNormalized(Window* window);
 		const glm::vec3& GetRelCursorPos();
 		const glm::vec3& GetRelCursorPosNormalized();
+		const glm::vec3& GetRelCursorPosNormalized(Window* window);
 		const glm::vec3& GetRelCursorOffset();
 
-		const std::string& GetDroppedFile();		
+		const std::string& GetDroppedFile();
+		SDL_Event& GetEvent();
 	};
 }

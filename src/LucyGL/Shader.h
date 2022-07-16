@@ -15,8 +15,10 @@ namespace lgl {
 		bool texture_array = false;
 		bool material = false;
 		bool light = false;
-		
-		Shader(const std::string &vs_filename, const std::string &fs_filename, bool file = true);
+	
+	public:
+		Shader(const std::string &vs_filename, const std::string &fs_filename, bool file);
+		Shader(const std::string &vs_filename, const std::string &fs_filename);
 		~Shader();
 
 		void Bind();

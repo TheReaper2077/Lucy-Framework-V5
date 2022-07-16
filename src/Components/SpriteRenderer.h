@@ -1,6 +1,6 @@
 #pragma once
 
-#include <LucyGL/API.h>
+#include <LucyGL/LucyGL.h>
 #include <glm/glm.hpp>
 #include <Structures/Structures.h>
 
@@ -10,6 +10,7 @@ namespace lucy {
 		glm::vec2 uv0 = { 0, 0 };
 		glm::vec2 uv1 = { 1, 1 };
 
+		bool visible = true;
 		bool enable_lighting = false;
 		bool enable_texture = false;
 		bool enable_color = false;

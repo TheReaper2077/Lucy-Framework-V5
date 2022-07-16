@@ -4,9 +4,7 @@
 
 #include <stb_image.h>
 #include <LucyGL/Texture.h>
-
 #include <glad/glad.h>
-#include <iostream>
 
 lgl::Texture::Texture(TextureMode mode) {
 	this->mode = mode;

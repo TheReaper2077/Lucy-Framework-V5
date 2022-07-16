@@ -10,7 +10,7 @@ in float textureid;
 void main() {
 	vec4 result;
 	
-	result = vec4(normal, 1);
+	result = color;
 
 	gl_FragColor = result;
 }

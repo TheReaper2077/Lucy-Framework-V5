@@ -1,6 +1,6 @@
 #pragma once
 
-#include <LucyGL/API.h>
+#include <LucyGL/LucyGL.h>
 #include <glm/glm.hpp>
 
 #include "Primitives.h"
@@ -14,7 +14,7 @@ namespace lucy {
 		glm::vec3 view_pos;
 
 		lgl::UniformBuffer* uniformbuffer = nullptr;
-		std::unordered_map<std::string, lgl::Shader> shader_map;
+		std::unordered_map<std::string, lgl::Shader*> shader_map;
 
 		typedef std::string vertex_src;
 		typedef std::string fragment_src;
@@ -42,8 +42,9 @@ namespace lucy {
 		void Clear(const glm::vec4& color);
 		void Clear(const glm::vec3& color);
 
-		void AddShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename);
-		lgl::Shader& GetPBRShader(const std::string& name);
+		void SetShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename);
+		lgl::Shader* GetPBRShader(const std::string& name);
+		lgl::Shader* GetShader(const std::string& name);
 
 		Renderer();
 		~Renderer();

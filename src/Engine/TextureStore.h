@@ -1,6 +1,6 @@
 #pragma once
 
-#include <LucyGL/API.h>
+#include <LucyGL/LucyGL.h>
 #include <unordered_map>
 
 namespace lucy {

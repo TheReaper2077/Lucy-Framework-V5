@@ -112,5 +112,5 @@ void main() {
 			break;
 	}
 
-	gl_FragColor = result;
+	gl_FragData[0] = vec4(result.xyz, 1);
 }

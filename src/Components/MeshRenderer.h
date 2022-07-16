@@ -9,6 +9,8 @@ namespace lucy {
 
 		bool enable_lighting = false;
 
+		MeshRenderer() {}
 		MeshRenderer(Mesh* mesh): mesh(mesh) {}
+		MeshRenderer(Mesh* mesh, Material* material): mesh(mesh), material(material) {}
 	};
 }

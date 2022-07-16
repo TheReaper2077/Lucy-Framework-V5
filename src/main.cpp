@@ -2,7 +2,7 @@
 
 int main(int argcount, char** args) {	
 	lucy::Engine engine;
-	
+
 	engine.Init();
 	engine.Mainloop();
 

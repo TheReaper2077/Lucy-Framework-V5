@@ -7,19 +7,24 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <Engine/WindowRegistry.h>
 
 static auto& registry = lucy::Registry::Instance();
 static auto& timestep = registry.store<lucy::TimeStep>();
-static auto& window = registry.store<lucy::Window>();
+static auto& windowregistry = registry.store<lucy::WindowRegistry>();
 static auto& events = registry.store<lucy::Events>();
 
 void lucy::CameraSystem::Update() {
 	for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
 		if (!camera.enable) continue;
 
-		if (camera.width != window.size.x || camera.height != window.size.y) {
-			camera.width = window.size.x;
-			camera.height = window.size.y;
+		auto* window = windowregistry[camera.window_id];
+
+		assert(window != nullptr);
+
+		if (camera.width != window->size.x || camera.height != window->size.y) {
+			camera.width = window->size.x;
+			camera.height = window->size.y;
 
 			camera.lastx = camera.width / 2;
 			camera.lasty = camera.height / 2;
@@ -29,7 +34,15 @@ void lucy::CameraSystem::Update() {
 			camera.projection = glm::perspective(glm::radians(camera.fov), (float)camera.width / camera.height, camera.c_near, camera.c_far);
 		}
 
-		FPSView(entity);
+		switch (camera.mode) {
+			case ViewMode_FPS:
+				FPSView(entity);
+				break;
+
+			case ViewMode_Editor:
+				FPSView(entity);
+				break;
+		}
 	}
 }
 

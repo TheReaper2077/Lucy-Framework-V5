@@ -84,13 +84,15 @@ void lucy::SpriteRenderPass::Flush() {
 void lucy::SpriteRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 	if (framebuffer != nullptr) framebuffer->Bind();
 
+	renderer.SetModel(glm::mat4(1.0f));
+
 	if (shader == nullptr)
-		shader = new lgl::Shader("D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\sprite.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\sprite.frag");
+		shader = lgl::MakeShader("D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\sprite.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\sprite.frag");
 
 	static lgl::Texture* null_texture = nullptr;
 
 	if (null_texture == nullptr) {
-		null_texture = new lgl::Texture();
+		null_texture = lgl::MakeTexture();
 		null_texture->Bind();
 		null_texture->LoadTexture(nullptr);
 	}
@@ -117,21 +119,21 @@ void lucy::SpriteRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 	if (framebuffer != nullptr) framebuffer->UnBind();
 }
 
-void lucy::SpriteRenderPass::Render(Camera& camera) {
-	if (!camera.enable) return;
+// void lucy::SpriteRenderPass::Render(Camera& camera) {
+// 	if (!camera.enable) return;
 
-	renderer.SetProjection(camera.projection);
-	renderer.SetView(camera.view);
-	renderer.SetViewPos(camera.position);
-	renderer.SetModel(glm::mat4(1.0f));
+// 	renderer.SetProjection(camera.projection);
+// 	renderer.SetView(camera.view);
+// 	renderer.SetViewPos(camera.position);
+// 	renderer.SetModel(glm::mat4(1.0f));
 
-	Render(camera.framebuffer);
-}
+// 	Render(camera.framebuffer);
+// }
 
-void lucy::SpriteRenderPass::Render() {
-	for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
-		if (!camera.enable) continue;
+// void lucy::SpriteRenderPass::Render() {
+// 	for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
+// 		if (!camera.enable) continue;
 
-		Render(camera);
-	}
-}
+// 		Render(camera);
+// 	}
+// }

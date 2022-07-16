@@ -8,7 +8,6 @@ namespace lucy {
 	class MeshRenderPass: public RenderPass {
 		std::set<Entity> lighting_entities;
 		std::unordered_map<Material*, std::vector<Entity>> material_entities;
-		lgl::Shader* mesh_shader = nullptr;
 
 	public:
 		MeshRenderPass() {}
