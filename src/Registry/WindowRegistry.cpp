@@ -1,6 +1,6 @@
-#include "WindowRegistry.h"
-#include "ECS.h"
-#include "Events.h"
+#include "Registry.h"
+#include <Engine/ECS.h>
+#include <Engine/Events.h>
 
 #define UUID_SYSTEM_GENERATOR
 #include <stduuid/uuid.h>

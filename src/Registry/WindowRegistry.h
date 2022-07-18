@@ -2,7 +2,7 @@
 
 #include <LucyGL/LucyGL.h>
 #include <memory>
-#include "Window.h"
+#include <Engine/Window.h>
 #include <string>
 
 namespace lucy {

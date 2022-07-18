@@ -1,4 +1,4 @@
-#include "MeshVertexArrayRegistry.h"
+#include "Registry.h"
 #include <iostream>
 #include <bitset>
 

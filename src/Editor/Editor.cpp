@@ -13,7 +13,7 @@
 #include "GamePanel.h"
 #include "EditorPanel.h"
 #include "SceneHeirarchyPanel.h"
-#include <Engine/WindowRegistry.h>
+#include <Registry/Registry.h>
 
 static auto& registry = lucy::Registry::Instance();
 
@@ -72,26 +72,26 @@ void lucy::Editor::Render() {
 	ImGui::NewFrame();
 
 	{
-		// static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
-		// ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
-		// ImGui::SetNextWindowPos(ImVec2(0, 0));
-		// ImGui::SetNextWindowSize(ImVec2(window->size.x, window->size.y));
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowSize(ImVec2(window->size.x, window->size.y));
 
-		// ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-		// ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-		// ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
-		// ImGui::Begin("DockSpace", &p_open, window_flags);
+		ImGui::Begin("DockSpace", &p_open, window_flags);
 
-		// ImGui::PopStyleVar(3);
-		// if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+		ImGui::PopStyleVar(3);
+		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
 			
-		// 	ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-		// 	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-		// }
-		// ImGui::End();
+			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+		}
+		ImGui::End();
 	}
 
 	static SceneHeirarchyPanel sceneheirarchypanel;

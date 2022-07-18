@@ -3,6 +3,10 @@
 #include "RenderPass.h"
 #include "TextureStore.h"
 #include <Components/Components.h>
+#include <set>
+#include <vector>
+#include "ECS.h"
+#include "Renderer.h"
 
 namespace lucy {
 	class MeshRenderPass: public RenderPass {

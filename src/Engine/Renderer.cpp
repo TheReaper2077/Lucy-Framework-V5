@@ -4,11 +4,20 @@
 #include <iostream>
 #include "ECS.h"
 #include "Util.h"
+#include <Registry/Registry.h>
 #include <Components/Components.h>
 
 auto& registry = lucy::Registry::Instance();
 
 lucy::Renderer::Renderer() {
+	
+}
+
+lucy::Renderer::~Renderer() {
+	
+}
+
+void lucy::Renderer::Init() {
 	uniformbuffer = lgl::MakeUniformBuffer();
 
 	uniformbuffer->Bind();
@@ -19,10 +28,6 @@ lucy::Renderer::Renderer() {
 	SetView(glm::mat4(1.0f));
 	SetProjection(glm::mat4(1.0f));
 	SetViewPos(glm::vec3(0.0f));
-}
-
-lucy::Renderer::~Renderer() {
-	
 }
 
 void lucy::Renderer::SetModel(const glm::mat4& model) {
@@ -112,6 +117,40 @@ void lucy::Renderer::Clear(const glm::vec4& color) {
 void lucy::Renderer::Clear(const glm::vec3& color) {
 	glClearColor(color.r, color.g, color.b, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void lucy::Renderer::RenderMain() {
+	auto& windowregistry = registry.store<WindowRegistry>();
+	auto* window = windowregistry[MAIN_WINDOW];
+
+	Clear({ 0, 0, 0, 0 });
+	glViewport(0, 0, window->size.x, window->size.y);
+
+	for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
+		if (!camera.enable) continue;
+
+		SetProjection(camera.projection);
+		SetView(camera.view);
+		SetViewPos(camera.position);
+
+		auto* window = windowregistry[camera.window_id];
+
+		if (window == nullptr) {
+			window = windowregistry[GAME_WINDOW];
+		}
+
+		if (window->framebuffer != nullptr) window->framebuffer->Bind();
+
+		Clear(camera.clear_color);
+		glViewport(0, 0, window->size.x, window->size.y);
+
+		for (auto& pair: renderpass_map) {
+			pair.second->Init();
+			pair.second->Render(nullptr);
+		}
+
+		if (window->framebuffer != nullptr) window->framebuffer->UnBind();
+	}
 }
 
 void lucy::Renderer::SetShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename) {

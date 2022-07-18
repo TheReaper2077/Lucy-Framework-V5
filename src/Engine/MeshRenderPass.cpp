@@ -2,6 +2,9 @@
 #include <Components/Components.h>
 #include "MeshRenderPass.h"
 
+static auto& registry = lucy::Registry::Instance();
+static auto& renderer = lucy::Registry::Instance().store<lucy::Renderer>();
+
 void lucy::MeshRenderPass::FirstInit() {
 	renderer.SetShader("mesh", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.frag");
 	renderer.SetShader("pbrmesh", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\pbr.frag");

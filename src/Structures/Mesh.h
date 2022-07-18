@@ -6,6 +6,10 @@
 #include <vector>
 #include <Engine/TextureStore.h>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 namespace lucy {
 	struct Mesh {
 		std::vector<glm::vec3> positions;
@@ -34,6 +38,10 @@ namespace lucy {
 
 		size_t flags;
 
+		Mesh() {}
+		Mesh(const aiScene* ai_scene, aiMesh* ai_mesh);
+
+		void Import(const aiScene* ai_scene, aiMesh* ai_mesh);
 		void Transfer();
 		void RecalculateNormals();
 		void ClearData();

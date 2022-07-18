@@ -1,7 +1,7 @@
 #include "Events.h"
 #include <imgui_impl_sdl.h>
 #include "ECS.h"
-#include "WindowRegistry.h"
+#include <Registry/Registry.h>
 
 static auto& registry = lucy::Registry::Instance();
 

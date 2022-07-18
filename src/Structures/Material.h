@@ -2,6 +2,9 @@
 
 #include <glm/glm.hpp>
 #include <LucyGL/LucyGL.h>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 namespace lucy {
 	struct Material {		
@@ -27,5 +30,10 @@ namespace lucy {
 		lgl::Shader* shader = nullptr;
 
 		bool use_shader = false;
+
+		uint32_t flags = 0;
+
+		Material() {}
+		Material(aiMaterial *ai_material);
 	};
 }

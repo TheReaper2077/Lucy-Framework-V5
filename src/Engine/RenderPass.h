@@ -1,15 +1,9 @@
 #pragma once
 
-#include "Renderer.h"
-#include "ECS.h"
-#include <Components/Components.h>
+#include <LucyGL/LucyGL.h>
 
 namespace lucy {
 	class RenderPass {
-	protected:
-		Renderer& renderer = Registry::Instance().store<Renderer>();
-		Registry& registry = Registry::Instance();
-
 	public:
 		virtual void FirstInit() = 0;
 

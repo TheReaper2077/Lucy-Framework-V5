@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <Engine/ECS.h>
+#include <Registry/Registry.h>
 
 namespace lucy {
 	class Editor {

@@ -1,8 +1,10 @@
 #pragma once
 
 #include "RenderPass.h"
+#include "Renderer.h"
 #include "TextureStore.h"
 #include <Components/Components.h>
+#include "ECS.h"
 
 namespace lucy {
 	class SpriteRenderPass: public RenderPass {

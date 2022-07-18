@@ -1,7 +1,7 @@
 #include "Engine.h"
 #include "Window.h"
 
-#include "WindowRegistry.h"
+#include <Registry/Registry.h>
 #include "Renderer.h"
 #include "SpriteRenderPass.h"
 #include "MeshRenderPass.h"
@@ -20,7 +20,7 @@ static lucy::Editor editor;
 
 void lucy::Engine::Init() {
 	auto null_entity = registry.create();
-
+	auto& renderer = registry.store<Renderer>();
 	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -35,7 +35,11 @@ void lucy::Engine::Init() {
 
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
+	renderer.Init();
 	editor.Init(sdl_window, &sdl_glcontext);
+
+	renderer.AddRenderPass<SpriteRenderPass>();
+	renderer.AddRenderPass<MeshRenderPass>();
 }
 
 void lucy::Engine::Mainloop() {
@@ -44,12 +48,6 @@ void lucy::Engine::Mainloop() {
 	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];
 	auto& renderer = registry.store<Renderer>();
 	auto& windowregistry = registry.store<WindowRegistry>();
-
-	SpriteRenderPass spriterenderpass;
-	MeshRenderPass meshrenderpass;
-
-	spriterenderpass.FirstInit();
-	meshrenderpass.FirstInit();
 
 	lucy::Sprite sprite;
 
@@ -122,9 +120,6 @@ void lucy::Engine::Mainloop() {
 	CameraSystem camerasystem;
 
 	while (!events.IsQuittable()) {
-		spriterenderpass.Init();
-		meshrenderpass.Init();
-
 		events.Update();
 
 		timestep.Update();
@@ -136,32 +131,7 @@ void lucy::Engine::Mainloop() {
 
 		camerasystem.Update();
 
-		renderer.Clear({ 0, 0, 0, 0 });
-		glViewport(0, 0, window->size.x, window->size.y);
-
-		for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
-			if (!camera.enable) continue;
-
-			renderer.SetProjection(camera.projection);
-			renderer.SetView(camera.view);
-			renderer.SetViewPos(camera.position);
-
-			auto* window = windowregistry[camera.window_id];
-
-			if (window == nullptr) {
-				window = registry.store<WindowRegistry>()[GAME_WINDOW];
-			}
-
-			if (window->framebuffer != nullptr) window->framebuffer->Bind();
-
-			renderer.Clear({ 0, 0, 0, 0 });
-			glViewport(0, 0, window->size.x, window->size.y);
-
-			meshrenderpass.Render(nullptr);
-			spriterenderpass.Render(nullptr);
-		
-			if (window->framebuffer != nullptr) window->framebuffer->UnBind();
-		}
+		renderer.RenderMain();
 
 		editor.Render();
 

@@ -1,26 +1,10 @@
 #include "SceneHeirarchyPanel.h"
 #include "EditorStatus.h"
 #include <Engine/Events.h>
-#include <imgui.h>
+#include "Gui.h"
 #include <Components/Components.h>
 
 static auto& registry = lucy::Registry::Instance();
-
-namespace ImGui {
-	void PopupOpenLogic(bool& open, bool& toggle) {
-		auto& events = registry.store<lucy::Events>();
-
-		if ((!ImGui::IsWindowHovered() && events.IsButtonPressedAny()) || (ImGui::IsWindowHovered() && !events.IsButtonPressed(SDL_BUTTON_RIGHT) && events.IsButtonPressedAny())) {
-			open = false;
-		}
-
-		if (toggle && ImGui::IsWindowHovered() && events.IsButtonPressed(SDL_BUTTON_RIGHT)) {
-			open = true;
-		}
-		
-		toggle = (ImGui::IsWindowHovered() && !events.IsButtonPressed(SDL_BUTTON_RIGHT));
-	}
-}
 
 void lucy::SceneHeirarchyPanel::Render() {
 	if (!panel_open) return;

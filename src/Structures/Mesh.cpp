@@ -1,10 +1,44 @@
 #include "Mesh.h"
 #include <iostream>
 #include <Engine/ECS.h>
-#include "MeshVertexArrayRegistry.h"
+#include <Registry/Registry.h>
 
 static auto& registry = lucy::Registry::Instance();
 static auto& vertexarrayregistry = registry.store<lucy::MeshVAORegistry>();
+
+lucy::Mesh::Mesh(const aiScene* ai_scene, aiMesh* ai_mesh) {
+	Import(ai_scene, ai_mesh);
+}
+
+void lucy::Mesh::Import(const aiScene* ai_scene, aiMesh* ai_mesh) {
+	for (int i = 0; i < ai_mesh->mNumVertices; i++) {
+		if (ai_mesh->HasPositions())
+			positions.push_back(glm::vec3(ai_mesh->mVertices[i].x, ai_mesh->mVertices[i].y, ai_mesh->mVertices[i].z));
+
+		if (ai_mesh->HasNormals())
+			normals.push_back(glm::vec3(ai_mesh->mNormals[i].x, ai_mesh->mNormals[i].y, ai_mesh->mNormals[i].z));
+		
+		if (ai_mesh->mColors[0]) {
+			colors.push_back({ai_mesh->mColors[0][i].r, ai_mesh->mColors[0][i].g, ai_mesh->mColors[0][i].b, ai_mesh->mColors[0][i].a});
+		}
+
+		if (ai_mesh->mTextureCoords[0]) {
+			uv.push_back({ai_mesh->mTextureCoords[0][i].x, ai_mesh->mTextureCoords[0][i].y});
+		}
+	}
+
+	for (int i = 0; i < ai_mesh->mNumFaces; i++) {
+		aiFace face = ai_mesh->mFaces[i];
+
+		for(unsigned int j = 0; j < face.mNumIndices; j++) {
+			indices.push_back(face.mIndices[j]);
+		}
+	}
+
+	// for (int i = 0; i < ai_mesh->mNumVertices; i++) {
+	// 	std::cout << glm::to_string(positions[i]) << '\n';
+	// }
+}
 
 void lucy::Mesh::Transfer() {
 	if (positions.size() && !disable_position) flags |= MeshVAOAttribFlag_POSITION;

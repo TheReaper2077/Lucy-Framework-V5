@@ -2,7 +2,7 @@
 #include <imgui.h>
 #include <Engine/ECS.h>
 #include <Engine/Window.h>
-#include <Engine/WindowRegistry.h>
+#include <Registry/Registry.h>
 
 static auto& registry = lucy::Registry::Instance();
 

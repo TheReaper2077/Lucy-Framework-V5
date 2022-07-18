@@ -3,6 +3,9 @@
 #include <Structures/Structures.h>
 #include <Components/Components.h>
 
+static auto& registry = lucy::Registry::Instance();
+static auto& renderer = lucy::Registry::Instance().store<lucy::Renderer>();
+
 using TexVertex = lucy::Vertex::P1UV1T1;
 using ColorVertex = lucy::Vertex::P1C1;
 using TexColorVertex = lucy::Vertex::P1C1UV1T1;

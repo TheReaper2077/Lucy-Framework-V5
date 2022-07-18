@@ -6,6 +6,7 @@
 
 namespace lucy {
 	enum ViewMode {
+		ViewMode_None,
 		ViewMode_FPS,
 		ViewMode_Editor,
 
@@ -19,8 +20,10 @@ namespace lucy {
 		glm::vec3 position = { 0.0, 0.0, 0.0 };
 		glm::vec3 world_front = { 0.0, 0.0, -1.0 };
 		glm::vec3 front = world_front;
-		glm::vec3 world_up = { 0.0f, 1.0f, 0.0f };
+		glm::vec3 world_up = { 0.0, 1.0, 0.0 };
 		glm::vec3 up = world_up;
+
+		glm::vec4 clear_color = { 0, 0, 0, 0 };
 
 		std::string window_id = GAME_WINDOW;
 
@@ -34,7 +37,7 @@ namespace lucy {
 
 		bool is_maincamera = true;
 
-		ViewMode mode;
+		ViewMode mode = ViewMode_None;
 
 		Camera() {}
 		Camera(ViewMode mode): mode(mode) {}

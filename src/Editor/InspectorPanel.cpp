@@ -1,9 +1,9 @@
 #include "InspectorPanel.h"
 #include "EditorStatus.h"
 #include <Engine/ECS.h>
+#include <Registry/Registry.h>
 #include <Components/Components.h>
-#include <imgui.h>
-#include <imgui_stdlib.h>
+#include "Gui.h"
 
 static auto& registry = lucy::Registry::Instance();
 
@@ -64,40 +64,39 @@ void lucy::ComponentHeader<lucy::Transform>::Render(Entity entity) {
 
 template <>
 void lucy::ComponentHeader<lucy::Camera>::Render(Entity entity) {
-	// auto& camera = registry.get<Camera>(entity);
-	// auto& gamewindow = registry.store<GameWindow>();
+	auto& camera = registry.get<Camera>(entity);
+	auto* gamewindow = registry.store<WindowRegistry>()[camera.window_id];
 
-	// camera.enable = (gamewindow.camera == entity || camera.enable);
+	// camera.enable = (gamewindow->camera == entity || camera.enable);
 
-	// ImGui::Checkbox("Enable", &camera.enable);
+	ImGui::Checkbox("Enable", &camera.enable);
 	
-	// if (camera.enable && gamewindow.camera != entity) {
-	// 	gamewindow.camera = entity;
+	// if (camera.enable && gamewindow->camera != entity) {
+	// 	gamewindow->camera = entity;
 	// }
-	// if (!camera.enable && gamewindow.camera == entity) {
-	// 	gamewindow.camera = (Entity)0;
+	// if (!camera.enable && gamewindow->camera == entity) {
+	// 	gamewindow->camera = (Entity)0;
 	// }
 
 	// if (camera.mode == ORTHOGRAPHIC) {
 		
 	// }
-	// if (camera.mode == PERSPECTIVE) {
-	// 	ImGui::DragFloat("Near", &camera.camera_near, 0.1);
-	// 	ImGui::DragFloat("Far", &camera.camera_far, 0.1);
-	// 	ImGui::DragFloat("Fov", &camera.fov, 0.1, 0.0, 180.0);
-	// }
 
-	// ImGui::ColorEdit4("ClearColor", &camera.clear_color[0], ImGuiColorEditFlags_NoInputs);
+	ImGui::DragFloat("Near", &camera.c_near, 0.1);
+	ImGui::DragFloat("Far", &camera.c_far, 0.1);
+	ImGui::DragFloat("Fov", &camera.fov, 0.1, 0.0, 180.0);
+
+	ImGui::ColorEdit4("ClearColor", &camera.clear_color[0], ImGuiColorEditFlags_NoInputs);
 
 	// ImGui::EnumComboLogic("Projection", { "ORTHOGRAPHIC", "PERSPECTIVE" }, camera.mode);
-	// ImGui::EnumComboLogic("Type", { "FPS", "TPS", "Default", "None" }, camera.type);
+	ImGui::EnumComboLogic("Mode", { "FPS", "Editor", "None" }, camera.mode, { "Editor", "None"});
 }
 
 template <>
 void lucy::ComponentHeader<lucy::Light>::Render(Entity entity) {
 	auto& light = registry.get<Light>(entity);
 
-	// ImGui::EnumComboLogic("Mode", { "Point", "Spot", "Area", "Directional" }, light.mode);
+	ImGui::EnumComboLogic("Mode", { "Directional", "Areal", "Point", "Spot" }, light.mode);
 
 	ImGui::Spacing();
 

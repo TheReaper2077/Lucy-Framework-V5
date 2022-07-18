@@ -5,6 +5,9 @@
 
 #include "Primitives.h"
 #include "TextureStore.h"
+#include <vector>
+#include <memory>
+#include "RenderPass.h"
 
 namespace lucy {
 	class Renderer {
@@ -21,7 +24,11 @@ namespace lucy {
 
 		std::unordered_map<std::string, std::pair<vertex_src, fragment_src>> shader_src_map;
 
+		std::unordered_map<uint32_t, std::shared_ptr<RenderPass>> renderpass_map;
+
 	public:
+		void Init();
+
 		void SetModel(const glm::mat4& model);
 		void SetView(const glm::mat4& view);
 		void SetProjection(const glm::mat4& projection);
@@ -41,6 +48,16 @@ namespace lucy {
 		void Clear();
 		void Clear(const glm::vec4& color);
 		void Clear(const glm::vec3& color);
+
+		void RenderMain();
+
+		template <typename T>
+		void AddRenderPass() {
+			if (renderpass_map.find(typeid(T).hash_code()) == renderpass_map.end()) {
+				renderpass_map[typeid(T).hash_code()] = std::static_pointer_cast<RenderPass>(std::make_shared<T>());
+				renderpass_map[typeid(T).hash_code()]->FirstInit();
+			}
+		}
 
 		void SetShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename);
 		lgl::Shader* GetPBRShader(const std::string& name);

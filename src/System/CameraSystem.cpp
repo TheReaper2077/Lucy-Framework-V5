@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
-#include <Engine/WindowRegistry.h>
+#include <Registry/Registry.h>
 
 static auto& registry = lucy::Registry::Instance();
 static auto& timestep = registry.store<lucy::TimeStep>();
@@ -40,7 +40,7 @@ void lucy::CameraSystem::Update() {
 				break;
 
 			case ViewMode_Editor:
-				FPSView(entity);
+				EditorView(entity);
 				break;
 		}
 	}
@@ -84,7 +84,7 @@ void lucy::CameraSystem::FPSView(Entity entity) {
 		transform.translation -= glm::normalize(glm::cross(camera.front, camera.up)) * speed;
 	if (events.IsKeyPressed(SDL_SCANCODE_D))
 		transform.translation += glm::normalize(glm::cross(camera.front, camera.up)) * speed;
-	if (events.IsKeyPressed(SDL_SCANCODE_LSHIFT))
+	if (events.IsKeyPressed(SDL_SCANCODE_LALT))
 		transform.translation -= camera.up * speed;
 	if (events.IsKeyPressed(SDL_SCANCODE_SPACE))
 		transform.translation += camera.up * speed;
