@@ -2,17 +2,23 @@
 
 #include <Engine/ECS.h>
 #include <Components/Components.h>
+#include <memory>
 
 namespace lucy {
 	struct MeshRegistry {
-		std::unordered_map<std::string, Mesh> registry;
+	private:
+		std::unordered_map<std::string, Mesh> mesh_registry;
 
+	public:
 		MeshRegistry() {}
 
-		bool Contains(std::string name);
-		
-		Mesh& GetMesh(std::string name);
-
+		void Init();
+		bool Contains(std::string name);		
+		Mesh* GetMesh(std::string name);
 		void AddMesh(std::string name, Mesh mesh);
+		template <typename ...Args>
+		void AddMesh(std::string name, Args ...args) {
+			mesh_registry = Mesh{args...};
+		}
 	};
 }

@@ -5,3 +5,5 @@
 #include "TextureRegistry.h"
 #include "MaterialRegistry.h"
 #include "WindowRegistry.h"
+#include "MeshRegistry.h"
+#include "MaterialRegistry.h"

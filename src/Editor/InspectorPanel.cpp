@@ -1,4 +1,4 @@
-#include "InspectorPanel.h"
+#include "Panel.h"
 #include "EditorStatus.h"
 #include <Engine/ECS.h>
 #include <Registry/Registry.h>
@@ -125,7 +125,7 @@ void lucy::ComponentHeader<lucy::MeshRenderer>::Render(Entity entity) {
 	auto& meshrenderer = registry.get<MeshRenderer>(entity);
 }
 
-void lucy::InspectorPanel::Render() {
+void lucy::Panel<lucy::PanelInstance_Inspector>::Render() {
 	if (!panel_open) return;
 
 	if (ImGui::Begin("Inspector", &panel_open)) {

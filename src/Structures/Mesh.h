@@ -39,6 +39,8 @@ namespace lucy {
 		size_t flags;
 
 		Mesh() {}
+		~Mesh() {}
+
 		Mesh(const aiScene* ai_scene, aiMesh* ai_mesh);
 
 		void Import(const aiScene* ai_scene, aiMesh* ai_mesh);

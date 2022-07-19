@@ -1,4 +1,4 @@
-#include "GamePanel.h"
+#include "Panel.h"
 #include <imgui.h>
 #include <Engine/ECS.h>
 #include <Engine/Window.h>
@@ -6,7 +6,7 @@
 
 static auto& registry = lucy::Registry::Instance();
 
-void lucy::GamePanel::Render() {
+void lucy::Panel<lucy::PanelInstance_Game>::Render() {
 	if (!panel_open) return;
 	
 	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];

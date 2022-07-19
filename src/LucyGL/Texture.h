@@ -22,7 +22,7 @@ namespace lgl {
 		Texture(TextureMode mode = TEXTURE_2D);
 		~Texture();
 
-		void LoadTexture(const char* filename);
+		bool LoadTexture(const char* filename);
 		void LoadSpriteSheet(const char* filename, int x, int y, int w, int h);
 
 		void Load2D(int level, Format internalformat, int width, int height, int border, Format format, Type type, void* data = nullptr);

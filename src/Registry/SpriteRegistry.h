@@ -9,7 +9,7 @@
 namespace lucy {
 	struct SpriteRegistry {
 		struct TextureCountainer {
-			lgl::Texture texture;
+			lgl::Texture* texture = nullptr;
 			std::string name = "", filename = "";
 		};
 

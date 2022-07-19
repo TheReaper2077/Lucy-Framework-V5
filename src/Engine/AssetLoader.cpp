@@ -23,14 +23,14 @@ void lucy::AssetLoader::Init() {
 }
 
 const lucy::Mesh& lucy::AssetLoader::LoadMesh(std::string filename) {
-	
+	return Mesh{};
 }
 
 const lucy::Mesh& lucy::AssetLoader::LoadSubMesh(std::string filename) {
-	
+	return Mesh{};
 }
 
 const lucy::Material& lucy::AssetLoader::LoadMaterial(std::string filename) {
-	
+	return Material{};
 }
 

@@ -22,6 +22,7 @@ void lucy::Engine::Init() {
 	auto null_entity = registry.create();
 	auto& renderer = registry.store<Renderer>();
 	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];
+	auto& meshregistry = registry.store<MeshRegistry>();
 
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -37,6 +38,7 @@ void lucy::Engine::Init() {
 
 	renderer.Init();
 	editor.Init(sdl_window, &sdl_glcontext);
+	meshregistry.Init();
 
 	renderer.AddRenderPass<SpriteRenderPass>();
 	renderer.AddRenderPass<MeshRenderPass>();
@@ -45,9 +47,10 @@ void lucy::Engine::Init() {
 void lucy::Engine::Mainloop() {
 	auto& timestep = registry.store<TimeStep>();
 	auto& events = registry.store<Events>();
-	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];
-	auto& renderer = registry.store<Renderer>();
 	auto& windowregistry = registry.store<WindowRegistry>();
+	auto* window = windowregistry[MAIN_WINDOW];
+	auto& renderer = registry.store<Renderer>();
+	auto& meshregistry = registry.store<MeshRegistry>();
 
 	lucy::Sprite sprite;
 
@@ -70,48 +73,19 @@ void lucy::Engine::Mainloop() {
 	registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 1));
 	registry.emplace<lucy::Camera>(camera_entity, ViewMode_FPS, true);
 
-	Mesh mesh;
-
-	mesh.positions = {
-		{ -0.5, -0.5, -0.5, },
-		{ 0.5, -0.5, -0.5, },
-		{ 0.5,  0.5, -0.5, },
-		{ 0.5,  0.5, -0.5, },
-		{ -0.5,  0.5, -0.5, },
-		{ -0.5, -0.5, -0.5, },
-	};
-
-	mesh.colors = {
-		{1.0, 1.0, 0.0, 1.0},
-		{1.0, 1.0, 0.0, 1.0},
-		{1.0, 1.0, 0.0, 1.0},
-		{1.0, 1.0, 0.0, 1.0},
-		{1.0, 1.0, 0.0, 1.0},
-		{1.0, 1.0, 0.0, 1.0},
-	};
-
-	// mesh.RecalculateNormals();
-	mesh.normals = {
-		{0.0,  0.0, -1.0},
-		{0.0,  0.0, -1.0},
-		{0.0,  0.0, -1.0},
-		{0.0,  0.0, -1.0},
-		{0.0,  0.0, -1.0},
-		{0.0,  0.0, -1.0},
-	};
-	mesh.Transfer();
+	auto* mesh = meshregistry.GetMesh("test");
 
 	Material material;
 
 	auto mesh_entity = registry.create();
 	registry.emplace<lucy::Tag>(mesh_entity, "Mesh");
 	registry.emplace<lucy::Transform>(mesh_entity, glm::vec3(0, -4, 0), glm::vec3(0, 0, 0));
-	registry.emplace<lucy::MeshRenderer>(mesh_entity, &mesh);
+	registry.emplace<lucy::MeshRenderer>(mesh_entity, mesh);
 
 	auto mesh_entity2 = registry.create();
 	registry.emplace<lucy::Tag>(mesh_entity2, "Mesh2");
 	registry.emplace<lucy::Transform>(mesh_entity2, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0));
-	registry.emplace<lucy::MeshRenderer>(mesh_entity2, &mesh, &material);
+	registry.emplace<lucy::MeshRenderer>(mesh_entity2, mesh, &material);
 
 	auto light_entity = registry.create();
 	registry.emplace<lucy::Tag>(light_entity, "light");

@@ -1,4 +1,4 @@
-#include "EditorPanel.h"
+#include "Panel.h"
 #include <Engine/ECS.h>
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -6,7 +6,7 @@
 
 static auto& registry = lucy::Registry::Instance();
 
-void lucy::EditorPanel::Render() {
+void lucy::Panel<lucy::PanelInstance_Editor>::Render() {
 	if (!panel_open) return;
 
 	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];

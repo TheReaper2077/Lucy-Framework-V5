@@ -15,6 +15,7 @@ namespace lucy {
 
 		float roughness = 0.6;
 		float metallic = 0.0;
+		float shininess = 0.0;
 
 		lgl::Texture* albedo_map = nullptr;
 		lgl::Texture* diffuse_map = nullptr;
@@ -27,6 +28,8 @@ namespace lucy {
 
 		int illum_model;
 
+		std::string name;
+
 		lgl::Shader* shader = nullptr;
 
 		bool use_shader = false;
@@ -34,6 +37,8 @@ namespace lucy {
 		uint32_t flags = 0;
 
 		Material() {}
+		~Material() {}
+
 		Material(aiMaterial *ai_material);
 	};
 }

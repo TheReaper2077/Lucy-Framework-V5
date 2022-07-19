@@ -1,4 +1,4 @@
-#include "SceneHeirarchyPanel.h"
+#include "Panel.h"
 #include "EditorStatus.h"
 #include <Engine/Events.h>
 #include "Gui.h"
@@ -6,7 +6,7 @@
 
 static auto& registry = lucy::Registry::Instance();
 
-void lucy::SceneHeirarchyPanel::Render() {
+void lucy::Panel<lucy::PanelInstance_SceneHeirarchy>::Render() {
 	if (!panel_open) return;
 
 	auto& events = registry.store<Events>();

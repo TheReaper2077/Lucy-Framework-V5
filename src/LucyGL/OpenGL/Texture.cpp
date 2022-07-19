@@ -16,7 +16,7 @@ lgl::Texture::~Texture() {
 	glDeleteTextures(1, &id);
 }
 
-void lgl::Texture::LoadTexture(const char* filename) {
+bool lgl::Texture::LoadTexture(const char* filename) {
 	assert(mode == TEXTURE_2D);
 
 	SetWrapMode(WrapMode_MIRRORED_REPEAT, WrapMode_MIRRORED_REPEAT);
@@ -46,12 +46,16 @@ void lgl::Texture::LoadTexture(const char* filename) {
 		};
 
 		Load2D(0, RGBA, 4, 4, 0, RGBA, UNSIGNED_BYTE, default_data);
+
+		return false;
 	} else {
 		if (channels == 4) Load2D(0, RGBA, width, height, 0, RGBA, UNSIGNED_BYTE, data);
 		if (channels == 3) Load2D(0, RGBA, width, height, 0, RGB, UNSIGNED_BYTE, data);
 	}
 
 	stbi_image_free(data);
+
+	return true;
 }
 
 void lgl::Texture::LoadSpriteSheet(const char* filename, int x, int y, int w, int h) {

@@ -31,6 +31,8 @@ lucy::Entity lucy::Functions::CreateEntity() {
 	auto entity = registry.create();
 	registry.emplace<lucy::Tag>(entity, GetName("Empty"), GetID);
 	registry.emplace<lucy::Transform>(entity);
+
+	return entity;
 }
 
 lucy::Entity lucy::Functions::CreateLightEntity() {
@@ -38,6 +40,8 @@ lucy::Entity lucy::Functions::CreateLightEntity() {
 	registry.emplace<lucy::Tag>(entity, GetName("Light"), GetID);
 	registry.emplace<lucy::Transform>(entity);
 	registry.emplace<lucy::Light>(entity);
+
+	return entity;
 }
 
 lucy::Entity lucy::Functions::CreateCameraEntity() {
@@ -45,6 +49,8 @@ lucy::Entity lucy::Functions::CreateCameraEntity() {
 	registry.emplace<lucy::Tag>(entity, GetName("Camera"), GetID);
 	registry.emplace<lucy::Transform>(entity);
 	registry.emplace<lucy::Camera>(entity);
+
+	return entity;
 }
 
 lucy::Entity lucy::Functions::CreateMeshEntity() {
@@ -52,6 +58,8 @@ lucy::Entity lucy::Functions::CreateMeshEntity() {
 	registry.emplace<lucy::Tag>(entity, GetName("Mesh"), GetID);
 	registry.emplace<lucy::Transform>(entity);
 	registry.emplace<lucy::MeshRenderer>(entity);
+
+	return entity;
 }
 
 lucy::Entity lucy::Functions::CreateSpriteEntity() {
@@ -59,6 +67,8 @@ lucy::Entity lucy::Functions::CreateSpriteEntity() {
 	registry.emplace<lucy::Tag>(entity, GetName("Sprite"), GetID);
 	registry.emplace<lucy::Transform>(entity);
 	registry.emplace<lucy::SpriteRenderer>(entity);
+
+	return entity;
 }
 
 void lucy::Functions::Serialize() {

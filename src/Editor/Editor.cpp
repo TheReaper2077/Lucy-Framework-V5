@@ -9,10 +9,7 @@
 #include <Engine/Window.h>
 #include "EditorStatus.h"
 #include "ImGuiStyles.h"
-#include "InspectorPanel.h"
-#include "GamePanel.h"
-#include "EditorPanel.h"
-#include "SceneHeirarchyPanel.h"
+#include "PanelRegistry.h"
 #include <Registry/Registry.h>
 
 static auto& registry = lucy::Registry::Instance();
@@ -34,7 +31,10 @@ void lucy::Editor::Init(SDL_Window* sdl_window, SDL_GLContext* sdl_glcontext) {
 
 	auto& editorstatus = registry.store<EditorStatus>();
 	auto& windowregistry = registry.store<WindowRegistry>();
+	auto& panelregistry = registry.store<PanelRegistry>();
 	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];
+
+	panelregistry.Init();
 
 	{
 		auto entity = registry.create();
@@ -64,6 +64,7 @@ void lucy::Editor::Render() {
 	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];
 	auto& events = registry.store<Events>();
 	auto& editorstatus = registry.store<EditorStatus>();
+	auto& panelregistry = registry.store<PanelRegistry>();
 
 	static bool p_open = false, show_demo = false;
 
@@ -94,22 +95,7 @@ void lucy::Editor::Render() {
 		ImGui::End();
 	}
 
-	static SceneHeirarchyPanel sceneheirarchypanel;
-
-	sceneheirarchypanel.RenderWindow();
-
-	static InspectorPanel inspectorpanel;
-
-	inspectorpanel.RenderWindow();
-
-	static GamePanel gamepanel;
-
-	gamepanel.RenderWindow();
-
-	static EditorPanel editorpanel;
-
-	editorpanel.RenderWindow();
-
+	panelregistry.Render();
 	// ImGui::ShowDemoWindow(&show_demo);
 
 	ImGui::EndFrame();
