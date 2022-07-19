@@ -28,7 +28,7 @@ namespace lucy {
 
 		int illum_model;
 
-		std::string name;
+		std::string name = "New Material";
 
 		lgl::Shader* shader = nullptr;
 
@@ -40,5 +40,6 @@ namespace lucy {
 		~Material() {}
 
 		Material(aiMaterial *ai_material);
+		void Import(aiMaterial *ai_material);
 	};
 }

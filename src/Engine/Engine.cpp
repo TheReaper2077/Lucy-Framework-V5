@@ -21,6 +21,7 @@ static lucy::Editor editor;
 void lucy::Engine::Init() {
 	auto null_entity = registry.create();
 	auto& renderer = registry.store<Renderer>();
+	auto& events = registry.store<Events>();
 	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];
 	auto& meshregistry = registry.store<MeshRegistry>();
 
@@ -36,6 +37,7 @@ void lucy::Engine::Init() {
 
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
+	events.Init();
 	renderer.Init();
 	editor.Init(sdl_window, &sdl_glcontext);
 	meshregistry.Init();
@@ -51,12 +53,12 @@ void lucy::Engine::Mainloop() {
 	auto* window = windowregistry[MAIN_WINDOW];
 	auto& renderer = registry.store<Renderer>();
 	auto& meshregistry = registry.store<MeshRegistry>();
+	auto& spriteregistry = registry.store<SpriteRegistry>();
+	auto& materialregistry = registry.store<MaterialRegistry>();
 
 	lucy::Sprite sprite;
 
-	sprite.texture = lgl::MakeTexture();
-	sprite.texture->Bind();
-	sprite.texture->LoadTexture("D:\\C++\\Lucy Framework V5\\assets\\Redstone.PNG");
+	sprite.texture_raw = spriteregistry.GetTexture("D:\\C++\\Lucy Framework V5\\assets\\Redstone.PNG");
 
 	auto entity = registry.create();
 	registry.emplace<lucy::Tag>(entity, "Entity");
@@ -76,6 +78,8 @@ void lucy::Engine::Mainloop() {
 	auto* mesh = meshregistry.GetMesh("test");
 
 	Material material;
+
+	materialregistry.AddMaterial(material);
 
 	auto mesh_entity = registry.create();
 	registry.emplace<lucy::Tag>(mesh_entity, "Mesh");

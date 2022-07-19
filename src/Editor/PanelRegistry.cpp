@@ -5,5 +5,9 @@ void lucy::PanelRegistry::Init() {
 	Add<PanelInstance_Editor>();
 	Add<PanelInstance_SceneHeirarchy>();
 	Add<PanelInstance_Inspector>();
+
+	Add<PanelInstance_MaterialRegistry>();
+
+	Add<PanelInstance_TextureRegistry>();
 }
 

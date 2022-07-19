@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <LucyGL/LucyGL.h>
+#include "RawTexture.h"
 
 namespace lucy {
 	struct Sprite {
@@ -9,6 +10,10 @@ namespace lucy {
 		glm::vec2 uv0 = glm::vec2(0, 0);
 		glm::vec2 uv1 = glm::vec2(1, 1);
 
-		lgl::Texture* texture = nullptr;
+		std::string name = "New Sprite";
+
+		RawTexture* texture_raw = nullptr;
+
+		int idx = 0;
 	};
 }

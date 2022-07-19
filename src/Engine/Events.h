@@ -32,10 +32,12 @@ namespace lucy {
 		bool scrolldown;
 
 		std::string dropfilename;
+		bool is_file_dropped = false;
 
 		bool is_window_resized;
 
 	public:
+		void Init();
 		void Update();
 
 		bool IsKeyPressed(SDL_Scancode scancode);
@@ -60,6 +62,8 @@ namespace lucy {
 		const glm::vec3& GetRelCursorOffset();
 
 		const std::string& GetDroppedFile();
+		bool IsFileDropped();
+
 		SDL_Event& GetEvent();
 	};
 }

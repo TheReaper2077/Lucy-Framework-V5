@@ -1,6 +1,10 @@
 #include "Material.h"
 
 lucy::Material::Material(aiMaterial *ai_material) {
+	Import(ai_material);
+}
+
+void lucy::Material::Import(aiMaterial *ai_material) {
 	name = std::string(ai_material->GetName().C_Str());
 
 	aiString str;

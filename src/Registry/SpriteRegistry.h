@@ -8,23 +8,12 @@
 
 namespace lucy {
 	struct SpriteRegistry {
-		struct TextureCountainer {
-			lgl::Texture* texture = nullptr;
-			std::string name = "", filename = "";
-		};
-
-		typedef std::string tex_filename;
-
-		std::unordered_map<std::string, TextureCountainer> texture_store;
+		std::unordered_map<std::string, RawTexture> texture_store;
 		std::unordered_map<std::string, lucy::Sprite> sprite_store;
 
-		lgl::Texture* GetTexture(const std::string& filename);
-		lgl::Texture* GetTextureById(const std::string& id);
-
-		lgl::Texture* LoadTexture(const std::string& name, const std::string& filename, const std::string& id = uuids::to_string(uuids::uuid_system_generator{}()));
-
-		lucy::Sprite* LoadSprite();
-		lucy::Sprite* GetSprite(std::string id);
+		RawTexture* GetTexture(const std::string& filename);
+		RawTexture* GetTextureById(const std::string& id);
+		RawTexture* LoadTexture(const std::string& name, const std::string& filename, const std::string& id = uuids::to_string(uuids::uuid_system_generator{}()));
 
 		std::string Serialize();
 		bool Deserialize(const std::string& src);

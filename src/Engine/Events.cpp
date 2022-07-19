@@ -2,10 +2,17 @@
 #include <imgui_impl_sdl.h>
 #include "ECS.h"
 #include <Registry/Registry.h>
+#include <iostream>
 
 static auto& registry = lucy::Registry::Instance();
 
+void lucy::Events::Init() {
+	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
+}
+
 void lucy::Events::Update() {
+	is_file_dropped = false;
+
 	while (SDL_PollEvent(&event)) {
 		ImGui_ImplSDL2_ProcessEvent(&event);
 
@@ -50,6 +57,7 @@ void lucy::Events::Update() {
 		}
 		if (event.type == SDL_DROPFILE) {
 			dropfilename = std::string(event.drop.file);
+			is_file_dropped = true;
 		}
 	}
 }
@@ -144,6 +152,10 @@ const glm::vec3& lucy::Events::GetRelCursorOffset() {
 
 const std::string& lucy::Events::GetDroppedFile() {
 	return dropfilename;
+}
+
+bool lucy::Events::IsFileDropped() {
+	return is_file_dropped;
 }
 
 SDL_Event& lucy::Events::GetEvent() {

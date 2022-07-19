@@ -52,7 +52,7 @@ void lucy::SpriteRenderPass::Flush<TexVertex>() {
 
 	shader->SetUniformi("u_type", TEXTURE);
 
-	renderer.RenderQuads(lgl::TRIANGLE, nullptr, TexVertex::VertexArray(), vertexbuffer, vertices.size());
+	renderer.RenderQuads(lgl::TRIANGLE, nullptr, TexVertex::VertexArray(), vertexbuffer, vertices.size(), texture_store);
 
 	texture_store.clear();
 	vertices.clear();
@@ -67,7 +67,7 @@ void lucy::SpriteRenderPass::Flush<TexColorVertex>() {
 
 	shader->SetUniformi("u_type", TEXTURE_COLOR);
 	
-	renderer.RenderQuads(lgl::TRIANGLE, nullptr, TexColorVertex::VertexArray(), vertexbuffer, vertices.size());
+	renderer.RenderQuads(lgl::TRIANGLE, nullptr, TexColorVertex::VertexArray(), vertexbuffer, vertices.size(), texture_store);
 
 	texture_store.clear();
 	vertices.clear();
@@ -107,10 +107,10 @@ void lucy::SpriteRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 			if (!texture_store.slotavaliable()) {
 				Flush<TexVertex>();
 			}
-			if (sprite->texture == nullptr) {
+			if (sprite->texture_raw->texture == nullptr) {
 				Primitives::QuadIndexed(GetVertices<TexVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, sprite->uv0 * spriterenderer.uv0, sprite->uv1 * spriterenderer.uv1, texture_store[null_texture], transform.GetRotationQuat());
 			} else {
-				Primitives::QuadIndexed(GetVertices<TexVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, sprite->uv0 * spriterenderer.uv0, sprite->uv1 * spriterenderer.uv1, texture_store[spriterenderer.sprite->texture], transform.GetRotationQuat());
+				Primitives::QuadIndexed(GetVertices<TexVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, sprite->uv0 * spriterenderer.uv0, sprite->uv1 * spriterenderer.uv1, texture_store[spriterenderer.sprite->texture_raw->texture], transform.GetRotationQuat());
 			}
 		} else {
 			Primitives::QuadIndexed(GetVertices<ColorVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, spriterenderer.color, transform.GetRotationQuat());

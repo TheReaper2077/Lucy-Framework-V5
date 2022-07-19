@@ -12,7 +12,7 @@ namespace lucy {
 		bool paused = false;
 
 	public:
-		Entity CreateEntity();
+		Entity CreateEmptyEntity();
 		Entity CreateLightEntity();
 		Entity CreateCameraEntity();
 		Entity CreateMeshEntity();

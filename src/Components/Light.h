@@ -14,7 +14,7 @@ namespace lucy {
 
 	struct Light {
 		glm::vec3 color = { 1, 1, 1 };
-		LightMode mode;
+		LightMode mode = LightMode::DIRECTIONAL_LIGHT;
 
 		bool enable = true;
 

@@ -27,7 +27,7 @@ std::string lucy::Functions::GetName(std::string name) {
 	return result;
 }
 
-lucy::Entity lucy::Functions::CreateEntity() {
+lucy::Entity lucy::Functions::CreateEmptyEntity() {
 	auto entity = registry.create();
 	registry.emplace<lucy::Tag>(entity, GetName("Empty"), GetID);
 	registry.emplace<lucy::Transform>(entity);

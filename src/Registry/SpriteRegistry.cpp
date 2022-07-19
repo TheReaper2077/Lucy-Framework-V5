@@ -1,22 +1,24 @@
 #include "SpriteRegistry.h"
 
-lgl::Texture* lucy::SpriteRegistry::GetTexture(const std::string& filename) {
+lucy::RawTexture* lucy::SpriteRegistry::GetTexture(const std::string& filename) {
 	return LoadTexture(filename.substr(filename.find_last_of('\\') + 1, filename.find_last_of(".") - 1 - filename.find_last_of('\\')), filename, uuids::to_string(uuids::uuid_system_generator{}()));
 }
 
-lgl::Texture* lucy::SpriteRegistry::GetTextureById(const std::string& id) {
+lucy::RawTexture* lucy::SpriteRegistry::GetTextureById(const std::string& id) {
 	if (texture_store.find(id) == texture_store.end())
 		return nullptr;
 	
-	return texture_store[id].texture;
+	return &texture_store[id];
 }
 
-lgl::Texture* lucy::SpriteRegistry::LoadTexture(const std::string& name, const std::string& filename, const std::string& id) {
+lucy::RawTexture* lucy::SpriteRegistry::LoadTexture(const std::string& name, const std::string& filename, const std::string& id) {
 	if (texture_store.find(id) == texture_store.end()) {
 		texture_store[id] = {};
+
 		texture_store[id].filename = filename;
 		texture_store[id].name = name;
 		texture_store[id].texture = lgl::MakeTexture();
+		texture_store[id].id = id;
 
 		auto* texture = texture_store[id].texture;
 
@@ -24,8 +26,8 @@ lgl::Texture* lucy::SpriteRegistry::LoadTexture(const std::string& name, const s
 		texture->LoadTexture(filename.c_str());
 		texture->UnBind();
 
-		return texture;
+		return &texture_store[id];
 	}
 
-	return texture_store[id].texture;
+	return &texture_store[id];
 }

@@ -1,6 +1,9 @@
 #pragma once
 
 #include <Engine/ECS.h>
+#include <imgui.h>
+#include <imgui_internal.h>
+#include <imgui_stdlib.h>
 
 namespace lucy {
 	enum PanelInstance_ {
@@ -9,6 +12,21 @@ namespace lucy {
 		PanelInstance_Editor,
 		PanelInstance_Inspector,
 		PanelInstance_SceneHeirarchy,
+
+		PanelInstance_MaterialEditor,
+		PanelInstance_MaterialViewer,
+		PanelInstance_MaterialRegistry,
+
+		PanelInstance_MeshViewer,
+		PanelInstance_MeshRegistry,
+
+		PanelInstance_SpriteEditor,
+		PanelInstance_SpriteRegistry,
+
+		PanelInstance_TextureEditor,
+		PanelInstance_TextureRegistry,
+
+		PanelInstance_Statistics,
 
 		PanelInstance_COUNT,
 	};

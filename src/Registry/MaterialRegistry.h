@@ -8,10 +8,8 @@
 
 namespace lucy {
 	struct MaterialRegistry {
-	private:
 		std::unordered_map<std::string, Material> material_registry;
 
-	public:
 		MaterialRegistry() {}
 
 		void Init();

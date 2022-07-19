@@ -11,6 +11,7 @@
 #include "ImGuiStyles.h"
 #include "PanelRegistry.h"
 #include <Registry/Registry.h>
+#include <iostream>
 
 static auto& registry = lucy::Registry::Instance();
 
@@ -65,6 +66,11 @@ void lucy::Editor::Render() {
 	auto& events = registry.store<Events>();
 	auto& editorstatus = registry.store<EditorStatus>();
 	auto& panelregistry = registry.store<PanelRegistry>();
+	auto& spriteregistry = registry.store<SpriteRegistry>();
+
+	if (events.IsFileDropped()) {
+		spriteregistry.GetTexture(events.GetDroppedFile());
+	}
 
 	static bool p_open = false, show_demo = false;
 
@@ -96,7 +102,7 @@ void lucy::Editor::Render() {
 	}
 
 	panelregistry.Render();
-	// ImGui::ShowDemoWindow(&show_demo);
+	ImGui::ShowDemoWindow(&show_demo);
 
 	ImGui::EndFrame();
 	ImGui::Render();
