@@ -1,9 +1,6 @@
 #include "Functions.h"
 #include <Components/Components.h>
-#define UUID_SYSTEM_GENERATOR
-#include <stduuid/uuid.h>
-
-#define GetID uuids::to_string(uuids::uuid_system_generator{}())
+#include <Engine/UUID.h>
 
 static auto& registry = lucy::Registry::Instance();
 
@@ -29,7 +26,7 @@ std::string lucy::Functions::GetName(std::string name) {
 
 lucy::Entity lucy::Functions::CreateEmptyEntity() {
 	auto entity = registry.create();
-	registry.emplace<lucy::Tag>(entity, GetName("Empty"), GetID);
+	registry.emplace<lucy::Tag>(entity, GetName("Empty"), GetID());
 	registry.emplace<lucy::Transform>(entity);
 
 	return entity;
@@ -37,7 +34,7 @@ lucy::Entity lucy::Functions::CreateEmptyEntity() {
 
 lucy::Entity lucy::Functions::CreateLightEntity() {
 	auto entity = registry.create();
-	registry.emplace<lucy::Tag>(entity, GetName("Light"), GetID);
+	registry.emplace<lucy::Tag>(entity, GetName("Light"), GetID());
 	registry.emplace<lucy::Transform>(entity);
 	registry.emplace<lucy::Light>(entity);
 
@@ -46,7 +43,7 @@ lucy::Entity lucy::Functions::CreateLightEntity() {
 
 lucy::Entity lucy::Functions::CreateCameraEntity() {
 	auto entity = registry.create();
-	registry.emplace<lucy::Tag>(entity, GetName("Camera"), GetID);
+	registry.emplace<lucy::Tag>(entity, GetName("Camera"), GetID());
 	registry.emplace<lucy::Transform>(entity);
 	registry.emplace<lucy::Camera>(entity);
 
@@ -55,7 +52,7 @@ lucy::Entity lucy::Functions::CreateCameraEntity() {
 
 lucy::Entity lucy::Functions::CreateMeshEntity() {
 	auto entity = registry.create();
-	registry.emplace<lucy::Tag>(entity, GetName("Mesh"), GetID);
+	registry.emplace<lucy::Tag>(entity, GetName("Mesh"), GetID());
 	registry.emplace<lucy::Transform>(entity);
 	registry.emplace<lucy::MeshRenderer>(entity);
 
@@ -64,7 +61,7 @@ lucy::Entity lucy::Functions::CreateMeshEntity() {
 
 lucy::Entity lucy::Functions::CreateSpriteEntity() {
 	auto entity = registry.create();
-	registry.emplace<lucy::Tag>(entity, GetName("Sprite"), GetID);
+	registry.emplace<lucy::Tag>(entity, GetName("Sprite"), GetID());
 	registry.emplace<lucy::Transform>(entity);
 	registry.emplace<lucy::SpriteRenderer>(entity);
 

@@ -111,8 +111,6 @@ template <>
 void lucy::ComponentHeader<lucy::SpriteRenderer>::Render(Entity entity) {
 	auto& spriterenderer = registry.get<SpriteRenderer>(entity);
 
-	ImGui::Spacing();
-
 	ImGui::Checkbox("Visible", &spriterenderer.visible);
 
 	ImGui::Spacing();
@@ -128,10 +126,20 @@ void lucy::ComponentHeader<lucy::MeshRenderer>::Render(Entity entity) {
 void lucy::Panel<lucy::PanelInstance_Inspector>::Render() {
 	if (!panel_open) return;
 
-	if (ImGui::Begin("Inspector", &panel_open)) {
-		Entity entity = registry.store<EditorStatus>().selected_entity;
+	auto& editorstatus = registry.store<EditorStatus>();
 
-		if (entity != (Entity)0) {
+	static Entity last_entity;
+	static std::string last_texture;
+	static std::string last_sprite;
+
+	if (ImGui::Begin("Inspector", &panel_open)) {
+		Entity selected_entity = editorstatus.GetEntityID();
+		auto selected_texture = editorstatus.GetTextureID();
+		auto selected_sprite = editorstatus.GetSpriteID();
+
+		if (selected_entity != (Entity)0) {
+			last_entity = selected_entity;
+
 			static ComponentHeader<Tag> tag("Tag", true);
 			static ComponentHeader<Transform> transform("Transform");
 			static ComponentHeader<Camera> camera("Camera");
@@ -139,12 +147,12 @@ void lucy::Panel<lucy::PanelInstance_Inspector>::Render() {
 			static ComponentHeader<SpriteRenderer> spriterenderer("SpriteRenderer");
 			static ComponentHeader<MeshRenderer> meshrenderer("MeshRenderer");
 			
-			tag.Header(entity);
-			transform.Header(entity);
-			camera.Header(entity);
-			light.Header(entity);
-			spriterenderer.Header(entity);
-			meshrenderer.Header(entity);
+			tag.Header(selected_entity);
+			transform.Header(selected_entity);
+			camera.Header(selected_entity);
+			light.Header(selected_entity);
+			spriterenderer.Header(selected_entity);
+			meshrenderer.Header(selected_entity);
 
 			ImGui::Spacing();
 			if (ImGui::Button("Add Component", ImVec2(ImGui::GetColumnWidth(), 0))) {
@@ -153,23 +161,23 @@ void lucy::Panel<lucy::PanelInstance_Inspector>::Render() {
 
 			if (ImGui::BeginPopup("Component Menu")) {
 				if (ImGui::Selectable("Transform") && !transform.has_component) {
-					registry.emplace<Transform>(entity);
+					registry.emplace<Transform>(selected_entity);
 					transform.open = true;
 				}
 				if (ImGui::Selectable("Camera") && !camera.has_component) {
-					registry.emplace<Camera>(entity);
+					registry.emplace<Camera>(selected_entity);
 					camera.open = true;
 				}
 				if (ImGui::Selectable("Light") && !light.has_component) {
-					registry.emplace<Light>(entity);
+					registry.emplace<Light>(selected_entity);
 					light.open = true;
 				}
 				if (ImGui::Selectable("SpriteRenderer") && !spriterenderer.has_component) {
-					registry.emplace<SpriteRenderer>(entity);
+					registry.emplace<SpriteRenderer>(selected_entity);
 					spriterenderer.open = true;
 				}
 				if (ImGui::Selectable("MeshRenderer") && !meshrenderer.has_component) {
-					registry.emplace<MeshRenderer>(entity);
+					registry.emplace<MeshRenderer>(selected_entity);
 					meshrenderer.open = true;
 				}
 

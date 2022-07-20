@@ -11,10 +11,10 @@ void lucy::Panel<lucy::PanelInstance_SceneHeirarchy>::Render() {
 	if (!panel_open) return;
 
 	auto& events = registry.store<Events>();
+	auto& editorstatus = registry.store<EditorStatus>();
 
 	if (ImGui::Begin("Scene", &panel_open)) {
 		static bool open, toggle;
-		auto& selected_entity = registry.store<EditorStatus>().selected_entity;
 		
 		ImGui::PopupOpenLogic(open, toggle);
 
@@ -23,7 +23,7 @@ void lucy::Panel<lucy::PanelInstance_SceneHeirarchy>::Render() {
 
 			if (ImGui::TreeNodeEx(tag.name.c_str(), ImGuiTreeNodeFlags_Leaf)) {
 				if (ImGui::IsItemClicked()) {
-					selected_entity = entity;
+					editorstatus.SetEntity(entity);
 				}
 
 				if (ImGui::IsItemHovered() && registry.store<Events>().IsButtonPressed(SDL_BUTTON_RIGHT)) {
@@ -33,8 +33,8 @@ void lucy::Panel<lucy::PanelInstance_SceneHeirarchy>::Render() {
 
 				if (ImGui::BeginPopup("Entity SHMenu")) {
 					if (ImGui::Selectable("Delete")) {
-						if (selected_entity == entity) {
-							selected_entity = (Entity)0;
+						if (editorstatus.GetEntityID() == entity) {
+							editorstatus.SetEntity((Entity)0);
 						}
 						registry.destroy(entity);
 					}
@@ -53,16 +53,16 @@ void lucy::Panel<lucy::PanelInstance_SceneHeirarchy>::Render() {
 			auto& functions = registry.store<Functions>();
 
 			if (ImGui::Selectable("New Entity")) {
-				selected_entity = functions.CreateEmptyEntity();
+				editorstatus.SetEntity(functions.CreateEmptyEntity());
 			}
 			if (ImGui::Selectable("New Camera")) {
-				selected_entity = functions.CreateCameraEntity();
+				editorstatus.SetEntity(functions.CreateCameraEntity());
 			}
 			if (ImGui::Selectable("New Sprite")) {
-				selected_entity = functions.CreateSpriteEntity();
+				editorstatus.SetEntity(functions.CreateSpriteEntity());
 			}
 			if (ImGui::Selectable("New Light")) {
-				selected_entity = functions.CreateLightEntity();
+				editorstatus.SetEntity(functions.CreateLightEntity());
 			}
 			ImGui::EndPopup();
 		}

@@ -2,18 +2,16 @@
 
 #include <Structures/Structures.h>
 #include <unordered_map>
-
-#define UUID_SYSTEM_GENERATOR
-#include <stduuid/uuid.h>
+#include <Engine/UUID.h>
 
 namespace lucy {
 	struct MaterialRegistry {
-		std::unordered_map<std::string, Material> material_registry;
+		std::unordered_map<uuid, Material> material_registry;
 
 		MaterialRegistry() {}
 
 		void Init();
-		std::string AddMaterial(const Material& material, std::string id = uuids::to_string(uuids::uuid_system_generator{}()));
+		std::string AddMaterial(const Material& material, uuid id = GetID());
 		Material* GetMaterial(const std::string& id);
 	};
 }

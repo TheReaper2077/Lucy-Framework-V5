@@ -26,3 +26,27 @@ bool ImGui::in_expections(std::string value, const std::vector<std::string>& exc
 
 	return false;
 }
+std::tuple<float, float> ImGui::ThumbnailListLogic(const float& padding, const float& thumbnail_size) {
+	float cell_size = padding + thumbnail_size;
+	float panel_width = ImGui::GetContentRegionAvail().x;
+
+	int column_count = (int)(panel_width / cell_size);
+	int width_delta = int(panel_width) - int(cell_size)*(int(panel_width)/int(cell_size));
+
+	if (panel_width > cell_size) {
+		ImGui::Columns(column_count, 0, false);
+
+		for (int i = 1; i < column_count; i++)
+			ImGui::SetColumnOffset(i, i * cell_size);
+	}
+
+	auto* draw_list = ImGui::GetWindowDrawList();
+	auto win_pos = ImGui::GetWindowPos();
+
+	int column_idx = 0;
+	int row_idx = 1;
+
+	float y_scroll = ImGui::GetScrollY();
+
+	return { panel_width, cell_size };
+}

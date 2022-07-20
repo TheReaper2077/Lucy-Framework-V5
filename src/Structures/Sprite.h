@@ -12,6 +12,8 @@ namespace lucy {
 
 		std::string name = "New Sprite";
 
+		uuid id;
+
 		RawTexture* texture_raw = nullptr;
 
 		int idx = 0;

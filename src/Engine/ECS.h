@@ -1,5 +1,7 @@
 #pragma once
 
+#include "EngineStatus.h"
+#include "EngineSettings.h"
 #include <entt/entt.hpp>
 #include <unordered_map>
 

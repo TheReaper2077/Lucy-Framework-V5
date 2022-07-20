@@ -22,4 +22,6 @@ namespace ImGui {
 			ImGui::EndCombo();
 		}
 	}
+	
+	std::tuple<float, float> ThumbnailListLogic(const float& padding, const float& thumbnail_size);
 }

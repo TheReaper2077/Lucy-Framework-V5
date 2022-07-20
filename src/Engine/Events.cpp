@@ -13,6 +13,23 @@ void lucy::Events::Init() {
 void lucy::Events::Update() {
 	is_file_dropped = false;
 
+	dropfilename = "";
+	drag_begin = false;
+	static bool drag_end;
+	static int drag_count;
+
+	if (drag_count > 1) {
+		payload_data = nullptr;
+		payload_type = "";
+		drag_end = false;
+	}
+
+	if (drag_end) {
+		drag_count++;
+	} else {
+		drag_count = 0;
+	}
+
 	while (SDL_PollEvent(&event)) {
 		ImGui_ImplSDL2_ProcessEvent(&event);
 
@@ -47,9 +64,15 @@ void lucy::Events::Update() {
 		}
 		if (event.type == SDL_MOUSEBUTTONDOWN) {
 			pressed_buttons.insert(event.button.button);
+			if (event.button.button == SDL_BUTTON_LEFT) {
+				drag_begin = true;
+			}
 		}
 		if (event.type == SDL_MOUSEBUTTONUP) {
 			pressed_buttons.erase(event.button.button);
+			if (event.button.button == SDL_BUTTON_LEFT) {
+				drag_end = true;
+			}
 		}
 		if (event.type == SDL_MOUSEWHEEL) {
 			scrollup = (event.wheel.y > 0);
@@ -156,6 +179,23 @@ const std::string& lucy::Events::GetDroppedFile() {
 
 bool lucy::Events::IsFileDropped() {
 	return is_file_dropped;
+}
+
+void lucy::Events::SetPayload(void* data, const std::string& type) {
+	payload_data = data;
+	payload_type = type;
+}
+
+bool lucy::Events::IsPayloadPresent() {
+	return (payload_data != nullptr);
+}
+
+void* lucy::Events::GetPayloadData() {
+	return payload_data;
+}
+
+std::string lucy::Events::GetPayloadType() {
+	return payload_type;
 }
 
 SDL_Event& lucy::Events::GetEvent() {

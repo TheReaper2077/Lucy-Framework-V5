@@ -1,16 +1,15 @@
 #pragma once
 
-#define UUID_SYSTEM_GENERATOR
-#include <stduuid/uuid.h>
 #include <string>
+#include <Engine/UUID.h>
 
 namespace lucy {
 	struct Tag {
+		uuid id = GetID();
 		std::string name = "";
-		std::string id = uuids::to_string(uuids::uuid_system_generator{}());
 		bool hidden = false;
 
-		Tag(const std::string& name, const std::string& id): name(name), id(id) {}
+		Tag(const std::string& name, const uuid& id): name(name), id(id) {}
 		Tag(const std::string& name): name(name) {}
 	};
 }

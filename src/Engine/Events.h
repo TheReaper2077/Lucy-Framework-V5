@@ -36,6 +36,11 @@ namespace lucy {
 
 		bool is_window_resized;
 
+		void* payload_data = nullptr;
+		std::string payload_type;
+
+		bool drag_begin;
+
 	public:
 		void Init();
 		void Update();
@@ -63,6 +68,11 @@ namespace lucy {
 
 		const std::string& GetDroppedFile();
 		bool IsFileDropped();
+
+		void SetPayload(void* data, const std::string& type);
+		bool IsPayloadPresent();
+		void* GetPayloadData();
+		std::string GetPayloadType();
 
 		SDL_Event& GetEvent();
 	};

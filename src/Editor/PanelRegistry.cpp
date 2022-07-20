@@ -9,5 +9,7 @@ void lucy::PanelRegistry::Init() {
 	Add<PanelInstance_MaterialRegistry>();
 
 	Add<PanelInstance_TextureRegistry>();
+
+	Add<PanelInstance_SpriteEditor>();
 }
 
