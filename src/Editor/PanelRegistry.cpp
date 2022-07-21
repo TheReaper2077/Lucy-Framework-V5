@@ -11,5 +11,7 @@ void lucy::PanelRegistry::Init() {
 	Add<PanelInstance_TextureRegistry>();
 
 	Add<PanelInstance_SpriteEditor>();
+
+	Add<PanelInstance_Explorer>();
 }
 

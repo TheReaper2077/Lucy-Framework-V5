@@ -61,11 +61,11 @@ void lucy::EditorStatus::CloseSpriteEditor() {
 	
 }
 
-void lucy::EditorStatus::SpriteEditorTexture() {
-	
+std::string lucy::EditorStatus::SpriteEditorTexture() {
+	return "";
 }
 
 bool lucy::EditorStatus::IsOpenSpriteEditor() {
-	
+	return false;
 }
 

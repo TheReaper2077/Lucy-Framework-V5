@@ -31,7 +31,7 @@ namespace lucy {
 
 		void OpenSpriteEditor(std::string texture);
 		void CloseSpriteEditor();
-		void SpriteEditorTexture();
+		std::string SpriteEditorTexture();
 		bool IsOpenSpriteEditor();
 	};
 }

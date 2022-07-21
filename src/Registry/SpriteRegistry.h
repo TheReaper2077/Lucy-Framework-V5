@@ -10,6 +10,7 @@ namespace lucy {
 		std::unordered_map<std::string, lucy::Sprite> sprite_store;
 
 		RawTexture* GetTexture(const std::string& filename);
+		RawTexture* GetTexture();
 		lgl::Texture* GetNullTexture();
 		RawTexture* GetTextureById(const uuid& id);
 		RawTexture* LoadTexture(const std::string& name, const std::string& filename, const uuid& id = GetID());

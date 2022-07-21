@@ -29,6 +29,8 @@ namespace lucy {
 
 		PanelInstance_Statistics,
 
+		PanelInstance_Explorer,
+
 		PanelInstance_COUNT,
 	};
 
