@@ -7,7 +7,7 @@ enable_testing()
 file(GLOB_RECURSE TARGET_SRC "src/*.cpp" "src/*.c" "./dependencies/src/*.cpp" "./dependencies/src/*.c")
 
 include(C:/Users/krishnadev/vcpkg/scripts/buildsystems/vcpkg.cmake)
-include_directories("./dependencies/include/" src C:/Users/krishnadev/vcpkg/installed/x64-windows/include)
+include_directories("./dependencies/include/" src C:/Users/krishnadev/vcpkg/installed/x64-windows/include "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.32.31326/include/")
 
 set(CMAKE_CXX_STANDARD 20)
 

@@ -13,6 +13,7 @@ namespace lucy {
 		RawTexture* GetTexture();
 		lgl::Texture* GetNullTexture();
 		RawTexture* GetTextureById(const uuid& id);
+		RawTexture* GetTextureByFilename(const std::string& filename);
 		RawTexture* LoadTexture(const std::string& name, const std::string& filename, const uuid& id = GetID());
 
 		std::string Serialize();

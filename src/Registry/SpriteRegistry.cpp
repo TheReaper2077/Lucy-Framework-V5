@@ -21,7 +21,21 @@ lucy::RawTexture* lucy::SpriteRegistry::GetTextureById(const uuid& id) {
 	return &texture_store[id];
 }
 
+lucy::RawTexture* lucy::SpriteRegistry::GetTextureByFilename(const std::string& filename) {
+	for (auto& pair: texture_store) {
+		if (pair.second.filename == filename)
+			return &pair.second;
+	}
+
+	return nullptr;
+}
+
 lucy::RawTexture* lucy::SpriteRegistry::LoadTexture(const std::string& name, const std::string& filename, const uuid& id) {
+	for (auto& pair: texture_store) {
+		if (pair.second.filename == filename)
+			return &pair.second;
+	}
+
 	if (texture_store.find(id) == texture_store.end()) {
 		texture_store[id] = {};
 

@@ -28,7 +28,7 @@ void lucy::Editor::Init(SDL_Window* sdl_window, SDL_GLContext* sdl_glcontext) {
 	ImGui_ImplOpenGL3_Init("#version 400");
 
 	ImGui::StyleColorsDark();
-	VS_Theme();
+	embraceTheDarkness();
 
 	auto& editorstatus = registry.store<EditorStatus>();
 	auto& windowregistry = registry.store<WindowRegistry>();
