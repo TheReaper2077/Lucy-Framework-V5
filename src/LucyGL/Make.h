@@ -67,4 +67,18 @@ namespace lgl {
 
 		return indexbuffer_array.back().get();
 	}
+
+	void DeleteTexture(Texture* texture);
+
+	void DeleteShader(Shader* shader);
+
+	void DeleteFrameBuffer(FrameBuffer* framebuffer);
+
+	void DeleteUniformBuffer(UniformBuffer* uniformbuffer);
+
+	void DeleteVertexArray(VertexArray* vertexarray);
+
+	void DeleteVertexBuffer(VertexBuffer* vertexbuffer);
+
+	void DeleteIndexBuffer(IndexBuffer* indexbuffer);
 }

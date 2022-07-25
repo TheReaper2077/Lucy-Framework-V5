@@ -6,11 +6,11 @@
 static auto& registry = lucy::Registry::Instance();
 static auto& vertexarrayregistry = registry.store<lucy::MeshVAORegistry>();
 
-lucy::Mesh::Mesh(const aiScene* ai_scene, aiMesh* ai_mesh) {
-	Import(ai_scene, ai_mesh);
+lucy::Mesh::Mesh(aiMesh* ai_mesh) {
+	Import(ai_mesh);
 }
 
-void lucy::Mesh::Import(const aiScene* ai_scene, aiMesh* ai_mesh) {
+void lucy::Mesh::Import(aiMesh* ai_mesh) {
 	for (int i = 0; i < ai_mesh->mNumVertices; i++) {
 		if (ai_mesh->HasPositions())
 			positions.push_back(glm::vec3(ai_mesh->mVertices[i].x, ai_mesh->mVertices[i].y, ai_mesh->mVertices[i].z));
@@ -41,10 +41,10 @@ void lucy::Mesh::Import(const aiScene* ai_scene, aiMesh* ai_mesh) {
 }
 
 void lucy::Mesh::Transfer() {
-	if (positions.size() && !disable_position) flags |= MeshVAOAttribFlag_POSITION;
-	if (normals.size() && !disable_normal) flags |= MeshVAOAttribFlag_NORMAL;
-	if (colors.size() && !disable_color) flags |= MeshVAOAttribFlag_COLOR;	
-	if (uv.size() && !disable_uv) flags |= MeshVAOAttribFlag_UV;
+	flags |= MeshVAOAttribFlag_POSITION;
+	if (normals.size() && enable_normal) flags |= MeshVAOAttribFlag_NORMAL;
+	if (colors.size() && enable_color) flags |= MeshVAOAttribFlag_COLOR;
+	if (uv.size() && enable_uv) flags |= MeshVAOAttribFlag_UV;
 
 	vertexarray = vertexarrayregistry.GetVertexArray(flags);	
 	indexcount = indices.size();

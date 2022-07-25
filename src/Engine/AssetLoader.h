@@ -14,9 +14,10 @@ namespace lucy {
 		AssetLoader() {}
 
 		void Init();
-		void Import(std::string filepath);
-		const Mesh& LoadMesh(std::string filename);
-		const Mesh& LoadSubMesh(std::string filename);
-		const Material& LoadMaterial(std::string filename);
+		const aiScene* Import(std::string filepath, uint32_t flags = 0);
+		const std::string& LoadMesh(aiMesh* ai_mesh);
+		const std::string& LoadMesh(const std::string& filename);
+		// const std::string& LoadFragmentedMesh(std::string filename);
+		// const std::string& LoadMaterial(std::string filename);
 	};
 }

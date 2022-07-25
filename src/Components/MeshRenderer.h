@@ -7,6 +7,8 @@ namespace lucy {
 		Mesh* mesh = nullptr;
 		Material* material = nullptr;
 
+		bool visible = true;
+
 		bool enable_lighting = false;
 
 		MeshRenderer() {}

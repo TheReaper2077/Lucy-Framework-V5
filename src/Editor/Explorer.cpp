@@ -2,6 +2,13 @@
 #include <filesystem>
 #include <iostream>
 #include <Engine/Util.h>
+#include <Engine/Events.h>
+#include "EditorStatus.h"
+
+static auto& registry = lucy::Registry::Instance();
+static auto& spriteregistry = registry.store<lucy::SpriteRegistry>();
+static auto& editorstatus = registry.store<lucy::EditorStatus>();
+static auto& events = registry.store<lucy::Events>();
 
 lucy::Explorer::Explorer() {
 	treeinit_path = "D:/C++/Lucy Framework V5/assets/";
@@ -26,6 +33,12 @@ std::string lucy::Explorer::GetSelectedTreePath() {
 
 std::string lucy::Explorer::GetSelectedExplorerItemPath() {
 	return selectedexploreritem_path;
+}
+
+void lucy::Explorer::MainNavigation() {
+	if (ImGui::IsWindowFocused()) {
+		// if (events.)
+	}
 }
 
 void lucy::Explorer::RenderTree() {
@@ -73,7 +86,7 @@ void lucy::Explorer::ShortcutMenu() {
 	
 	if (ImGui::BeginPopup("Scene Shortcut")) {
 		if (ImGui::Selectable("New File")) {
-
+			
 		}
 		if (ImGui::Selectable("New Folder")) {
 
@@ -94,20 +107,60 @@ void lucy::Explorer::ShortcutMenu() {
 void lucy::Explorer::RenderExplorer() {
 	if (!std::filesystem::exists(explorer_path)) return;
 
-	for (auto entry: std::filesystem::directory_iterator(explorer_path)) {
-		ImGui::Button(entry.path().generic_string().c_str());
+	if (ImGui::BeginTable("##3", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable)) {
+		ImGui::TableNextRow();
+
+		ImGui::TableSetColumnIndex(0);
+
+		ImGui::Text("Name");
+
+		ImGui::TableSetColumnIndex(1);
+
+		ImGui::Text("Type");
+
+		ImGui::TableSetColumnIndex(2);
+
+		ImGui::Text("ID");
+
+		for (auto entry: std::filesystem::directory_iterator(explorer_path)) {
+			ImGui::TableNextRow();
+
+			ImGui::TableSetColumnIndex(0);
+
+			if (ImGui::Selectable(entry.path().generic_string().c_str())) {
+				if (entry.is_directory()) {
+					explorer_path = entry.path().generic_string().c_str();
+					break;
+				}
+			}
+
+			ImGui::TableSetColumnIndex(1);
+
+			if (entry.is_directory()) {
+				ImGui::Text("Folder");
+			}
+		}
+		ImGui::EndTable();
 	}
 
 	static std::string exp_path = "";
-
 	if (exp_path == explorer_path) return;
-
 	exp_path = explorer_path;
 
+	if (path_stack.size()) {
+		if (exp_path != path_stack.back()) {
+			path_stack.push_back(exp_path);
+		}
+		if (path_stack.size() > 256) {
+			path_stack.pop_front();
+		}
+	} else {
+		path_stack.push_back(exp_path);
+	}
+
 	std::stringstream test(explorer_path);
-	std::string segment;
 	std::vector<std::string> seglist;
-	std::string temp = "";
+	std::string segment, temp = "";
 
 	while(std::getline(test, segment, '/')) {
 		seglist.push_back(segment);
@@ -115,10 +168,7 @@ void lucy::Explorer::RenderExplorer() {
 
 	for (int i = 0; i < seglist.size(); i++) {
 		temp += seglist[i] + '/';
-		// std::cout << '\t' << temp << '\n';
-		// if (node_state.find(temp) != node_state.end()) {
-			node_state[temp] = true;
-		// }
+		node_state[temp] = true;
 	}
 }
 
@@ -138,7 +188,11 @@ void lucy::Explorer::Render() {
 
 	ImGui::BeginChild("##1");
 	ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+
 	ImGui::InputText("##", &explorer_path);
+
+	while (explorer_path.find("\\") != std::string::npos)
+		util::replace_first(explorer_path, "\\", "/");
 
 	RenderExplorer();
 

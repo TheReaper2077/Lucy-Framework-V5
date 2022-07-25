@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Components/Components.h>
 #include "MeshRenderPass.h"
+#include <glm/gtx/string_cast.hpp>
 
 static auto& registry = lucy::Registry::Instance();
 static auto& renderer = lucy::Registry::Instance().store<lucy::Renderer>();
@@ -21,6 +22,8 @@ void lucy::MeshRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 	material_entities.clear();
 
 	for (auto [entity, tag, transform, meshrenderer]: registry.view<Tag, Transform, MeshRenderer>().each()) {
+		if (meshrenderer.mesh == nullptr) continue;
+		
 		if (meshrenderer.enable_lighting) {
 			lighting_entities.insert(entity);
 		}
@@ -37,6 +40,8 @@ void lucy::MeshRenderPass::Render(lgl::FrameBuffer* framebuffer) {
 
 		if (material == nullptr)
 			continue;
+
+		// std::cout << glm::to_string(material->albedo) << ' ' << material->name << '\n';
 
 		pbr_shader->SetUniformVec3("material.albedo", &material->albedo[0]);
 		pbr_shader->SetUniformf("material.metallic", material->metallic);

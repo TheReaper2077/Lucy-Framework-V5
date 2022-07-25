@@ -3,9 +3,15 @@
 #include <Engine/ECS.h>
 #include <Registry/Registry.h>
 #include <Components/Components.h>
+#include <Engine/Events.h>
 #include "Gui.h"
 
 static auto& registry = lucy::Registry::Instance();
+static auto& editorstatus = registry.store<lucy::EditorStatus>();
+static auto& events = registry.store<lucy::Events>();
+static auto& materialregistry = registry.store<lucy::MaterialRegistry>();
+static auto& meshregistry = registry.store<lucy::MeshRegistry>();
+static auto& spriteregistry = registry.store<lucy::SpriteRegistry>();
 
 namespace lucy {
 	template <typename T>
@@ -121,6 +127,36 @@ void lucy::ComponentHeader<lucy::SpriteRenderer>::Render(Entity entity) {
 template <>
 void lucy::ComponentHeader<lucy::MeshRenderer>::Render(Entity entity) {
 	auto& meshrenderer = registry.get<MeshRenderer>(entity);
+
+	ImGui::Checkbox("Enable Lighting", &meshrenderer.enable_lighting);
+
+	if (ImGui::Selectable("Material")) {
+		ImGui::OpenPopup("mat_select");
+	}
+
+	if (ImGui::Selectable("Mesh")) {
+		ImGui::OpenPopup("mesh_select");
+	}
+
+	if (ImGui::BeginPopup("mat_select")) {
+		for (auto& pair: materialregistry.material_registry) {
+			if (ImGui::Selectable(pair.second.name.c_str())) {
+				meshrenderer.material = &pair.second;
+			}
+		}
+
+		ImGui::EndPopup();
+	}
+
+	if (ImGui::BeginPopup("mesh_select")) {
+		for (auto& pair: meshregistry.mesh_registry) {
+			if (ImGui::Selectable(pair.second.name.c_str())) {
+				meshrenderer.mesh = &pair.second.mesh;
+			}
+		}
+
+		ImGui::EndPopup();
+	}
 }
 
 void lucy::Panel<lucy::PanelInstance_Inspector>::Render() {

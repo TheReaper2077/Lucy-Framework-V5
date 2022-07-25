@@ -3,12 +3,15 @@
 #include "Panel.h"
 #include <string>
 #include <Registry/Registry.h>
+#include <deque>
 
 namespace lucy {
 	class Explorer {
 	private:
 		std::string tree_path, explorer_path, treeinit_path, selectedtree_path, selectedexploreritem_path;
 		std::unordered_map<std::string, bool> node_state;
+
+		std::deque<std::string> path_stack;
 
 	public:
 		Explorer();
@@ -19,6 +22,8 @@ namespace lucy {
 		void SetTreeInitPath(std::string path);
 		std::string GetSelectedTreePath();
 		std::string GetSelectedExplorerItemPath();
+
+		void MainNavigation();
 
 		void RenderTree();
 		void RenderTree(const std::string& dirpath);

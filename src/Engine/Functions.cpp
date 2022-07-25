@@ -1,6 +1,8 @@
 #include "Functions.h"
 #include <Components/Components.h>
 #include <Engine/UUID.h>
+#include "ToYAML.h"
+#include "Util.h"
 
 static auto& registry = lucy::Registry::Instance();
 
@@ -81,6 +83,14 @@ void lucy::Functions::SerializeEntities() {
 }
 
 void lucy::Functions::DeserializeEntities() {
+	
+}
+
+void lucy::Functions::SerializeRegistries() {
+	
+}
+
+void lucy::Functions::DeserializeRegistries() {
 	
 }
 

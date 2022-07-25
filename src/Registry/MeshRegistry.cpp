@@ -33,21 +33,23 @@ void lucy::MeshRegistry::Init() {
 	};
 
 	mesh.Transfer();
-
-	AddMesh("test", mesh);
+	AddMesh("plane", mesh);
 }
 
-bool lucy::MeshRegistry::Contains(std::string name) {
-	return (mesh_registry.find(name) != mesh_registry.end());
+lucy::Mesh* lucy::MeshRegistry::GetMesh(const std::string& id) {
+	if (mesh_registry.find(id) == mesh_registry.end()) return nullptr;
+
+	return &mesh_registry[id].mesh;
 }
 
-lucy::Mesh* lucy::MeshRegistry::GetMesh(std::string name) {
-	if (!Contains(name)) return nullptr;
+std::string lucy::MeshRegistry::AddMesh(std::string name, const Mesh& mesh, uuid id) {
+	mesh_registry[id] = MeshContainer { mesh, name };
 
-	return &mesh_registry[name];
+	return id;
 }
 
-void lucy::MeshRegistry::AddMesh(std::string name, Mesh mesh) {
-	mesh_registry[name] = mesh;
-}
+std::string lucy::MeshRegistry::AddMesh(std::string name, aiMesh* ai_mesh, uuid id) {
+	mesh_registry[id] = MeshContainer { Mesh(ai_mesh), name };
 
+	return id;
+}

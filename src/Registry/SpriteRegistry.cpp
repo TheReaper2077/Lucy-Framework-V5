@@ -5,13 +5,16 @@ lucy::RawTexture* lucy::SpriteRegistry::GetTexture(const std::string& filename) 
 }
 
 lgl::Texture* lucy::SpriteRegistry::GetNullTexture() {
-	static lgl::Texture texture;
+	static lgl::Texture* texture = nullptr;
 
-	texture.Bind();
-	texture.LoadTexture(nullptr);
-	texture.UnBind();
+	if (texture == nullptr) {
+		texture = new lgl::Texture();
+		texture->Bind();
+		texture->LoadTexture(nullptr);
+		texture->UnBind();
+	}
 
-	return &texture;
+	return texture;
 }
 
 lucy::RawTexture* lucy::SpriteRegistry::GetTextureById(const uuid& id) {

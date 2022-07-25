@@ -22,6 +22,8 @@ namespace lucy {
 		void Deserialize();
 		void SerializeEntities();
 		void DeserializeEntities();
+		void SerializeRegistries();
+		void DeserializeRegistries();
 
 		void StartPlaying();
 		void StopPlaying();

@@ -31,19 +31,18 @@ namespace lucy {
 
 		lgl::Primitive primitive = lgl::TRIANGLE;
 
-		bool disable_position = false;
-		bool disable_normal = false;
-		bool disable_color = false;
-		bool disable_uv = false;
+		bool enable_normal = true;
+		bool enable_color = true;
+		bool enable_uv = true;
 
 		size_t flags;
 
 		Mesh() {}
 		~Mesh() {}
 
-		Mesh(const aiScene* ai_scene, aiMesh* ai_mesh);
+		Mesh(aiMesh* ai_mesh);
 
-		void Import(const aiScene* ai_scene, aiMesh* ai_mesh);
+		void Import(aiMesh* ai_mesh);
 		void Transfer();
 		void RecalculateNormals();
 		void ClearData();

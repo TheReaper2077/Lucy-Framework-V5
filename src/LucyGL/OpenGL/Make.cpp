@@ -11,4 +11,12 @@ namespace lgl {
 	std::vector<std::unique_ptr<VertexArray>> vertexarray_array;
 	std::vector<std::unique_ptr<VertexBuffer>> vertexbuffer_array;
 	std::vector<std::unique_ptr<IndexBuffer>> indexbuffer_array;
+
+	void DeleteTexture(Texture* texture) {
+		for (int i = 0; i < texture_array.size(); i++) {
+			if (texture == texture_array[i].get()) {
+				// texture_array.erase(i);
+			}
+		}
+	}
 }

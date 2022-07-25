@@ -55,6 +55,9 @@ void lucy::Engine::Mainloop() {
 	auto& meshregistry = registry.store<MeshRegistry>();
 	auto& spriteregistry = registry.store<SpriteRegistry>();
 	auto& materialregistry = registry.store<MaterialRegistry>();
+	auto& assetloader = registry.store<AssetLoader>();
+
+	assetloader.Init();
 
 	lucy::Sprite sprite;
 
@@ -75,21 +78,21 @@ void lucy::Engine::Mainloop() {
 	registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 1));
 	registry.emplace<lucy::Camera>(camera_entity, ViewMode_FPS, true);
 
-	auto* mesh = meshregistry.GetMesh("test");
-
 	Material material;
 
 	materialregistry.AddMaterial(material);
 
+	assetloader.Import("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
+
 	auto mesh_entity = registry.create();
 	registry.emplace<lucy::Tag>(mesh_entity, "Mesh");
 	registry.emplace<lucy::Transform>(mesh_entity, glm::vec3(0, -4, 0), glm::vec3(0, 0, 0));
-	registry.emplace<lucy::MeshRenderer>(mesh_entity, mesh);
+	registry.emplace<lucy::MeshRenderer>(mesh_entity, nullptr);
 
 	auto mesh_entity2 = registry.create();
 	registry.emplace<lucy::Tag>(mesh_entity2, "Mesh2");
 	registry.emplace<lucy::Transform>(mesh_entity2, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0));
-	registry.emplace<lucy::MeshRenderer>(mesh_entity2, mesh, &material);
+	registry.emplace<lucy::MeshRenderer>(mesh_entity2, nullptr, &material);
 
 	auto light_entity = registry.create();
 	registry.emplace<lucy::Tag>(light_entity, "light");
