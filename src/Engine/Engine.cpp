@@ -2,9 +2,7 @@
 #include "Window.h"
 
 #include <Registry/Registry.h>
-#include "Renderer.h"
-#include "SpriteRenderPass.h"
-#include "MeshRenderPass.h"
+#include <LucyRE/LucyRE.h>
 #include <Components/Components.h>
 #include <Structures/Structures.h>
 #include <System/System.h>
@@ -41,9 +39,6 @@ void lucy::Engine::Init() {
 	renderer.Init();
 	// editor.Init(sdl_window, &sdl_glcontext);
 	meshregistry.Init();
-
-	renderer.AddRenderPass<SpriteRenderPass>();
-	renderer.AddRenderPass<MeshRenderPass>();
 }
 
 void lucy::Engine::Mainloop() {
@@ -53,10 +48,10 @@ void lucy::Engine::Mainloop() {
 	auto& meshregistry = registry.store<MeshRegistry>();
 	auto& spriteregistry = registry.store<SpriteRegistry>();
 	auto& materialregistry = registry.store<MaterialRegistry>();
-	auto& assetloader = registry.store<AssetLoader>();
 	auto& window = registry.store<Window>();
+	// auto& assetloader = registry.store<AssetLoader>();
 
-	assetloader.Init();
+	// assetloader.Init();
 
 	lucy::Sprite sprite;
 
@@ -67,40 +62,39 @@ void lucy::Engine::Mainloop() {
 	registry.emplace<lucy::Transform>(entity, glm::vec3(0, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 1));
 	registry.emplace<lucy::SpriteRenderer>(entity, sprite);
 
-	auto entity2 = registry.create();
-	registry.emplace<lucy::Tag>(entity2, "Entity2");
-	registry.emplace<lucy::Transform>(entity2, glm::vec3(1, 1, 2), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
-	registry.emplace<lucy::SpriteRenderer>(entity2);
-
 	auto camera_entity = registry.create();
 	registry.emplace<lucy::Tag>(camera_entity, "CameraFPS");
 	registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 1));
 	registry.emplace<lucy::Camera>(camera_entity, ViewMode_FPS, true);
 
-	Material material;
+	// auto entity2 = registry.create();
+	// registry.emplace<lucy::Tag>(entity2, "Entity2");
+	// registry.emplace<lucy::Transform>(entity2, glm::vec3(1, 1, 2), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
+	// registry.emplace<lucy::SpriteRenderer>(entity2);
 
-	materialregistry.AddMaterial(material);
+	// Material material;
 
-	assetloader.Import("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
+	// materialregistry.AddMaterial(material);
 
-	auto mesh_entity = registry.create();
-	registry.emplace<lucy::Tag>(mesh_entity, "Mesh");
-	registry.emplace<lucy::Transform>(mesh_entity, glm::vec3(0, -4, 0), glm::vec3(0, 0, 0));
-	registry.emplace<lucy::MeshRenderer>(mesh_entity, nullptr);
+	// // assetloader.Import("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
 
-	auto mesh_entity2 = registry.create();
-	registry.emplace<lucy::Tag>(mesh_entity2, "Mesh2");
-	registry.emplace<lucy::Transform>(mesh_entity2, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0));
-	registry.emplace<lucy::MeshRenderer>(mesh_entity2, nullptr, &material);
+	// auto mesh_entity = registry.create();
+	// registry.emplace<lucy::Tag>(mesh_entity, "Mesh");
+	// registry.emplace<lucy::Transform>(mesh_entity, glm::vec3(0, -4, 0), glm::vec3(0, 0, 0));
+	// registry.emplace<lucy::MeshRenderer>(mesh_entity, nullptr);
 
-	auto light_entity = registry.create();
-	registry.emplace<lucy::Tag>(light_entity, "light");
-	registry.emplace<lucy::Transform>(light_entity, glm::vec3(0, 0, 3), glm::vec3(0, 90, 0));
-	registry.emplace<lucy::Light>(light_entity, lucy::LightMode::POINT_LIGHT);
+	// auto mesh_entity2 = registry.create();
+	// registry.emplace<lucy::Tag>(mesh_entity2, "Mesh2");
+	// registry.emplace<lucy::Transform>(mesh_entity2, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0));
+	// registry.emplace<lucy::MeshRenderer>(mesh_entity2, nullptr, &material);
+
+	// auto light_entity = registry.create();
+	// registry.emplace<lucy::Tag>(light_entity, "light");
+	// registry.emplace<lucy::Transform>(light_entity, glm::vec3(0, 0, 3), glm::vec3(0, 90, 0));
+	// registry.emplace<lucy::Light>(light_entity, lucy::LightMode::POINT_LIGHT);
 
 	while (!events.IsQuittable()) {
 		events.Update();
-
 		timestep.Update();
 
 		glEnable(GL_DEPTH_TEST);
@@ -110,10 +104,6 @@ void lucy::Engine::Mainloop() {
 
 		System::CameraSystem(registry);
 		System::RenderSystem(registry);
-
-		renderer.RenderMain();
-
-		// editor.Render();
 
 		SDL_GL_SwapWindow(sdl_window);
 	}

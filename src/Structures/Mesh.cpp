@@ -150,5 +150,4 @@ void lucy::Mesh::ClearData() {
 	uvw.clear();
 
 	indices.clear();
-	texture_store.clear();
 }

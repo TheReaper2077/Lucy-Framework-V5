@@ -2,12 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glad/glad.h>
 #include <iostream>
-#include "ECS.h"
-#include "Util.h"
-#include <Registry/Registry.h>
-#include <Components/Components.h>
-
-auto& registry = lucy::Registry::Instance();
+#include <Engine/Util.h>
 
 lucy::Renderer::Renderer() {
 	
@@ -29,8 +24,8 @@ void lucy::Renderer::Init() {
 	SetProjection(glm::mat4(1.0f));
 	SetViewPos(glm::vec3(0.0f));
 
-	SetShader("mesh", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.frag");
-	SetShader("pbrmesh", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\mesh.vert", "D:\\C++\\Lucy Framework V5\\src\\Engine\\Shaders\\Default\\pbr.frag");
+	SetShader("mesh", "D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\Default\\mesh.vert", "D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\Default\\mesh.frag");
+	SetShader("pbrmesh", "D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\Default\\mesh.vert", "D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\Default\\pbr.frag");
 }
 
 void lucy::Renderer::SetModel(const glm::mat4& model) {
@@ -122,42 +117,12 @@ void lucy::Renderer::Clear(const glm::vec3& color) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void lucy::Renderer::RenderMain() {
-	auto& window = registry.store<Window>();
-
-	Clear({ 0, 0, 0, 0 });
-	glViewport(0, 0, window.size.x, window.size.y);
-
-	for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
-		if (!camera.enable) continue;
-
-		SetProjection(camera.projection);
-		SetView(camera.view);
-		SetViewPos(camera.position);
-
-		Clear(camera.clear_color);
-		glViewport(0, 0, window.size.x, window.size.y);
-
-		// for (auto& pair: renderpass_map) {
-		// 	pair.second->Init();
-		// 	pair.second->Render(nullptr);
-		// }
-	}
-}
-
 void lucy::Renderer::SetShader(const std::string& name, const std::string& vs_filename, const std::string& fs_filename) {
 	shader_src_map[name] = std::pair(vs_filename, fs_filename);
 }
 
 lgl::Shader* lucy::Renderer::GetPBRShader(const std::string& name) {
-	int dir_count = 0, point_count = 0; 
-
-	for (auto [entity, tag, transform, light]: registry.view<Tag, Transform, Light>().each()) {
-		dir_count += (light.mode == DIRECTIONAL_LIGHT);
-		point_count += (light.mode == POINT_LIGHT);
-	}
-
-	auto id = name + "_PBR_" + std::to_string(dir_count) + "_" + std::to_string(point_count);
+	auto id = name + "_PBR_" + std::to_string(directional_light_count) + "_" + std::to_string(point_light_count);
 
 	if (shader_map.find(id) == shader_map.end()) {
 		const auto& [vs, fs] = shader_src_map[name];
@@ -167,12 +132,12 @@ lgl::Shader* lucy::Renderer::GetPBRShader(const std::string& name) {
 
 		std::string uniforms, logic;
 
-		for (int i = 0; i < dir_count; i++) {
+		for (int i = 0; i < directional_light_count; i++) {
 			std::string dir_light = "dir_light" + std::to_string(i);
 			uniforms += "uniform Light " + dir_light + ";\n";
 			logic += "	Lo += DirCalculatePBR(N, V, " + dir_light + ".position, " + dir_light + ".direction, " + dir_light + ".color);\n";
 		}
-		for (int i = 0; i < point_count; i++) {
+		for (int i = 0; i < point_light_count; i++) {
 			auto point_light = "point_light" + std::to_string(i);
 			uniforms += "uniform Light " + point_light + ";\n";
 			logic += "	Lo += PointCalculatePBR(N, V, " + point_light + ".position, " + point_light + ".color);\n";
@@ -184,36 +149,7 @@ lgl::Shader* lucy::Renderer::GetPBRShader(const std::string& name) {
 		shader_map[id] = lgl::MakeShader(vs_src, fs_src, false);
 	}
 
-	auto* shader = shader_map[id];
-
-	shader->Bind();
-
-	for (auto [entity, tag, transform, light]: registry.view<Tag, Transform, Light>().each()) {
-		if (light.mode == DIRECTIONAL_LIGHT) {
-			auto direction = glm::normalize(transform.GetRotationQuat() * glm::vec3(0, -1.0, 0));
-			auto dir_light = "dir_light" + std::to_string(dir_count);
-
-			dir_count--;
-
-			shader->SetUniformVec3(dir_light + ".position", &transform.translation[0]);
-			shader->SetUniformVec3(dir_light + ".color", &light.color[0]);
-			shader->SetUniformVec3(dir_light + ".direction", &direction[0]);
-		}
-		if (light.mode == POINT_LIGHT) {
-			point_count--;
-
-			auto point_light = "point_light" + std::to_string(point_count);
-
-			shader->SetUniformVec3(point_light + ".position", &transform.translation[0]);
-			shader->SetUniformVec3(point_light + ".color", &light.color[0]);
-		}
-	}
-
-	shader->UnBind();
-
-	assert(dir_count == 0 && point_count == 0);
-
-	return shader;
+	return shader_map[id];
 }
 
 lgl::Shader* lucy::Renderer::GetShader(const std::string& name) {
@@ -224,75 +160,5 @@ lgl::Shader* lucy::Renderer::GetShader(const std::string& name) {
 	}
 
 	return shader_map[name];
-}
-
-
-using TexVertex = lucy::Vertex::P1UV1T1;
-using ColorVertex = lucy::Vertex::P1C1;
-using TexColorVertex = lucy::Vertex::P1C1UV1T1;
-
-static enum ShaderStates {
-	TEXTURE,
-	TEXTURE_COLOR,
-	TEXTURE_UCOLOR,
-	UTEXTURE,
-	UTEXTURE_COLOR,
-	UTEXTURE_UCOLOR,
-	COLOR,
-	UCOLOR,
-};
-
-template <>
-void lucy::Renderer::Flush<ColorVertex>() {
-	auto& vertices = GetVertices<ColorVertex>();
-	if (vertices.size() == 0) return;
-
-	auto* vertexbuffer = AddData(vertices);
-
-	shader->SetUniformi("u_type", COLOR);
-
-	RenderQuads(lgl::TRIANGLE, nullptr, ColorVertex::VertexArray(), vertexbuffer, vertices.size());
-
-	vertices.clear();
-}
-
-template <>
-void lucy::Renderer::Flush<TexVertex>() {
-	auto& vertices = GetVertices<TexVertex>();
-	if (vertices.size() == 0) return;
-
-	auto* vertexbuffer = AddData(vertices);
-
-	shader->SetUniformi("u_type", TEXTURE);
-
-	RenderQuads(lgl::TRIANGLE, nullptr, TexVertex::VertexArray(), vertexbuffer, vertices.size(), texture_store);
-
-	texture_store.clear();
-	vertices.clear();
-}
-
-template <>
-void lucy::Renderer::Flush<TexColorVertex>() {
-	auto& vertices = GetVertices<TexColorVertex>();
-	if (vertices.size() == 0) return;
-
-	auto* vertexbuffer = AddData(vertices);
-
-	shader->SetUniformi("u_type", TEXTURE_COLOR);
-	
-	RenderQuads(lgl::TRIANGLE, nullptr, TexColorVertex::VertexArray(), vertexbuffer, vertices.size(), texture_store);
-
-	texture_store.clear();
-	vertices.clear();
-}
-
-void lucy::Renderer::Flush() {
-	shader->Bind();
-
-	Flush<ColorVertex>();
-	Flush<TexVertex>();
-	Flush<TexColorVertex>();
-
-	shader->UnBind();
 }
 

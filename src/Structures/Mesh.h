@@ -4,7 +4,7 @@
 #include <LucyGL/LucyGL.h>
 #include <array>
 #include <vector>
-#include <Engine/TextureStore.h>
+#include <LucyRE/LucyRE.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -19,8 +19,6 @@ namespace lucy {
 		std::vector<glm::vec3> uvw;
 
 		std::vector<uint32_t> indices;
-
-		TextureStore texture_store;
 
 		lgl::VertexBuffer* vertexbuffer = nullptr;
 		lgl::IndexBuffer* indexbuffer = nullptr;
