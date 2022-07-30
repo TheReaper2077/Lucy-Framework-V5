@@ -12,9 +12,6 @@
 #include <SDL2/SDL.h>
 #include <glm/gtx/string_cast.hpp>
 #include <glad/glad.h>
-#include <Editor/Editor.h>
-
-// static lucy::Editor editor;
 
 void lucy::Engine::Init() {
 	auto null_entity = registry.create();
@@ -37,7 +34,6 @@ void lucy::Engine::Init() {
 
 	events.Init();
 	renderer.Init();
-	// editor.Init(sdl_window, &sdl_glcontext);
 	meshregistry.Init();
 }
 
