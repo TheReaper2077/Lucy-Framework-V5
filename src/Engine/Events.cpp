@@ -1,7 +1,7 @@
 #include "Events.h"
 #include <imgui_impl_sdl.h>
 #include "ECS.h"
-#include <Registry/Registry.h>
+#include "Window.h"
 #include <iostream>
 
 static auto& registry = lucy::Registry::Instance();
@@ -31,7 +31,7 @@ void lucy::Events::Update() {
 	}
 
 	while (SDL_PollEvent(&event)) {
-		ImGui_ImplSDL2_ProcessEvent(&event);
+		// ImGui_ImplSDL2_ProcessEvent(&event);
 
 		is_quit = (event.type == SDL_QUIT);
 
@@ -134,7 +134,7 @@ bool lucy::Events::IsButtonToggled(unsigned int button) {
 }
 
 const glm::vec3& lucy::Events::GetCursorPosNormalized() {
-	return GetCursorPosNormalized(registry.store<WindowRegistry>()[MAIN_WINDOW]);
+	return GetCursorPosNormalized(&registry.store<Window>());
 }
 
 const glm::vec3& lucy::Events::GetCursorPos() {
@@ -152,7 +152,7 @@ const glm::vec3& lucy::Events::GetCursorPosNormalized(Window* window) {
 }
 
 const glm::vec3& lucy::Events::GetRelCursorPosNormalized() {
-	return GetRelCursorPosNormalized(registry.store<WindowRegistry>()[MAIN_WINDOW]);
+	return GetRelCursorPosNormalized(&registry.store<Window>());
 }
 
 const glm::vec3& lucy::Events::GetRelCursorPos() {

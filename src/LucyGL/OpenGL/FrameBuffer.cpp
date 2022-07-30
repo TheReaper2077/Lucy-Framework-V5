@@ -75,7 +75,7 @@ lgl::FrameBuffer::~FrameBuffer() {
 }
 
 void lgl::FrameBuffer::AttachTexture2D(Attachment attachment, TextureMode target, TextureId texture, int level) {
-	glFramebufferTexture2D(GL_FRAMEBUFFER, Map(attachment), Map(target), texture, level);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, target, texture, level);
 }
 
 void lgl::FrameBuffer::AttachTexture2D(Attachment attachment, Texture* texture, int level) {
@@ -88,7 +88,7 @@ void lgl::FrameBuffer::SetDrawAttachments(const std::vector<Attachment>& attachm
 	auto* draw_attachments = (unsigned int*)malloc(attachments.size() * sizeof(unsigned int));
 
 	for (int i = 0; i < attachments.size(); i++)
-		draw_attachments[i] = Map(attachments[i]);
+		draw_attachments[i] = attachments[i];
 
 	glDrawBuffers(attachments.size(), draw_attachments);
 

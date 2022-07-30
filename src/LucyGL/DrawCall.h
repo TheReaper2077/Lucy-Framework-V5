@@ -9,7 +9,7 @@ namespace lgl {
 	bool DrawIndexed(Primitive mode, int count, Type type, void* indices);
 	bool MultiDrawIndexed(Primitive mode, int count, Type type, void* indices);
 
-	void Clear(float r, float g, float b, float a, BitFlags flags);
-	void Clear(BitFlags flags);
+	void Clear(float r, float g, float b, float a, BufferBitFlags flags);
+	void Clear(BufferBitFlags flags);
 	void ClearColor(float r, float g, float b, float a);
 }

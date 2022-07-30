@@ -63,15 +63,15 @@ void lgl::Texture::LoadSpriteSheet(const char* filename, int x, int y, int w, in
 }
 
 void lgl::Texture::Load2D(int level, Format internalformat, int width, int height, int border, Format format, Type type, void* data) {
-	glTexImage2D(Map(mode), level, Map(internalformat), width, height, border, Map(format), Map(type), data);
+	glTexImage2D(mode, level, internalformat, width, height, border, format, type, data);
 }
 
 void lgl::Texture::Load3D(int level, Format internalformat, int width, int height, int depth, int border, Format format, Type type, void* data) {
-	glTexImage3D(Map(mode), level, Map(internalformat), width, height, depth, border, Map(format), Map(type), data);
+	glTexImage3D(mode, level, internalformat, width, height, depth, border, format, type, data);
 }
 
 void lgl::Texture::LoadSub3D(int level, Format internalformat, int x, int y, int z, int width, int height, int depth, Format format, Type type, void* data) {
-	glTexSubImage3D(Map(mode), level, x, y, z, width, height, depth, Map(format), Map(type), data);
+	glTexSubImage3D(mode, level, x, y, z, width, height, depth, format, type, data);
 }
 
 void lgl::Texture::GenerateMimmap() {
@@ -81,31 +81,31 @@ void lgl::Texture::GenerateMimmap() {
 void lgl::Texture::SetWrapMode(TextureWrapMode wrap_s, TextureWrapMode wrap_t, TextureWrapMode wrap_r) {
 	if (this->wrap_s != wrap_s && wrap_s != WrapMode_None) {
 		this->wrap_s = wrap_s;
-		glTexParameteri(Map(mode), GL_TEXTURE_WRAP_S, Map(wrap_s));
+		glTexParameteri(mode, GL_TEXTURE_WRAP_S, wrap_s);
 	}
 	if (this->wrap_t != wrap_t && wrap_t != WrapMode_None) {
 		this->wrap_t = wrap_t;
-		glTexParameteri(Map(mode), GL_TEXTURE_WRAP_T, Map(wrap_t));
+		glTexParameteri(mode, GL_TEXTURE_WRAP_T, wrap_t);
 	}
 	if (this->wrap_r != wrap_r && wrap_r != WrapMode_None) {
 		this->wrap_r = wrap_r;
-		glTexParameteri(Map(mode), GL_TEXTURE_WRAP_R, Map(wrap_r));
+		glTexParameteri(mode, GL_TEXTURE_WRAP_R, wrap_r);
 	}
 }
 
 void lgl::Texture::SetFilteringMode(TextureFilteringMode mag, TextureFilteringMode min) {
 	if (this->mag != mag && mag != FilterMode_None) {
 		this->mag = mag;
-		glTexParameteri(Map(mode), GL_TEXTURE_MAG_FILTER, Map(mag));
+		glTexParameteri(mode, GL_TEXTURE_MAG_FILTER, mag);
 	}
 	if (this->min != min && min != FilterMode_None) {
 		this->min = min;
-		glTexParameteri(Map(mode), GL_TEXTURE_MIN_FILTER, Map(min));
+		glTexParameteri(mode, GL_TEXTURE_MIN_FILTER, min);
 	}
 }
 
 void lgl::Texture::Bind() {
-	glBindTexture(Map(mode), id);
+	glBindTexture(mode, id);
 }
 
 void lgl::Texture::BindUnit(const unsigned int unit) {
@@ -113,7 +113,7 @@ void lgl::Texture::BindUnit(const unsigned int unit) {
 }
 
 void lgl::Texture::UnBind() {
-	glBindTexture(Map(mode), 0);
+	glBindTexture(mode, 0);
 }
 
 void lgl::BindTextureUnit(const TextureId id, const unsigned int unit) {

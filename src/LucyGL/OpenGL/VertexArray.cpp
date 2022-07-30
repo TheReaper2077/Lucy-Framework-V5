@@ -21,10 +21,10 @@ lgl::VertexArray::VertexArray(std::vector<VertexArrayAttribDescriptor> layouts) 
 
 		switch (attrib.type) {
 			case FLOAT:
-				glVertexArrayAttribFormat(id, attrib.idx, attrib.size, Map(attrib.type), false, relativeoffset);
+				glVertexArrayAttribFormat(id, attrib.idx, attrib.size, attrib.type, false, relativeoffset);
 				break;
 			case BYTE:case UNSIGNED_BYTE:case INT:
-				glVertexArrayAttribIFormat(id, attrib.idx, attrib.size, Map(attrib.type), relativeoffset);
+				glVertexArrayAttribIFormat(id, attrib.idx, attrib.size, attrib.type, relativeoffset);
 				break;
 			default:
 				assert(false);

@@ -7,7 +7,7 @@
 #include "MeshRenderPass.h"
 #include <Components/Components.h>
 #include <Structures/Structures.h>
-#include <System/CameraSystem.h>
+#include <System/System.h>
 
 #include <iostream>
 #include <assert.h>
@@ -16,21 +16,21 @@
 #include <glad/glad.h>
 #include <Editor/Editor.h>
 
-static lucy::Editor editor;
+// static lucy::Editor editor;
 
 void lucy::Engine::Init() {
 	auto null_entity = registry.create();
 	auto& renderer = registry.store<Renderer>();
 	auto& events = registry.store<Events>();
-	auto* window = registry.store<WindowRegistry>()[MAIN_WINDOW];
 	auto& meshregistry = registry.store<MeshRegistry>();
+	auto& window = registry.store<Window>();
 
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	sdl_window = SDL_CreateWindow(window->title.c_str(), window->pos.x, window->pos.y, window->size.x, window->size.y, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+	sdl_window = SDL_CreateWindow(window.title.c_str(), window.pos.x, window.pos.y, window.size.x, window.size.y, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	assert(sdl_window);
 
 	sdl_glcontext = SDL_GL_CreateContext(sdl_window);
@@ -39,7 +39,7 @@ void lucy::Engine::Init() {
 
 	events.Init();
 	renderer.Init();
-	editor.Init(sdl_window, &sdl_glcontext);
+	// editor.Init(sdl_window, &sdl_glcontext);
 	meshregistry.Init();
 
 	renderer.AddRenderPass<SpriteRenderPass>();
@@ -49,13 +49,12 @@ void lucy::Engine::Init() {
 void lucy::Engine::Mainloop() {
 	auto& timestep = registry.store<TimeStep>();
 	auto& events = registry.store<Events>();
-	auto& windowregistry = registry.store<WindowRegistry>();
-	auto* window = windowregistry[MAIN_WINDOW];
 	auto& renderer = registry.store<Renderer>();
 	auto& meshregistry = registry.store<MeshRegistry>();
 	auto& spriteregistry = registry.store<SpriteRegistry>();
 	auto& materialregistry = registry.store<MaterialRegistry>();
 	auto& assetloader = registry.store<AssetLoader>();
+	auto& window = registry.store<Window>();
 
 	assetloader.Init();
 
@@ -98,7 +97,6 @@ void lucy::Engine::Mainloop() {
 	registry.emplace<lucy::Tag>(light_entity, "light");
 	registry.emplace<lucy::Transform>(light_entity, glm::vec3(0, 0, 3), glm::vec3(0, 90, 0));
 	registry.emplace<lucy::Light>(light_entity, lucy::LightMode::POINT_LIGHT);
-	CameraSystem camerasystem;
 
 	while (!events.IsQuittable()) {
 		events.Update();
@@ -110,11 +108,12 @@ void lucy::Engine::Mainloop() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDepthFunc(GL_LEQUAL);
 
-		camerasystem.Update();
+		System::CameraSystem(registry);
+		System::RenderSystem(registry);
 
 		renderer.RenderMain();
 
-		editor.Render();
+		// editor.Render();
 
 		SDL_GL_SwapWindow(sdl_window);
 	}

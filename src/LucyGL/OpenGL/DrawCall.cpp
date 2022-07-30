@@ -38,38 +38,38 @@ enum DrawMode {
 bool DrawCmd(DrawMode drawmode, lgl::Primitive mode, lgl::Type type, lgl::Format format, int first, int start, int end, int count, int basevertex, int baseinstance, int instancecount, int width, int height, void* indices, void* indirect, void* pixels) {
 	switch (drawmode) {
 		case NONE:
-			glDrawArrays(lgl::Map(mode), first, count);
+			glDrawArrays(mode, first, count);
 			break;
 		case INDIRECT:
-			glDrawArraysIndirect(lgl::Map(mode), indirect);
+			glDrawArraysIndirect(mode, indirect);
 			break;
 		case INSTANCED:
-			glDrawArraysInstanced(lgl::Map(mode), first, count, instancecount);
+			glDrawArraysInstanced(mode, first, count, instancecount);
 			break;
 		case INSTANCED_BASEINSTANCE:
-			glDrawArraysInstancedBaseInstance(lgl::Map(mode), first, count, instancecount, baseinstance);
+			glDrawArraysInstancedBaseInstance(mode, first, count, instancecount, baseinstance);
 			break;
 			
 		case INDEXED:
-			glDrawElements(lgl::Map(mode), count, lgl::Map(type), indices);
+			glDrawElements(mode, count, type, indices);
 			break;
 		case INDEXED_INDIRECT:
-			glDrawElementsIndirect(lgl::Map(mode), lgl::Map(type), indirect);
+			glDrawElementsIndirect(mode, type, indirect);
 			break;
 		case INDEXED_INSTANCED:
-			glDrawElementsInstanced(lgl::Map(mode), count, lgl::Map(type), indices, instancecount);
+			glDrawElementsInstanced(mode, count, type, indices, instancecount);
 			break;
 		case INDEXED_BASEVERTEX:
-			glDrawElementsBaseVertex(lgl::Map(mode), count, lgl::Map(type), indices, basevertex);
+			glDrawElementsBaseVertex(mode, count, type, indices, basevertex);
 			break;
 		case INDEXED_INSTANCED_BASEINSTANCE:
-			glDrawElementsInstancedBaseVertex(lgl::Map(mode), count, lgl::Map(type), indices, instancecount, basevertex);
+			glDrawElementsInstancedBaseVertex(mode, count, type, indices, instancecount, basevertex);
 			break;
 		case INDEXED_INSTANCED_BASEVERTEX:
-			glDrawElementsInstancedBaseVertex(lgl::Map(mode), count,  lgl::Map(type), indices, instancecount, basevertex);
+			glDrawElementsInstancedBaseVertex(mode, count,  type, indices, instancecount, basevertex);
 			break;
 		case INDEXED_INSTANCED_BASEVERTEX_BASEINSTANCE:
-			glDrawElementsInstancedBaseVertexBaseInstance(lgl::Map(mode), count, lgl::Map(type), indices, instancecount, basevertex, baseinstance);
+			glDrawElementsInstancedBaseVertexBaseInstance(mode, count, type, indices, instancecount, basevertex, baseinstance);
 			break;
 		
 		case MULTI:
@@ -89,14 +89,14 @@ bool DrawCmd(DrawMode drawmode, lgl::Primitive mode, lgl::Type type, lgl::Format
 			break;
 		
 		case RANGE_INDEXED:
-			glDrawRangeElements(lgl::Map(mode), start, end, count, lgl::Map(type), indices);
+			glDrawRangeElements(mode, start, end, count, type, indices);
 			break;
 		case RANGE_INDEXED_BASEVERTEX:
-			glDrawRangeElementsBaseVertex(lgl::Map(mode), start, end, count, lgl::Map(type), indices, basevertex);
+			glDrawRangeElementsBaseVertex(mode, start, end, count, type, indices, basevertex);
 			break;
 
 		case PIXELS:
-			glDrawPixels(width, height, lgl::Map(format), lgl::Map(type), pixels);
+			glDrawPixels(width, height, format, type, pixels);
 			break;
 
 		default:
@@ -117,12 +117,12 @@ bool lgl::MultiDrawIndexed(Primitive mode, int count, Type type, void* indices) 
 	return false;
 }
 
-void lgl::Clear(float r, float g, float b, float a, const BitFlags flags) {
+void lgl::Clear(float r, float g, float b, float a, const BufferBitFlags flags) {
 	glClearColor(r, g, b, a);
 	glClear(flags);
 }
 
-void lgl::Clear(const BitFlags flags) {
+void lgl::Clear(const BufferBitFlags flags) {
 	glClear(flags);
 }
 

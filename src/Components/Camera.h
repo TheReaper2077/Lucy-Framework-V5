@@ -25,8 +25,6 @@ namespace lucy {
 
 		glm::vec4 clear_color = { 0, 0, 0, 0 };
 
-		std::string window_id = GAME_WINDOW;
-
 		bool enable = false;
 		int width, height;
 		int lastx, lasty;

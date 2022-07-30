@@ -1,4 +1,4 @@
-#include "CameraSystem.h"
+#include "Camera.h"
 #include <Engine/ECS.h>
 #include <Engine/TimeStep.h>
 #include <Engine/Window.h>
@@ -8,23 +8,26 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <Registry/Registry.h>
+#include <Engine/TimeStep.h>
+#include <Engine/Events.h>
 
-static auto& registry = lucy::Registry::Instance();
-static auto& timestep = registry.store<lucy::TimeStep>();
-static auto& windowregistry = registry.store<lucy::WindowRegistry>();
-static auto& events = registry.store<lucy::Events>();
+namespace lucy {
+	void FPSView(lucy::Registry& registry, Entity entity);
+	void EditorView(lucy::Registry& registry, Entity entity);
+}
 
-void lucy::CameraSystem::Update() {
+void lucy::System::CameraSystem(lucy::Registry& registry) {	
+	static auto& timestep = registry.store<lucy::TimeStep>();
+	static auto& events = registry.store<lucy::Events>();
+
 	for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
 		if (!camera.enable) continue;
 
-		auto* window = windowregistry[camera.window_id];
+		auto& window = registry.store<Window>();
 
-		assert(window != nullptr);
-
-		if (camera.width != window->size.x || camera.height != window->size.y) {
-			camera.width = window->size.x;
-			camera.height = window->size.y;
+		if (camera.width != window.size.x || camera.height != window.size.y) {
+			camera.width = window.size.x;
+			camera.height = window.size.y;
 
 			camera.lastx = camera.width / 2;
 			camera.lasty = camera.height / 2;
@@ -36,17 +39,20 @@ void lucy::CameraSystem::Update() {
 
 		switch (camera.mode) {
 			case ViewMode_FPS:
-				FPSView(entity);
+				FPSView(registry, entity);
 				break;
 
 			case ViewMode_Editor:
-				EditorView(entity);
+				EditorView(registry, entity);
 				break;
 		}
 	}
 }
 
-void lucy::CameraSystem::FPSView(Entity entity) {
+void lucy::FPSView(lucy::Registry& registry, Entity entity) {	
+	static auto& timestep = registry.store<lucy::TimeStep>();
+	static auto& events = registry.store<lucy::Events>();
+
 	auto& transform = registry.get<Transform>(entity);
 	auto& camera = registry.get<Camera>(entity);
 
@@ -93,6 +99,6 @@ void lucy::CameraSystem::FPSView(Entity entity) {
 	camera.position = transform.translation;
 }
 
-void lucy::CameraSystem::EditorView(Entity entity) {
+void lucy::EditorView(lucy::Registry& registry, Entity entity) {
 	
 }

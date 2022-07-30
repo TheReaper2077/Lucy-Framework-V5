@@ -29,59 +29,6 @@ void lucy::SpriteRenderPass::Init() {
 	
 }
 
-template <>
-void lucy::SpriteRenderPass::Flush<ColorVertex>() {
-	auto& vertices = GetVertices<ColorVertex>();
-	if (vertices.size() == 0) return;
-
-	auto* vertexbuffer = AddData(vertices);
-
-	shader->SetUniformi("u_type", COLOR);
-
-	renderer.RenderQuads(lgl::TRIANGLE, nullptr, ColorVertex::VertexArray(), vertexbuffer, vertices.size());
-
-	vertices.clear();
-}
-
-template <>
-void lucy::SpriteRenderPass::Flush<TexVertex>() {
-	auto& vertices = GetVertices<TexVertex>();
-	if (vertices.size() == 0) return;
-
-	auto* vertexbuffer = AddData(vertices);
-
-	shader->SetUniformi("u_type", TEXTURE);
-
-	renderer.RenderQuads(lgl::TRIANGLE, nullptr, TexVertex::VertexArray(), vertexbuffer, vertices.size(), texture_store);
-
-	texture_store.clear();
-	vertices.clear();
-}
-
-template <>
-void lucy::SpriteRenderPass::Flush<TexColorVertex>() {
-	auto& vertices = GetVertices<TexColorVertex>();
-	if (vertices.size() == 0) return;
-
-	auto* vertexbuffer = AddData(vertices);
-
-	shader->SetUniformi("u_type", TEXTURE_COLOR);
-	
-	renderer.RenderQuads(lgl::TRIANGLE, nullptr, TexColorVertex::VertexArray(), vertexbuffer, vertices.size(), texture_store);
-
-	texture_store.clear();
-	vertices.clear();
-}
-
-void lucy::SpriteRenderPass::Flush() {
-	shader->Bind();
-
-	Flush<ColorVertex>();
-	Flush<TexVertex>();
-	Flush<TexColorVertex>();
-
-	shader->UnBind();
-}
 
 
 void lucy::SpriteRenderPass::Render(lgl::FrameBuffer* framebuffer) {

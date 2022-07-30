@@ -2,10 +2,10 @@
 #include <iostream>
 
 int main(int argcount, char** args) {
-	// lucy::Engine engine;
+	lucy::Engine engine;
 
-	// engine.Init();
-	// engine.Mainloop();
+	engine.Init();
+	engine.Mainloop();
 
 	return 0;
 }

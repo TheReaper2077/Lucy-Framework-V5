@@ -26,6 +26,37 @@ namespace lucy {
 
 		std::unordered_map<uint32_t, std::shared_ptr<RenderPass>> renderpass_map;
 
+		template <typename T>
+		std::vector<T>& GetVertices() {
+			static std::vector<T> vector;
+			return vector;
+		}
+		
+		template <typename T>
+		lgl::VertexBuffer* AddData(std::vector<T>& vertices) {
+			static lgl::VertexBuffer vertexbuffer;
+
+			vertexbuffer.Bind();
+			vertexbuffer.Allocate(sizeof(T)*vertices.size());
+			vertexbuffer.AddDataDynamic(vertices.data(), sizeof(T)*vertices.size());
+			return &vertexbuffer;
+		}
+
+		template <typename T>
+		lgl::VertexBuffer* AddData() {
+			return AddData(GetVertices<T>());
+		}
+		
+		template <typename T>
+		void Flush();
+		void Flush();
+
+		TextureStore texture_store;
+		lgl::Shader* shader = nullptr;
+
+		std::set<Entity> lighting_entities;
+		std::unordered_map<Material*, std::vector<Entity>> material_entities;
+
 	public:
 		void Init();
 
