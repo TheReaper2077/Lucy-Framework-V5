@@ -118,6 +118,16 @@ void lucy::RenderSprite(Registry& registry, Renderer renderer) {
 		if (sprite != nullptr) {
 			if (!texture_store.slotavaliable()) {
 				Flush<TexVertex>(renderer);
+
+
+
+
+
+
+
+
+
+				saddddddddddddddddddddddddd
 			}
 			uint32_t tex_id = (sprite->raw_texture->texture != nullptr) ? sprite->raw_texture->texture->id: spriteregistry.GetNullTexture()->id;
 
