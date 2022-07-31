@@ -14,7 +14,7 @@ namespace lucy {
 
 		uuid id;
 
-		RawTexture* texture_raw = nullptr;
+		RawTexture* raw_texture = nullptr;
 
 		int idx = 0;
 	};

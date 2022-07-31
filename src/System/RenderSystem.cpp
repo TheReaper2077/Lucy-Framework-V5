@@ -8,7 +8,7 @@
 #include "LightingSystem.h"
 
 void lucy::System::RenderSystem(Registry& registry) {
-	// LightingSystem(registry);
+	LightingSystem(registry);
 
 	auto& renderer = registry.store<Renderer>();
 	auto& window = registry.store<Window>();
@@ -27,6 +27,6 @@ void lucy::System::RenderSystem(Registry& registry) {
 		glViewport(0, 0, window.size.x, window.size.y);
 
 		RenderSprite(registry, renderer);
-		// MeshRenderSystem(registry, renderer);
+		MeshRenderSystem(registry, renderer);
 	}
 }

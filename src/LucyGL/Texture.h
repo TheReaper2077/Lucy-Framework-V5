@@ -12,6 +12,7 @@ namespace lgl {
 		TextureMode mode;
 
 		int width, height, channels;
+		int tile_x = 0, tile_y = 0, tile_w = 0, tile_h = 0;
 
 		TextureWrapMode wrap_s = WrapMode_None;
 		TextureWrapMode wrap_t = WrapMode_None;
@@ -23,11 +24,11 @@ namespace lgl {
 		~Texture();
 
 		bool LoadTexture(const char* filename);
-		void LoadSpriteSheet(const char* filename, int x, int y, int w, int h);
+		bool LoadSpriteSheet(const char* filename, int x, int y, int w, int h);
 
 		void Load2D(int level, Format internalformat, int width, int height, int border, Format format, Type type, void* data = nullptr);
 		void Load3D(int level, Format internalformat, int width, int height, int depth, int border, Format format, Type type, void* data = nullptr);
-		void LoadSub3D(int level, Format internalformat, int x, int y, int z, int width, int height, int depth, Format format, Type type, void* data = nullptr);
+		void LoadSub3D(int level, int x, int y, int z, int width, int height, int depth, Format format, Type type, void* data = nullptr);
 
 		void GenerateMimmap();
 		void SetWrapMode(TextureWrapMode wrap_s = WrapMode_None, TextureWrapMode wrap_t = WrapMode_None, TextureWrapMode wrap_r = WrapMode_None);

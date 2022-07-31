@@ -13,6 +13,13 @@ namespace lucy {
 		ViewMode_COUNT
 	};
 
+	enum Projection_Type {
+		ORTHOGRAPHIC,
+		PERSPECTIVE,
+
+		Projection_Type_COUNT
+	};
+
 	struct Camera {
 		glm::mat4 projection;
 		glm::mat4 view;
@@ -36,6 +43,7 @@ namespace lucy {
 		bool is_maincamera = true;
 
 		ViewMode mode = ViewMode_None;
+		Projection_Type type = PERSPECTIVE;
 
 		Camera() {}
 		Camera(ViewMode mode): mode(mode) {}

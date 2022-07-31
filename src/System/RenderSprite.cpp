@@ -119,10 +119,12 @@ void lucy::RenderSprite(Registry& registry, Renderer renderer) {
 			if (!texture_store.slotavaliable()) {
 				Flush<TexVertex>(renderer);
 			}
-			if (sprite->texture_raw->texture == nullptr) {
-				Primitives::QuadIndexed(GetVertices<TexVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, sprite->uv0 * spriterenderer.uv0, sprite->uv1 * spriterenderer.uv1, texture_store[null_texture], transform.GetRotationQuat());
+			uint32_t tex_id = (sprite->raw_texture->texture != nullptr) ? sprite->raw_texture->texture->id: spriteregistry.GetNullTexture()->id;
+
+			if (spriterenderer.enable_color) {
+				Primitives::QuadIndexed(GetVertices<TexVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, spriterenderer.uv0, spriterenderer.uv1, texture_store[tex_id], transform.GetRotationQuat());
 			} else {
-				Primitives::QuadIndexed(GetVertices<TexVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, sprite->uv0 * spriterenderer.uv0, sprite->uv1 * spriterenderer.uv1, texture_store[spriterenderer.sprite->texture_raw->texture], transform.GetRotationQuat());
+				Primitives::QuadIndexed(GetVertices<TexColorVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, spriterenderer.color, spriterenderer.uv0, spriterenderer.uv1, texture_store[tex_id], transform.GetRotationQuat());
 			}
 		} else {
 			Primitives::QuadIndexed(GetVertices<ColorVertex>(), transform.translation, { transform.scale.x, transform.scale.y }, spriterenderer.color, transform.GetRotationQuat());

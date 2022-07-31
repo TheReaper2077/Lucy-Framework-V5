@@ -6,3 +6,4 @@
 #include "Light.h"
 #include "SpriteRenderer.h"
 #include "MeshRenderer.h"
+#include "Rigidbody2D.h"

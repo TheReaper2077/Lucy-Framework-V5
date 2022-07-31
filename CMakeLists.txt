@@ -49,6 +49,9 @@ target_link_libraries(main PRIVATE glad::glad)
 find_package(stduuid CONFIG REQUIRED)
 target_link_libraries(main PRIVATE stduuid)
 
+find_package(box2d CONFIG REQUIRED)
+target_link_libraries(main PRIVATE box2d::box2d)
+
 target_link_libraries(main PRIVATE)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

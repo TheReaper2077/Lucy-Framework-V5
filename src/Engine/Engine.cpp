@@ -38,56 +38,12 @@ void lucy::Engine::Init() {
 }
 
 void lucy::Engine::Mainloop() {
-	auto& timestep = registry.store<TimeStep>();
 	auto& events = registry.store<Events>();
-	auto& renderer = registry.store<Renderer>();
-	auto& meshregistry = registry.store<MeshRegistry>();
-	auto& spriteregistry = registry.store<SpriteRegistry>();
-	auto& materialregistry = registry.store<MaterialRegistry>();
-	auto& window = registry.store<Window>();
-	// auto& assetloader = registry.store<AssetLoader>();
+	auto& timestep = registry.store<TimeStep>();
 
-	// assetloader.Init();
-
-	lucy::Sprite sprite;
-
-	sprite.texture_raw = spriteregistry.GetTexture("D:\\C++\\Lucy Framework V5\\assets\\Redstone.PNG");
-
-	auto entity = registry.create();
-	registry.emplace<lucy::Tag>(entity, "Entity");
-	registry.emplace<lucy::Transform>(entity, glm::vec3(0, 0, -1), glm::vec3(0, 0, 45), glm::vec3(1, 1, 1));
-	registry.emplace<lucy::SpriteRenderer>(entity, sprite);
-
-	auto camera_entity = registry.create();
-	registry.emplace<lucy::Tag>(camera_entity, "CameraFPS");
-	registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 1));
-	registry.emplace<lucy::Camera>(camera_entity, ViewMode_FPS, true);
-
-	// auto entity2 = registry.create();
-	// registry.emplace<lucy::Tag>(entity2, "Entity2");
-	// registry.emplace<lucy::Transform>(entity2, glm::vec3(1, 1, 2), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
-	// registry.emplace<lucy::SpriteRenderer>(entity2);
-
-	// Material material;
-
-	// materialregistry.AddMaterial(material);
-
-	// // assetloader.Import("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
-
-	// auto mesh_entity = registry.create();
-	// registry.emplace<lucy::Tag>(mesh_entity, "Mesh");
-	// registry.emplace<lucy::Transform>(mesh_entity, glm::vec3(0, -4, 0), glm::vec3(0, 0, 0));
-	// registry.emplace<lucy::MeshRenderer>(mesh_entity, nullptr);
-
-	// auto mesh_entity2 = registry.create();
-	// registry.emplace<lucy::Tag>(mesh_entity2, "Mesh2");
-	// registry.emplace<lucy::Transform>(mesh_entity2, glm::vec3(0, 0, 3), glm::vec3(0, 0, 0));
-	// registry.emplace<lucy::MeshRenderer>(mesh_entity2, nullptr, &material);
-
-	// auto light_entity = registry.create();
-	// registry.emplace<lucy::Tag>(light_entity, "light");
-	// registry.emplace<lucy::Transform>(light_entity, glm::vec3(0, 0, 3), glm::vec3(0, 90, 0));
-	// registry.emplace<lucy::Light>(light_entity, lucy::LightMode::POINT_LIGHT);
+	for (auto system_func: init_systems) {
+		system_func(registry);
+	}
 
 	while (!events.IsQuittable()) {
 		events.Update();
@@ -98,8 +54,9 @@ void lucy::Engine::Mainloop() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDepthFunc(GL_LEQUAL);
 
-		System::CameraSystem(registry);
-		System::RenderSystem(registry);
+		for (auto system_func: systems_array) {
+			system_func(registry);
+		}
 
 		SDL_GL_SwapWindow(sdl_window);
 	}
@@ -107,4 +64,18 @@ void lucy::Engine::Mainloop() {
 
 void lucy::Engine::Destroy() {
 	SDL_DestroyWindow(sdl_window);
+}
+
+void lucy::Engine::AddRuntimeSystem(system_func func) {
+	for (auto fn: systems_array)
+		assert(func != fn);
+
+	systems_array.push_back(func);
+}
+
+void lucy::Engine::AddInitializationSystem(system_func func) {
+	for (auto fn: init_systems)
+		assert(func != fn);
+
+	init_systems.push_back(func);
 }

@@ -7,16 +7,16 @@
 namespace lucy {
 	struct SpriteRegistry {
 		std::unordered_map<std::string, RawTexture> texture_store;
-		std::unordered_map<std::string, lucy::Sprite> sprite_store;
+		std::unordered_map<RawTexture*, std::vector<lucy::Sprite>> sprite_store;
+
+		lgl::Texture* GetNullTexture();
 
 		RawTexture* GetTexture(const std::string& filename);
-		RawTexture* GetTexture();
-		lgl::Texture* GetNullTexture();
-		RawTexture* GetTextureById(const uuid& id);
-		RawTexture* GetTextureByFilename(const std::string& filename);
-		RawTexture* LoadTexture(const std::string& name, const std::string& filename, const uuid& id = GetID());
+		RawTexture* GetTexture(const std::string& filename, int x, int y, int w, int h);
 
-		std::string Serialize();
-		bool Deserialize(const std::string& src);
+		RawTexture* LoadTexture(const std::string& name, const std::string& filename, const uuid& id = GetID());
+		RawTexture* LoadTextureArray(const std::string& name, const std::string& filename, int x, int y, int w , int h, const uuid& id = GetID());
+
+		void GenerateSprites(RawTexture* raw_texture);
 	};
 }

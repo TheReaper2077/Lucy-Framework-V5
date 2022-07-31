@@ -34,7 +34,11 @@ void lucy::System::CameraSystem(lucy::Registry& registry) {
 
 			camera.first_mouse = true;
 
-			camera.projection = glm::perspective(glm::radians(camera.fov), (float)camera.width / camera.height, camera.c_near, camera.c_far);
+			if (camera.type == PERSPECTIVE) {
+				camera.projection = glm::perspective(glm::radians(camera.fov), (float)camera.width / camera.height, camera.c_near, camera.c_far);
+			} else if (camera.type == ORTHOGRAPHIC) {
+				camera.projection = glm::ortho<float>(0, camera.width, camera.height, 0, -camera.c_near, camera.c_far);
+			}
 		}
 
 		switch (camera.mode) {
@@ -45,6 +49,15 @@ void lucy::System::CameraSystem(lucy::Registry& registry) {
 			case ViewMode_Editor:
 				EditorView(registry, entity);
 				break;
+
+			default:
+				const auto& quaternion = transform.GetRotationQuat();
+
+				camera.front = glm::normalize(quaternion * camera.world_front);
+				camera.up = glm::normalize(quaternion * camera.world_up);
+				
+				camera.view = glm::lookAt(transform.translation, transform.translation + camera.front, camera.up);
+				camera.position = transform.translation;
 		}
 	}
 }
