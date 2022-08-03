@@ -18,9 +18,9 @@ namespace lucy {
 
 		MeshRegistry() {}
 
-		void Init();
-		std::string AddMesh(std::string name, const Mesh& mesh, uuid id = GetID());
-		std::string AddMesh(std::string name, aiMesh* ai_mesh, uuid id = GetID());
-		Mesh* GetMesh(const std::string& id);
+		// void Init();
+		// std::string AddMesh(std::string name, const Mesh& mesh, uuid id = GetID());
+		// std::string AddMesh(std::string name, aiMesh* ai_mesh, uuid id = GetID());
+		// Mesh* GetMesh(const std::string& id);
 	};
 }

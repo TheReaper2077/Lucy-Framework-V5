@@ -5,11 +5,12 @@
 int main(int argcount, char** args) {
 	lucy::Engine engine;
 
-	engine.AddRuntimeSystem(lucy::System::CameraSystem);
-	engine.AddRuntimeSystem(lucy::System::RenderSystem);
-	// engine.AddRuntimeSystem(UpdateGame);
+	engine.AddInitializationSystem(InitApplication);
 
-	engine.AddInitializationSystem(InitGame);
+	engine.AddRuntimeSystem(UpdateApplication);
+	engine.AddRuntimeSystem(lucy::System::CameraSystem);
+	engine.AddRuntimeSystem(lucy::System::PhysicsSystem);
+	engine.AddRuntimeSystem(lucy::System::RenderSystem);
 
 	engine.Init();
 	engine.Mainloop();

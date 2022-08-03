@@ -1,7 +1,7 @@
 #include "Primitives.h"
 #include <glm/gtc/quaternion.hpp>
 
-lgl::IndexBuffer* lucy::Primitives::GetWireQuadIndices(int vertexcount) {
+lgl::IndexBuffer* lre::GetWireQuadIndices(int vertexcount) {
 	static lgl::IndexBuffer indexbuffer;
 	static int indexcount;
 
@@ -33,7 +33,7 @@ lgl::IndexBuffer* lucy::Primitives::GetWireQuadIndices(int vertexcount) {
 	return &indexbuffer;
 }
 
-lgl::IndexBuffer* lucy::Primitives::GetQuadIndices(int vertexcount) {
+lgl::IndexBuffer* lre::GetQuadIndices(int vertexcount) {
 	static lgl::IndexBuffer indexbuffer;
 	static int indexcount;
 
@@ -61,7 +61,7 @@ lgl::IndexBuffer* lucy::Primitives::GetQuadIndices(int vertexcount) {
 	return &indexbuffer;
 }
 
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1>& vertices, const glm::vec3& position, const glm::vec2& size) {
+void lre::QuadIndexed(std::vector<Vertex::P1>& vertices, const glm::vec3& position, const glm::vec2& size) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1 { glm::vec3(-size.x, -size.y, 0) + position});
@@ -69,7 +69,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1>& vertices, const glm:
 	vertices.emplace_back(Vertex::P1 { glm::vec3(+size.x, +size.y, 0) + position});
 	vertices.emplace_back(Vertex::P1 { glm::vec3(+size.x, -size.y, 0) + position});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position});
@@ -77,7 +77,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1>& vertices, const glm:
 	vertices.emplace_back(Vertex::P1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position});
 	vertices.emplace_back(Vertex::P1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1 { glm::vec3(-size.x, -size.y, 0) + position, color});
@@ -85,7 +85,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1>& vertices, const gl
 	vertices.emplace_back(Vertex::P1C1 { glm::vec3(+size.x, +size.y, 0) + position, color});
 	vertices.emplace_back(Vertex::P1C1 { glm::vec3(+size.x, -size.y, 0) + position, color});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, color});
@@ -93,7 +93,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1>& vertices, const gl
 	vertices.emplace_back(Vertex::P1C1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, color});
 	vertices.emplace_back(Vertex::P1C1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, color});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const unsigned int tex) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const unsigned int tex) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1T1 { glm::vec3(-size.x, -size.y, 0) + position, color, (float)tex});
@@ -101,7 +101,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1T1>& vertices, const 
 	vertices.emplace_back(Vertex::P1C1T1 { glm::vec3(+size.x, +size.y, 0) + position, color, (float)tex});
 	vertices.emplace_back(Vertex::P1C1T1 { glm::vec3(+size.x, -size.y, 0) + position, color, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const unsigned int tex, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const unsigned int tex, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1T1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, color, (float)tex});
@@ -109,7 +109,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1T1>& vertices, const 
 	vertices.emplace_back(Vertex::P1C1T1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, color, (float)tex});
 	vertices.emplace_back(Vertex::P1C1T1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, color, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1UV1 { glm::vec3(-size.x, -size.y, 0) + position, color, { uv0.x, uv0.y }});
@@ -117,7 +117,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1>& vertices, const
 	vertices.emplace_back(Vertex::P1C1UV1 { glm::vec3(+size.x, +size.y, 0) + position, color, { uv1.x, uv1.y }});
 	vertices.emplace_back(Vertex::P1C1UV1 { glm::vec3(+size.x, -size.y, 0) + position, color, { uv1.x, uv0.y }});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1UV1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, color, { uv0.x, uv0.y }});
@@ -125,7 +125,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1>& vertices, const
 	vertices.emplace_back(Vertex::P1C1UV1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, color, { uv1.x, uv1.y }});
 	vertices.emplace_back(Vertex::P1C1UV1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, color, { uv1.x, uv0.y }});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1UV1T1 { glm::vec3(-size.x, -size.y, 0) + position, color, { uv0.x, uv0.y }, (float)tex});
@@ -133,7 +133,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1T1>& vertices, con
 	vertices.emplace_back(Vertex::P1C1UV1T1 { glm::vec3(+size.x, +size.y, 0) + position, color, { uv1.x, uv1.y }, (float)tex});
 	vertices.emplace_back(Vertex::P1C1UV1T1 { glm::vec3(+size.x, -size.y, 0) + position, color, { uv1.x, uv0.y }, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1UV1T1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, color, { uv0.x, uv0.y }, (float)tex});
@@ -141,7 +141,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UV1T1>& vertices, con
 	vertices.emplace_back(Vertex::P1C1UV1T1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, color, { uv1.x, uv1.y }, (float)tex});
 	vertices.emplace_back(Vertex::P1C1UV1T1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, color, { uv1.x, uv0.y }, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UVW1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec3& uv0, const glm::vec2& uv1) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1UVW1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec3& uv0, const glm::vec2& uv1) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1UVW1 { glm::vec3(-size.x, -size.y, 0) + position, color, { uv0.x, uv0.y, uv0.z }});
@@ -149,7 +149,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UVW1>& vertices, cons
 	vertices.emplace_back(Vertex::P1C1UVW1 { glm::vec3(+size.x, +size.y, 0) + position, color, { uv1.x, uv1.y, uv0.z }});
 	vertices.emplace_back(Vertex::P1C1UVW1 { glm::vec3(+size.x, -size.y, 0) + position, color, { uv1.x, uv0.y, uv0.z }});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UVW1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec3& uv0, const glm::vec2& uv1, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1UVW1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec3& uv0, const glm::vec2& uv1, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1UVW1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, color, { uv0.x, uv0.y, uv0.z }});
@@ -157,7 +157,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UVW1>& vertices, cons
 	vertices.emplace_back(Vertex::P1C1UVW1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, color, { uv1.x, uv1.y, uv0.z }});
 	vertices.emplace_back(Vertex::P1C1UVW1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, color, { uv1.x, uv0.y, uv0.z }});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UVW1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec3& uv0, const glm::vec2& uv1, const unsigned int tex) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1UVW1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec3& uv0, const glm::vec2& uv1, const unsigned int tex) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1UVW1T1 { glm::vec3(-size.x, -size.y, 0) + position, color, { uv0.x, uv0.y, uv0.z }, (float)tex});
@@ -165,7 +165,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UVW1T1>& vertices, co
 	vertices.emplace_back(Vertex::P1C1UVW1T1 { glm::vec3(+size.x, +size.y, 0) + position, color, { uv1.x, uv1.y, uv0.z }, (float)tex});
 	vertices.emplace_back(Vertex::P1C1UVW1T1 { glm::vec3(+size.x, -size.y, 0) + position, color, { uv1.x, uv0.y, uv0.z }, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UVW1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec3& uv0, const glm::vec2& uv1, const unsigned int tex, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1C1UVW1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec3& uv0, const glm::vec2& uv1, const unsigned int tex, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1C1UVW1T1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, color, { uv0.x, uv0.y, uv0.z }, (float)tex});
@@ -173,7 +173,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1C1UVW1T1>& vertices, co
 	vertices.emplace_back(Vertex::P1C1UVW1T1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, color, { uv1.x, uv1.y, uv0.z }, (float)tex});
 	vertices.emplace_back(Vertex::P1C1UVW1T1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, color, { uv1.x, uv0.y, uv0.z }, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const unsigned int tex) {
+void lre::QuadIndexed(std::vector<Vertex::P1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const unsigned int tex) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1T1 { glm::vec3(-size.x, -size.y, 0) + position, (float)tex});
@@ -181,7 +181,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1T1>& vertices, const gl
 	vertices.emplace_back(Vertex::P1T1 { glm::vec3(+size.x, +size.y, 0) + position, (float)tex});
 	vertices.emplace_back(Vertex::P1T1 { glm::vec3(+size.x, -size.y, 0) + position, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const unsigned int tex, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const unsigned int tex, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1T1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, (float)tex});
@@ -189,7 +189,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1T1>& vertices, const gl
 	vertices.emplace_back(Vertex::P1T1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, (float)tex});
 	vertices.emplace_back(Vertex::P1T1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1) {
+void lre::QuadIndexed(std::vector<Vertex::P1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1UV1 { glm::vec3(-size.x, -size.y, 0) + position, { uv0.x, uv0.y }});
@@ -197,7 +197,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1>& vertices, const g
 	vertices.emplace_back(Vertex::P1UV1 { glm::vec3(+size.x, +size.y, 0) + position, { uv1.x, uv1.y }});
 	vertices.emplace_back(Vertex::P1UV1 { glm::vec3(+size.x, -size.y, 0) + position, { uv1.x, uv0.y }});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1UV1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1UV1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, { uv0.x, uv0.y }});
@@ -205,7 +205,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1>& vertices, const g
 	vertices.emplace_back(Vertex::P1UV1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, { uv1.x, uv1.y }});
 	vertices.emplace_back(Vertex::P1UV1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, { uv1.x, uv0.y }});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex) {
+void lre::QuadIndexed(std::vector<Vertex::P1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1UV1T1 { glm::vec3(-size.x, -size.y, 0) + position, { uv0.x, uv0.y }, (float)tex});
@@ -213,7 +213,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1T1>& vertices, const
 	vertices.emplace_back(Vertex::P1UV1T1 { glm::vec3(+size.x, +size.y, 0) + position, { uv1.x, uv1.y }, (float)tex});
 	vertices.emplace_back(Vertex::P1UV1T1 { glm::vec3(+size.x, -size.y, 0) + position, { uv1.x, uv0.y }, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1UV1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec2& uv0, const glm::vec2& uv1, const unsigned int tex, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1UV1T1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, { uv0.x, uv0.y }, (float)tex});
@@ -221,7 +221,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UV1T1>& vertices, const
 	vertices.emplace_back(Vertex::P1UV1T1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, { uv1.x, uv1.y }, (float)tex});
 	vertices.emplace_back(Vertex::P1UV1T1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, { uv1.x, uv0.y }, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UVW1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec3& uv0, const glm::vec2& uv1) {
+void lre::QuadIndexed(std::vector<Vertex::P1UVW1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec3& uv0, const glm::vec2& uv1) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1UVW1 { glm::vec3(-size.x, -size.y, 0) + position, { uv0.x, uv0.y, uv0.z }});
@@ -229,7 +229,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UVW1>& vertices, const 
 	vertices.emplace_back(Vertex::P1UVW1 { glm::vec3(+size.x, +size.y, 0) + position, { uv1.x, uv1.y, uv0.z }});
 	vertices.emplace_back(Vertex::P1UVW1 { glm::vec3(+size.x, -size.y, 0) + position, { uv1.x, uv0.y, uv0.z }});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UVW1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec3& uv0, const glm::vec2& uv1, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1UVW1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec3& uv0, const glm::vec2& uv1, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1UVW1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, { uv0.x, uv0.y, uv0.z }});
@@ -237,7 +237,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UVW1>& vertices, const 
 	vertices.emplace_back(Vertex::P1UVW1 { quaternion * glm::vec3(+size.x, +size.y, 0) + position, { uv1.x, uv1.y, uv0.z }});
 	vertices.emplace_back(Vertex::P1UVW1 { quaternion * glm::vec3(+size.x, -size.y, 0) + position, { uv1.x, uv0.y, uv0.z }});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UVW1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec3& uv0, const glm::vec2& uv1, const unsigned int tex) {
+void lre::QuadIndexed(std::vector<Vertex::P1UVW1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec3& uv0, const glm::vec2& uv1, const unsigned int tex) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1UVW1T1 { glm::vec3(-size.x, -size.y, 0) + position, { uv0.x, uv0.y, uv0.z }, (float)tex});
@@ -245,7 +245,7 @@ void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UVW1T1>& vertices, cons
 	vertices.emplace_back(Vertex::P1UVW1T1 { glm::vec3(+size.x, +size.y, 0) + position, { uv1.x, uv1.y, uv0.z }, (float)tex});
 	vertices.emplace_back(Vertex::P1UVW1T1 { glm::vec3(+size.x, -size.y, 0) + position, { uv1.x, uv0.y, uv0.z }, (float)tex});
 }
-void lucy::Primitives::QuadIndexed(std::vector<Vertex::P1UVW1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec3& uv0, const glm::vec2& uv1, const unsigned int tex, const glm::quat& quaternion) {
+void lre::QuadIndexed(std::vector<Vertex::P1UVW1T1>& vertices, const glm::vec3& position, const glm::vec2& size, const glm::vec3& uv0, const glm::vec2& uv1, const unsigned int tex, const glm::quat& quaternion) {
 	vertices.reserve(4 + vertices.size());
 
 	vertices.emplace_back(Vertex::P1UVW1T1 { quaternion * glm::vec3(-size.x, -size.y, 0) + position, { uv0.x, uv0.y, uv0.z }, (float)tex});

@@ -3,7 +3,7 @@
 
 void lucy::TimeStep::Update() {
 	static std::chrono::steady_clock::time_point start_time, end_time;
-	end_time = std::chrono::high_resolution_clock::now();	
+	end_time = std::chrono::high_resolution_clock::now();
 	dt = std::chrono::duration<double, std::ratio<1, 60>>(end_time - start_time).count();
 	start_time = std::chrono::high_resolution_clock::now();
 }

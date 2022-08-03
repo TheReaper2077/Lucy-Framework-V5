@@ -12,7 +12,10 @@ void process_node(const aiScene *ai_scene, aiNode *ai_node) {
 		auto* ai_mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 		auto mesh_name = std::string(ai_mesh->mName.C_Str());
 
-		registry.store<lucy::MeshRegistry>().AddMesh(mesh_name, lucy::Mesh{ai_mesh});
+		lucy::MeshBuilder meshbuilder;
+		meshbuilder.Import(ai_mesh);
+
+		// registry.store<lucy::MeshRegistry>().AddMesh(mesh_name, meshbuilder);
 	}
 
 	for (int i = 0; i < ai_node->mNumChildren; i++) {
@@ -36,25 +39,14 @@ const aiScene* lucy::AssetLoader::Import(std::string filepath, uint32_t flags) {
 
 	if (ai_scene->HasMeshes()) {
 		for (int i = 0; i < ai_scene->mNumMeshes; i++) {
-			auto id = meshregistry.AddMesh(ai_scene->mMeshes[i]->mName.C_Str(), ai_scene->mMeshes[i]);
-			meshregistry.GetMesh(id)->Transfer();
+			// auto id = meshregistry.AddMesh(ai_scene->mMeshes[i]->mName.C_Str(), ai_scene->mMeshes[i]);
+			// meshregistry.GetMesh(id)->Transfer();
 		}
 	}
 
 	return ai_scene;
 }
 
-const std::string& lucy::AssetLoader::LoadMesh(aiMesh* ai_mesh) {
-	return meshregistry.AddMesh(ai_mesh->mName.C_Str(), ai_mesh);
-}
-
 // const std::string& lucy::AssetLoader::LoadMesh(aiMesh* ai_mesh) {
-// 	return meshregistry.AddMesh(ai_mesh->mName.C_Str(), ai_mesh);
-// }
-
-// const std::string& lucy::AssetLoader::LoadFragmentedMesh(std::string filename) {
-// 	return Mesh{};
-// }
-
-// const std::string& lucy::AssetLoader::LoadMaterial(std::string filename) {
+// 	// return meshregistry.AddMesh(ai_mesh->mName.C_Str(), ai_mesh);
 // }

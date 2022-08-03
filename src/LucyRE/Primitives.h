@@ -2,7 +2,7 @@
 
 #include "Vertex.h"
 
-namespace lucy::Primitives {
+namespace lre {
 	lgl::IndexBuffer* GetWireQuadIndices(int vertexcount);
 	lgl::IndexBuffer* GetQuadIndices(int vertexcount);
 

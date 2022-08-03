@@ -6,9 +6,6 @@
 
 namespace lucy {
 	class Engine {
-		SDL_Window* sdl_window = nullptr;
-		SDL_GLContext sdl_glcontext;
-
 		Registry& registry = Registry::Instance();
 
 		typedef void(*system_func)(Registry&);
@@ -23,12 +20,5 @@ namespace lucy {
 
 		void AddRuntimeSystem(system_func func);
 		void AddInitializationSystem(system_func func);
-
-		SDL_Window* GetWindow() {
-			return sdl_window;
-		}
-		SDL_GLContext* GetGLContext() {
-			return &sdl_glcontext;
-		}
 	};
 }

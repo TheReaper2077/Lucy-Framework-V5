@@ -11,14 +11,14 @@ in vec3 view_pos;
 
 struct Material {
 	vec3 albedo;
-	sampler2D albedo_map;
 	float metallic;
-	sampler2D metallic_map;
 	float roughness;
-	sampler2D roughness_map;
 	float ao;
-	sampler2D ao_map;
 
+	sampler2D albedo_map;
+	sampler2D metallic_map;
+	sampler2D roughness_map;
+	sampler2D ao_map;
 	sampler2D normal_map;
 };
 

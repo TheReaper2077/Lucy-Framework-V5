@@ -6,7 +6,6 @@ in vec2 uv;
 in vec3 uvw;
 in float textureid;
 
-
 void main() {
 	vec4 result;
 	

@@ -24,7 +24,7 @@ namespace lgl {
 		RGB16F = 0x881B,
 		
 		DEPTH_STENCIL = 0x84F9,
-		DEPTH24_STENCIL8 = 0x84FA,
+		DEPTH24_STENCIL8 = 0x88F0,
 	};
 
 	enum Primitive {

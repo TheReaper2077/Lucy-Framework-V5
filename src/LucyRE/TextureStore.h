@@ -3,7 +3,7 @@
 #include <LucyGL/LucyGL.h>
 #include <unordered_map>
 
-namespace lucy {
+namespace lre {
 	struct TextureStore {
 	private:
 		unsigned int next_unit = 0;

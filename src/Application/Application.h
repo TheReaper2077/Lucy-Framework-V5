@@ -10,5 +10,5 @@ class Application {
 		void Update();
 };
 
-void InitGame(lucy::Registry& registry);
-void UpdateGame(lucy::Registry& registry);
+void InitApplication(lucy::Registry& registry);
+void UpdateApplication(lucy::Registry& registry);

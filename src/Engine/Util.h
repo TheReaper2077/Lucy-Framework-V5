@@ -17,6 +17,13 @@ namespace lucy::util {
 		return text;
 	}
 
+	static void replace_first(std::string& s, std::string const& toReplace, std::string const& replaceWith) {
+		size_t pos = s.find(toReplace);
+		if (pos == std::string::npos) return;
+
+		s.replace(pos, toReplace.length(), replaceWith);
+	}
+
 	static bool write_file(const std::string& filename, const std::string& source) {
 		return write_file(filename, source.c_str());
 	}
@@ -30,12 +37,5 @@ namespace lucy::util {
 		fout.close();
 
 		return true;
-	}
-
-	static void replace_first(std::string& s, std::string const& toReplace, std::string const& replaceWith) {
-		size_t pos = s.find(toReplace);
-		if (pos == std::string::npos) return;
-
-		s.replace(pos, toReplace.length(), replaceWith);
 	}
 }

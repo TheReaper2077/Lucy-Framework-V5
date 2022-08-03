@@ -15,6 +15,7 @@
 namespace lucy {
 	class Events {
 		bool is_quit;
+		bool is_init = false;
 
 		SDL_Event event;
 
@@ -41,8 +42,10 @@ namespace lucy {
 
 		bool drag_begin;
 
-	public:
+	private:
 		void Init();
+
+	public:
 		void Update();
 
 		bool IsKeyPressed(SDL_Scancode scancode);

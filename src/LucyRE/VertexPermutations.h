@@ -2,14 +2,14 @@
 
 #include "Vertex.h"
 
-struct lucy::Vertex::P1 {
+struct lre::Vertex::P1 {
 	glm::vec3 position;
 
 	SET_VERTEXARRAY({
 		{ Attrib::position, 3, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1 {
+struct lre::Vertex::P1C1 {
 	glm::vec3 position;
 	glm::vec4 color;
 
@@ -18,7 +18,7 @@ struct lucy::Vertex::P1C1 {
 		{ Attrib::color, 4, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1N1 {
+struct lre::Vertex::P1C1N1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec3 normal;
@@ -29,7 +29,7 @@ struct lucy::Vertex::P1C1N1 {
 		{ Attrib::normal, 3, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1N1T1 {
+struct lre::Vertex::P1C1N1T1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec3 normal;
@@ -42,7 +42,7 @@ struct lucy::Vertex::P1C1N1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1N1UV1 {
+struct lre::Vertex::P1C1N1UV1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec3 normal;
@@ -55,7 +55,7 @@ struct lucy::Vertex::P1C1N1UV1 {
 		{ Attrib::uv, 2, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1N1UV1T1 {
+struct lre::Vertex::P1C1N1UV1T1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec3 normal;
@@ -70,7 +70,7 @@ struct lucy::Vertex::P1C1N1UV1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1N1UVW1 {
+struct lre::Vertex::P1C1N1UVW1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec3 normal;
@@ -83,7 +83,7 @@ struct lucy::Vertex::P1C1N1UVW1 {
 		{ Attrib::uvw, 3, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1N1UVW1T1 {
+struct lre::Vertex::P1C1N1UVW1T1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec3 normal;
@@ -98,7 +98,7 @@ struct lucy::Vertex::P1C1N1UVW1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1T1 {
+struct lre::Vertex::P1C1T1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	float tex;
@@ -109,7 +109,7 @@ struct lucy::Vertex::P1C1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1UV1 {
+struct lre::Vertex::P1C1UV1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec2 uv;
@@ -120,7 +120,7 @@ struct lucy::Vertex::P1C1UV1 {
 		{ Attrib::uv, 2, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1UV1T1 {
+struct lre::Vertex::P1C1UV1T1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec2 uv;
@@ -133,7 +133,7 @@ struct lucy::Vertex::P1C1UV1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1UVW1 {
+struct lre::Vertex::P1C1UVW1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec3 uvw;
@@ -144,7 +144,7 @@ struct lucy::Vertex::P1C1UVW1 {
 		{ Attrib::uvw, 3, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1C1UVW1T1 {
+struct lre::Vertex::P1C1UVW1T1 {
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec3 uvw;
@@ -157,7 +157,7 @@ struct lucy::Vertex::P1C1UVW1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1N1 {
+struct lre::Vertex::P1N1 {
 	glm::vec3 position;
 	glm::vec3 normal;
 
@@ -166,7 +166,7 @@ struct lucy::Vertex::P1N1 {
 		{ Attrib::normal, 3, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1N1T1 {
+struct lre::Vertex::P1N1T1 {
 	glm::vec3 position;
 	glm::vec3 normal;
 	float tex;
@@ -177,7 +177,7 @@ struct lucy::Vertex::P1N1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1N1UV1 {
+struct lre::Vertex::P1N1UV1 {
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec2 uv;
@@ -188,7 +188,7 @@ struct lucy::Vertex::P1N1UV1 {
 		{ Attrib::uv, 2, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1N1UV1T1 {
+struct lre::Vertex::P1N1UV1T1 {
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec2 uv;
@@ -201,7 +201,7 @@ struct lucy::Vertex::P1N1UV1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1N1UVW1 {
+struct lre::Vertex::P1N1UVW1 {
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec3 uvw;
@@ -212,7 +212,7 @@ struct lucy::Vertex::P1N1UVW1 {
 		{ Attrib::uvw, 3, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1N1UVW1T1 {
+struct lre::Vertex::P1N1UVW1T1 {
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec3 uvw;
@@ -225,7 +225,7 @@ struct lucy::Vertex::P1N1UVW1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1T1 {
+struct lre::Vertex::P1T1 {
 	glm::vec3 position;
 	float tex;
 
@@ -234,7 +234,7 @@ struct lucy::Vertex::P1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1UV1 {
+struct lre::Vertex::P1UV1 {
 	glm::vec3 position;
 	glm::vec2 uv;
 
@@ -243,7 +243,7 @@ struct lucy::Vertex::P1UV1 {
 		{ Attrib::uv, 2, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1UV1T1 {
+struct lre::Vertex::P1UV1T1 {
 	glm::vec3 position;
 	glm::vec2 uv;
 	float tex;
@@ -254,7 +254,7 @@ struct lucy::Vertex::P1UV1T1 {
 		{ Attrib::tex, 1, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1UVW1 {
+struct lre::Vertex::P1UVW1 {
 	glm::vec3 position;
 	glm::vec3 uvw;
 
@@ -263,7 +263,7 @@ struct lucy::Vertex::P1UVW1 {
 		{ Attrib::uvw, 3, lgl::FLOAT },
 	})
 };
-struct lucy::Vertex::P1UVW1T1 {
+struct lre::Vertex::P1UVW1T1 {
 	glm::vec3 position;
 	glm::vec3 uvw;
 	float tex;

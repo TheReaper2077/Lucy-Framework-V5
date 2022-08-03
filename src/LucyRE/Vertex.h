@@ -4,7 +4,7 @@
 #include <LucyGL/LucyGL.h>
 #include <glm/glm.hpp>
 
-namespace lucy::Vertex {
+namespace lre::Vertex {
 	template <typename T>
 	std::vector<T>& GetVertices() {
 		static std::vector<T> vertices;

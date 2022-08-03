@@ -10,4 +10,5 @@
 #include "DrawCall.h"
 #include "Types.h"
 #include "Status.h"
+#include "Functions.h"
 #include "Make.h"

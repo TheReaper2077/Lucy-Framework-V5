@@ -1,4 +1,5 @@
-#define FUNC_TEXTURE_32
+#ifndef TEXTURE_FUNC
+#define TEXTURE_FUNC
 
 uniform sampler2D u_textures[32];
 
@@ -70,3 +71,5 @@ vec4 GetTexture(const int id, const vec2 uv) {
 			return texture(u_textures[31], uv);
 	}
 }
+
+#endif

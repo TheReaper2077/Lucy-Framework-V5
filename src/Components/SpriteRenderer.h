@@ -6,14 +6,14 @@
 
 namespace lucy {
 	struct SpriteRenderer {
-		glm::vec4 color = { 1, 1, 1, 1 };
+		glm::vec4 color = { 1, 1, 1, 0 };
 		glm::vec2 uv0 = { 0, 0 };
 		glm::vec2 uv1 = { 1, 1 };
 
 		bool visible = true;
 		bool enable_lighting = false;
 		bool enable_texture = false;
-		bool enable_color = false;
+		bool enable_color = true;
 
 		Sprite* sprite = nullptr;
 		Material* material = nullptr;

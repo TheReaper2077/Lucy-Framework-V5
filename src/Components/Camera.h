@@ -45,6 +45,8 @@ namespace lucy {
 		ViewMode mode = ViewMode_None;
 		Projection_Type type = PERSPECTIVE;
 
+		lgl::FrameBuffer* framebuffer = nullptr;
+
 		Camera() {}
 		Camera(ViewMode mode): mode(mode) {}
 		Camera(ViewMode mode, bool enable): mode(mode), enable(enable) {}

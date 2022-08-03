@@ -10,6 +10,7 @@
 #include <Registry/Registry.h>
 #include <Engine/TimeStep.h>
 #include <Engine/Events.h>
+#include <Engine/Functions.h>
 
 namespace lucy {
 	void FPSView(lucy::Registry& registry, Entity entity);
@@ -19,46 +20,56 @@ namespace lucy {
 void lucy::System::CameraSystem(lucy::Registry& registry) {	
 	static auto& timestep = registry.store<lucy::TimeStep>();
 	static auto& events = registry.store<lucy::Events>();
+	static std::unordered_map<Entity, glm::vec2> camera_size_map;
 
-	for (auto [entity, tag, transform, camera]: registry.view<Tag, Transform, Camera>().each()) {
-		if (!camera.enable) continue;
+	auto entity = registry.store<Functions>().main_camera;
 
-		auto& window = registry.store<Window>();
+	if (entity == (Entity)0) return;
+	if (!registry.contains<Camera>(entity)) return;
+	if (!registry.contains<Transform>(entity)) return;
 
-		if (camera.width != window.size.x || camera.height != window.size.y) {
-			camera.width = window.size.x;
-			camera.height = window.size.y;
+	auto& transform = registry.get<Transform>(entity);
+	auto& camera = registry.get<Camera>(entity);
 
-			camera.lastx = camera.width / 2;
-			camera.lasty = camera.height / 2;
+	if (!camera.enable) return;
 
-			camera.first_mouse = true;
+	if (camera_size_map.find(entity) == camera_size_map.end())
+		camera_size_map[entity] = { 0, 0 };
 
-			if (camera.type == PERSPECTIVE) {
-				camera.projection = glm::perspective(glm::radians(camera.fov), (float)camera.width / camera.height, camera.c_near, camera.c_far);
-			} else if (camera.type == ORTHOGRAPHIC) {
-				camera.projection = glm::ortho<float>(0, camera.width, camera.height, 0, -camera.c_near, camera.c_far);
-			}
+	auto& last_size = camera_size_map[entity];
+
+	if (camera.width != last_size.x || camera.height != last_size.y) {
+		camera_size_map[entity] = { camera.width, camera.height };
+
+		camera.lastx = camera.width / 2;
+		camera.lasty = camera.height / 2;
+
+		camera.first_mouse = true;
+
+		if (camera.type == PERSPECTIVE) {
+			camera.projection = glm::perspective(glm::radians(camera.fov), (float)camera.width / camera.height, camera.c_near, camera.c_far);
+		} else if (camera.type == ORTHOGRAPHIC) {
+			camera.projection = glm::ortho<float>(-camera.width, camera.width, -camera.height, camera.height, -camera.c_near, camera.c_far);
 		}
+	}
 
-		switch (camera.mode) {
-			case ViewMode_FPS:
-				FPSView(registry, entity);
-				break;
+	switch (camera.mode) {
+		case ViewMode_FPS:
+			FPSView(registry, entity);
+			break;
 
-			case ViewMode_Editor:
-				EditorView(registry, entity);
-				break;
+		case ViewMode_Editor:
+			EditorView(registry, entity);
+			break;
 
-			default:
-				const auto& quaternion = transform.GetRotationQuat();
+		default:
+			const auto& quaternion = transform.GetRotationQuat();
 
-				camera.front = glm::normalize(quaternion * camera.world_front);
-				camera.up = glm::normalize(quaternion * camera.world_up);
-				
-				camera.view = glm::lookAt(transform.translation, transform.translation + camera.front, camera.up);
-				camera.position = transform.translation;
-		}
+			camera.front = glm::normalize(quaternion * camera.world_front);
+			camera.up = glm::normalize(quaternion * camera.world_up);
+			
+			camera.view = glm::lookAt(transform.translation, transform.translation + camera.front, camera.up);
+			camera.position = transform.translation;
 	}
 }
 

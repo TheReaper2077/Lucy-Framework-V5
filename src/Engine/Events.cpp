@@ -11,6 +11,11 @@ void lucy::Events::Init() {
 }
 
 void lucy::Events::Update() {
+	if (!is_init) {
+		Init();
+		is_init = true;
+	}
+
 	is_file_dropped = false;
 
 	dropfilename = "";

@@ -12,10 +12,10 @@
 #include <SDL2/SDL.h>
 #include <glm/gtx/string_cast.hpp>
 #include <glad/glad.h>
+#include "Scene.h"
 
 void lucy::Engine::Init() {
 	auto null_entity = registry.create();
-	auto& renderer = registry.store<Renderer>();
 	auto& events = registry.store<Events>();
 	auto& meshregistry = registry.store<MeshRegistry>();
 	auto& window = registry.store<Window>();
@@ -25,27 +25,24 @@ void lucy::Engine::Init() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	sdl_window = SDL_CreateWindow(window.title.c_str(), window.pos.x, window.pos.y, window.size.x, window.size.y, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-	assert(sdl_window);
+	window.InitSDLWindow();
 
-	sdl_glcontext = SDL_GL_CreateContext(sdl_window);
-
-	gladLoadGLLoader(SDL_GL_GetProcAddress);
-
-	events.Init();
-	renderer.Init();
-	meshregistry.Init();
+	lgl::Initialize(SDL_GL_GetProcAddress);
+	lre::Initialize();
 }
 
 void lucy::Engine::Mainloop() {
 	auto& events = registry.store<Events>();
 	auto& timestep = registry.store<TimeStep>();
+	auto& window = registry.store<Window>();
 
 	for (auto system_func: init_systems) {
 		system_func(registry);
 	}
 
 	while (!events.IsQuittable()) {
+		const auto& start_time = std::chrono::high_resolution_clock::now();
+
 		events.Update();
 		timestep.Update();
 
@@ -54,16 +51,21 @@ void lucy::Engine::Mainloop() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDepthFunc(GL_LEQUAL);
 
-		for (auto system_func: systems_array) {
-			system_func(registry);
+		if (timestep.dt < 1) {
+			for (auto system_func: systems_array) {
+				system_func(registry);
+			}
 		}
 
-		SDL_GL_SwapWindow(sdl_window);
+		window.SwapWindow();
+
+		const auto& end_time = std::chrono::high_resolution_clock::now();
+		timestep.dt = std::chrono::duration<double, std::ratio<1, 60>>(end_time - start_time).count();
 	}
 }
 
 void lucy::Engine::Destroy() {
-	SDL_DestroyWindow(sdl_window);
+	
 }
 
 void lucy::Engine::AddRuntimeSystem(system_func func) {

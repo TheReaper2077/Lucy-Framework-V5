@@ -8,7 +8,7 @@ namespace lucy {
 
 	class Registry: public entt::registry {
 		std::unordered_map<size_t, Entity> singleton_instances;
-	
+
 	public:
 		template <typename T, typename ...Args>
 		inline T& store(Args ...params) {
@@ -18,6 +18,11 @@ namespace lucy {
 			}
 
 			return get<T>(singleton_instances[typeid(T).hash_code()]);
+		}
+
+		template <typename T>
+		bool contains(const Entity& entity) {
+			return (try_get<T>(entity) != nullptr);
 		}
 
 		static Registry& Instance() {
