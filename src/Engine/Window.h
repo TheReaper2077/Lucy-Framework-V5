@@ -52,5 +52,21 @@ namespace lucy {
 		void Destroy() {
 			SDL_DestroyWindow(sdl_window);
 		}
+
+		void SetCurrent() {
+			SDL_GL_MakeCurrent(sdl_window, sdl_glcontext);
+		}
+
+		void ResetSize() {
+			int w, h;
+			SDL_GetWindowSize(sdl_window, &w, &h);
+			size = { w, h };
+		}
+
+		void ResetPosition() {
+			int x, y;
+			SDL_GetWindowPosition(sdl_window, &x, &y);
+			pos = { x, y };
+		}
 	};
 }

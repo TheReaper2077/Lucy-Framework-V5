@@ -17,6 +17,10 @@ namespace lucy {
 		bool is_quit;
 		bool is_init = false;
 
+		typedef void(*event_func)(SDL_Event&);
+
+		std::vector<event_func> event_func_array;
+
 		SDL_Event event;
 
 		std::set<SDL_Scancode> pressed_keys;
@@ -35,7 +39,12 @@ namespace lucy {
 		std::string dropfilename;
 		bool is_file_dropped = false;
 
+		glm::vec2 window_resize_size;
+		glm::vec2 window_move_position;
 		bool is_window_resized;
+		bool is_window_moved;
+		bool is_window_mouse_focus;
+		bool is_window_keyboard_focus;
 
 		void* payload_data = nullptr;
 		std::string payload_type;
@@ -46,6 +55,7 @@ namespace lucy {
 		void Init();
 
 	public:
+		void AddFunction(event_func func);
 		void Update();
 
 		bool IsKeyPressed(SDL_Scancode scancode);
@@ -54,8 +64,13 @@ namespace lucy {
 		bool IsKeyToggled(SDL_Scancode scancode);
 		bool IsKeyChord(const std::vector<SDL_Scancode>& scancodes);
 
-		bool IsQuittable();
+		bool& IsQuittable();
+		const glm::vec2& GetWindowSize();
+		const glm::vec2& GetWindowPosition();
 		bool IsWindowResized();
+		bool IsWindowMoved();
+		bool IsWindowMouseFocused();
+		bool IsWindowKeyboardFocused();
 
 		bool IsButtonPressed(unsigned int button);
 		bool IsButtonPressedAny();

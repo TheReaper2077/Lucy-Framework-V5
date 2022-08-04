@@ -6,6 +6,7 @@
 #include <box2d/box2d.h>
 #include <Components/Components.h>
 #include <Engine/TimeStep.h>
+#include <Engine/Functions.h>
 #include <Engine/Events.h>
 #include <iostream>
 #include <glm/glm.hpp>
@@ -26,41 +27,36 @@ b2BodyType LucyTypeToB2DType(lucy::BodyType type) {
 void lucy::System::PhysicsSystem(Registry& registry) {
 	auto& timestep = registry.store<TimeStep>();
 	auto& events = registry.store<Events>();
+	auto& functions = registry.store<Functions>();
 
-	static bool init = false;
-
-	if (events.IsKeyPressed(SDL_SCANCODE_P)) {
-		init = true;
-	}
-
-	if (world == nullptr && init) {
+	if (world == nullptr && functions.IsPhysicsPlaying()) {
 		world = new b2World({ 0.0f, -9.8f });
 
 		for (auto [entity, transform, rigidbody2D]: registry.view<Transform, Rigidbody2D>().each()) {
-			b2BodyDef body_def;
+			// b2BodyDef body_def;
 
-			body_def.type = LucyTypeToB2DType(rigidbody2D.type);
-			body_def.position.Set(transform.translation.x, transform.translation.y);
-			body_def.angle = transform.rotation.z;
+			// body_def.type = LucyTypeToB2DType(rigidbody2D.type);
+			// body_def.position.Set(transform.translation.x, transform.translation.y);
+			// body_def.angle = transform.rotation.z;
 
-			b2Body* body = world->CreateBody(&body_def);
-			body->SetFixedRotation(rigidbody2D.fixed_rotation);
+			// b2Body* body = world->CreateBody(&body_def);
+			// body->SetFixedRotation(rigidbody2D.fixed_rotation);
 
-			rigidbody2D.runtime_body = (void*)body;
-			auto* boxcollider2D = registry.try_get<BoxCollider2D>(entity);
-			if (boxcollider2D != nullptr) {
-				b2PolygonShape poly_shape;
-				poly_shape.SetAsBox(transform.scale.x, transform.scale.y);
+			// rigidbody2D.runtime_body = (void*)body;
+			// auto* boxcollider2D = registry.try_get<BoxCollider2D>(entity);
+			// if (boxcollider2D != nullptr) {
+			// 	b2PolygonShape poly_shape;
+			// 	poly_shape.SetAsBox(transform.scale.x, transform.scale.y);
 
-				b2FixtureDef fixture_def;
-				fixture_def.shape = &poly_shape;
-				fixture_def.density = boxcollider2D->density;
-				fixture_def.friction = boxcollider2D->friction;
-				fixture_def.restitution = boxcollider2D->restitution;
-				fixture_def.restitutionThreshold = boxcollider2D->restitution_threshold;
+			// 	b2FixtureDef fixture_def;
+			// 	fixture_def.shape = &poly_shape;
+			// 	fixture_def.density = boxcollider2D->density;
+			// 	fixture_def.friction = boxcollider2D->friction;
+			// 	fixture_def.restitution = boxcollider2D->restitution;
+			// 	fixture_def.restitutionThreshold = boxcollider2D->restitution_threshold;
 
-				body->CreateFixture(&fixture_def);
-			}
+			// 	body->CreateFixture(&fixture_def);
+			// }
 		}
 	}
 
@@ -73,9 +69,38 @@ void lucy::System::PhysicsSystem(Registry& registry) {
 
 		for (auto [entity, transform, rigidbody2D]: registry.view<Transform, Rigidbody2D>().each()) {
 			b2Body* body = (b2Body*)rigidbody2D.runtime_body;
+
+			if (body == nullptr) {
+				b2BodyDef body_def;
+
+				body_def.type = LucyTypeToB2DType(rigidbody2D.type);
+				body_def.position.Set(transform.translation.x, transform.translation.y);
+				body_def.angle = transform.rotation.z;
+
+				body = world->CreateBody(&body_def);
+				body->SetFixedRotation(rigidbody2D.fixed_rotation);
+
+				rigidbody2D.runtime_body = (void*)body;
+
+				auto* boxcollider2D = registry.try_get<BoxCollider2D>(entity);
+				if (boxcollider2D != nullptr) {
+					b2PolygonShape poly_shape;
+					poly_shape.SetAsBox(transform.scale.x, transform.scale.y);
+
+					b2FixtureDef fixture_def;
+					fixture_def.shape = &poly_shape;
+					fixture_def.density = boxcollider2D->density;
+					fixture_def.friction = boxcollider2D->friction;
+					fixture_def.restitution = boxcollider2D->restitution;
+					fixture_def.restitutionThreshold = boxcollider2D->restitution_threshold;
+
+					body->CreateFixture(&fixture_def);
+				}
+			}
+
 			const auto& position = body->GetPosition();
 
-			// body->ApplyForce({ rigidbody2D.force.x, rigidbody2D.force.y }, );
+			// body->ApplyForce({ rigidbody2D.force.x, rigidbody2D.force.y }, { position.x, position.y }, false);
 
 			transform.translation.x = position.x;
 			transform.translation.y = position.y;

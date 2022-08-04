@@ -21,7 +21,7 @@ void InitApplication(lucy::Registry& registry) {
 	player_entity = registry.create();
 	{
 		registry.emplace<lucy::Tag>(player_entity, "Player");
-		registry.emplace<lucy::Transform>(player_entity, glm::vec3(0, -50, 0), glm::vec3(0, 0, 45), glm::vec3(50, 50, 0));
+		registry.emplace<lucy::Transform>(player_entity, glm::vec3(0, -1 * 50, 0), glm::vec3(0, 0, 45), glm::vec3(1 * 50, 1 * 50, 0));
 		auto& spriterenderer = registry.emplace<lucy::SpriteRenderer>(player_entity);
 		spriterenderer.color = { 0, 1, 1, 1 };
 
@@ -36,7 +36,7 @@ void InitApplication(lucy::Registry& registry) {
 	lucy::Entity floor_entity = registry.create();
 	{
 		registry.emplace<lucy::Tag>(floor_entity, "Floor");
-		registry.emplace<lucy::Transform>(floor_entity, glm::vec3(0, -500, 0), glm::vec3(0, 0, 0), glm::vec3(500, 20, 0));
+		registry.emplace<lucy::Transform>(floor_entity, glm::vec3(0, -10 * 50, 0), glm::vec3(0, 0, 0), glm::vec3(10 * 50, 20, 0));
 		auto& spriterenderer = registry.emplace<lucy::SpriteRenderer>(floor_entity);
 		spriterenderer.color = { 1, 0, 0, 1 };
 
@@ -51,9 +51,13 @@ void InitApplication(lucy::Registry& registry) {
 	{
 		registry.emplace<lucy::Tag>(camera_entity, "CameraFPS");
 		registry.emplace<lucy::Transform>(camera_entity, glm::vec3(0, 0, 1));
-		auto& camera = registry.emplace<lucy::Camera>(camera_entity, lucy::ViewMode_None, true);
-		camera.type = lucy::ORTHOGRAPHIC;
+		auto& camera = registry.emplace<lucy::Camera>(camera_entity);
 		functions.main_camera = camera_entity;
+
+		// camera.mode = lucy::ViewMode_FPS;
+		camera.type = lucy::ORTHOGRAPHIC;
+		camera.enable = true;
+		camera.is_maincamera = true;
 		camera.width = window.size.x;
 		camera.height = window.size.y;
 	}

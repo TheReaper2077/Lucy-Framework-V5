@@ -10,12 +10,21 @@ void lucy::Events::Init() {
 	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 }
 
+void lucy::Events::AddFunction(event_func func) {
+	for (auto fn: event_func_array)
+		assert(func != fn);
+
+	event_func_array.push_back(func);
+}
+
 void lucy::Events::Update() {
 	if (!is_init) {
 		Init();
 		is_init = true;
 	}
 
+	is_window_resized = false;
+	is_window_moved = false;
 	is_file_dropped = false;
 
 	dropfilename = "";
@@ -36,7 +45,9 @@ void lucy::Events::Update() {
 	}
 
 	while (SDL_PollEvent(&event)) {
-		// ImGui_ImplSDL2_ProcessEvent(&event);
+		for (auto func: event_func_array) {
+			func(event);
+		}
 
 		is_quit = (event.type == SDL_QUIT);
 
@@ -87,6 +98,28 @@ void lucy::Events::Update() {
 			dropfilename = std::string(event.drop.file);
 			is_file_dropped = true;
 		}
+		if (event.type == SDL_WINDOWEVENT_RESIZED) {
+			is_window_resized = true;
+			window_resize_size.x = event.window.data1;
+			window_resize_size.y = event.window.data2;
+		}
+		if (event.type == SDL_WINDOWEVENT_MOVED) {
+			is_window_moved = true;
+			window_move_position.x = event.window.data1;
+			window_move_position.y = event.window.data2;
+		}
+		if (event.type == SDL_WINDOWEVENT_ENTER) {
+			is_window_mouse_focus = true;
+		}
+		if (event.type == SDL_WINDOWEVENT_LEAVE) {
+			is_window_mouse_focus = false;
+		}
+		if (event.type == SDL_WINDOWEVENT_FOCUS_GAINED) {
+			is_window_keyboard_focus = true;
+		}
+		if (event.type == SDL_WINDOWEVENT_FOCUS_LOST) {
+			is_window_keyboard_focus = false;
+		}
 	}
 }
 
@@ -108,22 +141,42 @@ bool lucy::Events::IsKeyToggled(SDL_Scancode scancode) {
 }
 
 bool lucy::Events::IsKeyChord(const std::vector<SDL_Scancode>& key_chord) {
-	if (key_chord.size() < this->key_chord.size()) return false;
+	if (this->key_chord.size() < key_chord.size()) return false;
 
-	for (int i = 0; i < key_chord.size(); i++) {
-		if (key_chord[i] != this->key_chord[i])
+	for (int i = 0; i < this->key_chord.size(); i++) {
+		if (this->key_chord[i] != key_chord[i])
 			return false;
 	}
 
 	return true;
 }
 
-bool lucy::Events::IsQuittable() {
+bool& lucy::Events::IsQuittable() {
 	return is_quit;
+}
+
+const glm::vec2& lucy::Events::GetWindowSize() {
+	return window_resize_size;
+}
+
+const glm::vec2& lucy::Events::GetWindowPosition() {
+	return window_move_position;
 }
 
 bool lucy::Events::IsWindowResized() {
 	return is_window_resized;
+}
+
+bool lucy::Events::IsWindowMoved() {
+	return is_window_moved;
+}
+
+bool lucy::Events::IsWindowMouseFocused() {
+	return is_window_mouse_focus;
+}
+
+bool lucy::Events::IsWindowKeyboardFocused() {
+	return is_window_keyboard_focus;
 }
 
 bool lucy::Events::IsButtonPressed(unsigned int button) {

@@ -62,10 +62,12 @@ namespace lucy {
 		lgl::Shader* pbr_sphere_shader = nullptr;
 		lgl::Shader* pbr_sprite_shader = nullptr;
 		lgl::Shader* line_shader = nullptr;
+		lgl::Shader* screen_shader = nullptr;
 
 		bool shader_init = false;
 
 		void SetMaterial(lgl::Shader* shader, Material* material);
+		void RenderFramebuffer(lgl::FrameBuffer* framebuffer);
 
 	public:
 		void SetLightAndShaders(Registry& registry);

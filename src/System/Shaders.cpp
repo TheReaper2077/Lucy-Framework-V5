@@ -53,9 +53,15 @@ void lucy::MainRenderer::SetLightAndShaders(Registry& registry) {
 	if (sprite_shader == nullptr) {
 		auto vs = read_file("D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\vertex.glsl");
 		auto fs = sprite_shader_fs_create();
-
+		
 		sprite_shader = new lgl::Shader(vs, fs, false);
-		// sprite_shader = new lgl::Shader("D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\Default\\sprite.vert", "D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\Default\\sprite.frag", true);
+	}
+
+	if (screen_shader == nullptr) {
+		auto vs = "D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\screen_vertex.glsl";
+		auto fs = "D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\screen_frag.glsl";
+
+		screen_shader = new lgl::Shader(vs, fs, true);
 	}
 
 	// renderer.directional_light_count = 0;

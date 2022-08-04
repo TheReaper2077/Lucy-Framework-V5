@@ -71,6 +71,16 @@ void lgl::FrameBuffer::UnBind() {
 }
 
 lgl::FrameBuffer::~FrameBuffer() {
+	if (texture != nullptr) {
+		free(texture);
+		texture = nullptr;
+	}
+
+	if (picking != nullptr) {
+		free(picking);
+		picking = nullptr;
+	}
+
 	glDeleteFramebuffers(1, &id);
 }
 

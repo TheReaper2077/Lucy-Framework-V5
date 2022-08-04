@@ -48,8 +48,5 @@ namespace lucy {
 		lgl::FrameBuffer* framebuffer = nullptr;
 
 		Camera() {}
-		Camera(ViewMode mode): mode(mode) {}
-		Camera(ViewMode mode, bool enable): mode(mode), enable(enable) {}
-		Camera(ViewMode mode, bool enable, bool is_maincamera): mode(mode), enable(enable), is_maincamera(is_maincamera) {}
 	};
 }
