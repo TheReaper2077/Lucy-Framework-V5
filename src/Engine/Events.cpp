@@ -23,7 +23,10 @@ void lucy::Events::Update() {
 		is_init = true;
 	}
 
-	is_window_resized = false;
+	if (is_window_resized != 0 && is_window_resized < 3) {
+		is_window_resized++;
+	} else is_window_resized = 0;
+
 	is_window_moved = false;
 	is_file_dropped = false;
 
@@ -98,27 +101,29 @@ void lucy::Events::Update() {
 			dropfilename = std::string(event.drop.file);
 			is_file_dropped = true;
 		}
-		if (event.type == SDL_WINDOWEVENT_RESIZED) {
-			is_window_resized = true;
-			window_resize_size.x = event.window.data1;
-			window_resize_size.y = event.window.data2;
-		}
-		if (event.type == SDL_WINDOWEVENT_MOVED) {
-			is_window_moved = true;
-			window_move_position.x = event.window.data1;
-			window_move_position.y = event.window.data2;
-		}
-		if (event.type == SDL_WINDOWEVENT_ENTER) {
-			is_window_mouse_focus = true;
-		}
-		if (event.type == SDL_WINDOWEVENT_LEAVE) {
-			is_window_mouse_focus = false;
-		}
-		if (event.type == SDL_WINDOWEVENT_FOCUS_GAINED) {
-			is_window_keyboard_focus = true;
-		}
-		if (event.type == SDL_WINDOWEVENT_FOCUS_LOST) {
-			is_window_keyboard_focus = false;
+		if (event.type == SDL_WINDOWEVENT) {
+			if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+				is_window_resized = true;
+				window_resize_size.x = event.window.data1;
+				window_resize_size.y = event.window.data2;
+			}
+			if (event.window.event == SDL_WINDOWEVENT_MOVED) {
+				is_window_moved = true;
+				window_move_position.x = event.window.data1;
+				window_move_position.y = event.window.data2;
+			}
+			if (event.window.event == SDL_WINDOWEVENT_ENTER) {
+				is_window_mouse_focus = true;
+			}
+			if (event.window.event == SDL_WINDOWEVENT_LEAVE) {
+				is_window_mouse_focus = false;
+			}
+			if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) {
+				is_window_keyboard_focus = true;
+			}
+			if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+				is_window_keyboard_focus = false;
+			}
 		}
 	}
 }
@@ -164,7 +169,7 @@ const glm::vec2& lucy::Events::GetWindowPosition() {
 }
 
 bool lucy::Events::IsWindowResized() {
-	return is_window_resized;
+	return (is_window_resized > 0);
 }
 
 bool lucy::Events::IsWindowMoved() {

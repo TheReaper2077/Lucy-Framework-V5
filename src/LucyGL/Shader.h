@@ -30,6 +30,7 @@ namespace lgl {
 
 		bool SetUniformi(std::string uniform, int v0);
 		bool SetUniformf(std::string uniform, float v0);
+		bool SetUniformVec2(std::string uniform, const float* v);
 		bool SetUniformVec3(std::string uniform, const float* v);
 		bool SetUniformVec4(std::string uniform, const float* v);
 		bool SetUniformMat4(std::string uniform, const float* matrix);

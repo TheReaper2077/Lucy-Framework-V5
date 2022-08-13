@@ -20,7 +20,7 @@ namespace lucy {
 
 		Mesh* mesh = nullptr;
 
-		lgl::Primitive primitive;
+		lgl::Primitive primitive = lgl::TRIANGLE;
 
 		void Import(aiMesh* ai_mesh);
 		void Transfer();

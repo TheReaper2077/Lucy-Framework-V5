@@ -1,5 +1,6 @@
 #include "EditorSystem.h"
 #include <imgui.h>
+#include <iostream>
 #include <imgui_lucy_impl.h>
 #include <SDL2/SDL.h>
 #include <Engine/Window.h>
@@ -133,11 +134,98 @@ void lucy::System::Panel::InspectorLayer(Registry& registry) {
 			if (camera != nullptr) {
 				if (ImGui::TreeNodeEx("Camera")) {
 					ImGui::Checkbox("Enable", &camera->enable);
-					ImGui::ColorPicker4("Clear Color", &camera->clear_color[0]);
+					ImGui::ColorEdit4("Clear Color", &camera->clear_color[0]);
+
+					if (ImGui::TreeNodeEx("Clear Buffer")) {
+						bool color = ((camera->clear_flags & lgl::COLOR_BUFFER_BIT) != 0);
+						bool depth = ((camera->clear_flags & lgl::DEPTH_BUFFER_BIT) != 0);
+						bool stencil = ((camera->clear_flags & lgl::STENCIL_BUFFER_BIT) != 0);
+
+						ImGui::Checkbox("Color", &color);
+						ImGui::Checkbox("Depth", &depth);
+						ImGui::Checkbox("Stencil", &stencil);
+
+						if (color)
+							camera->clear_flags |= lgl::COLOR_BUFFER_BIT;
+						else
+							camera->clear_flags &= ~lgl::COLOR_BUFFER_BIT;
+						if (depth)
+							camera->clear_flags |= lgl::DEPTH_BUFFER_BIT;
+						else
+							camera->clear_flags &= ~lgl::DEPTH_BUFFER_BIT;
+						if (stencil)
+							camera->clear_flags |= lgl::STENCIL_BUFFER_BIT;
+						else
+							camera->clear_flags &= ~lgl::STENCIL_BUFFER_BIT;
+
+						ImGui::TreePop();
+					}
+
+					ImGui::DragFloat("Near", &camera->c_near);
+					ImGui::DragFloat("Far", &camera->c_far);
+					ImGui::DragFloat("Sensitivity", &camera->sensitivity);
+					ImGui::DragFloat("Fov", &camera->fov);
 
 					ImGui::TreePop();
 				}
 			}
+
+			auto* light = registry.try_get<Light>(selected_entity);
+			if (light != nullptr) {
+				if (ImGui::TreeNodeEx("Light")) {
+
+					ImGui::TreePop();
+				}
+			}
+
+			auto* spriterenderer = registry.try_get<SpriteRenderer>(selected_entity);
+			if (spriterenderer != nullptr) {
+				if (ImGui::TreeNodeEx("SpriteRenderer")) {
+					
+
+					ImGui::TreePop();
+				}
+			}
+		}
+	}
+	ImGui::End();
+}
+
+void lucy::System::Panel::EngineManagerLayer(Registry& registry) {
+	auto& functions = registry.store<Functions>();
+
+	static bool panel_open;
+	if (ImGui::Begin("PhysicsManger", &panel_open)) {
+		if (ImGui::TreeNodeEx("Physics")) {
+			ImGui::Checkbox("Enable Physics Caching", &functions.enable_physics_caching);
+			ImGui::Checkbox("Enable Physics Render", &functions.enable_physics_object_render);
+
+			ImGui::Text("Current State: ");
+			ImGui::SameLine();
+
+			if (functions.IsPhysicsPaused()) {
+				ImGui::TextColored({ 0, 0, 1, 1 }, "PAUSED");
+			} else if (functions.IsPhysicsStopped()) {
+				ImGui::TextColored({ 1, 0, 0, 1 }, "STOPPED");
+			} else if (functions.IsPhysicsPlaying()) {
+				ImGui::TextColored({ 0, 1, 0, 1 }, "PLAYING");
+			}
+
+			if (ImGui::Button("PLAY") && !functions.IsPhysicsPlaying()) {
+				functions.PlayPhysics();
+			}
+			if (ImGui::Button("PAUSE") && !functions.IsPhysicsPaused()) {
+				functions.PausePhysics();
+			}
+			if (ImGui::Button("STOP") && !functions.IsPhysicsStopped()) {
+				functions.StopPhysics();
+			}
+
+			ImGui::TreePop();
+		}
+		if (ImGui::TreeNodeEx("Render")) {
+			
+			ImGui::TreePop();
 		}
 	}
 	ImGui::End();
@@ -162,10 +250,14 @@ void lucy::System::EditorSystemUpdate(Registry& registry) {
 	}
 
 	if (!functions.render_target_to_screen) {
+		// window.Hide();
+
 		if (events.IsWindowResized())
 			mainwindow.size = events.GetWindowSize();
 		if (events.IsWindowMoved())
 			mainwindow.pos = events.GetWindowPosition();
+	} else {
+		// window.Show();
 	}
 
 	if (events.IsKeyChord({ SDL_SCANCODE_LALT, SDL_SCANCODE_F4 })) {
@@ -204,11 +296,13 @@ void lucy::System::EditorSystemUpdate(Registry& registry) {
 
 	Panel::HeirarchyLayer(registry);
 	Panel::InspectorLayer(registry);
-	// Panel::EditorLayer(registry);
+	Panel::EngineManagerLayer(registry);
 
 	static bool show_demo = false;
-	if (events.IsKeyPressed(SDL_SCANCODE_F12))
-		show_demo = !show_demo;
+	if (events.IsKeyPressed(SDL_SCANCODE_F12) && !show_demo)
+		show_demo = true;
+	if (events.IsKeyPressed(SDL_SCANCODE_F11) && show_demo)
+		show_demo = false;
 
 	if (show_demo)
 		ImGui::ShowDemoWindow(&show_demo);

@@ -10,7 +10,7 @@ int main(int argcount, char** args) {
 
 	engine.AddRuntimeSystem(UpdateApplication);
 	engine.AddRuntimeSystem(lucy::System::CameraSystem);
-	engine.AddRuntimeSystem(lucy::System::PhysicsSystem);
+	// engine.AddRuntimeSystem(lucy::System::PhysicsSystem);
 	engine.AddRuntimeSystem(lucy::System::RenderSystem);
 	engine.AddRuntimeSystem(lucy::System::EditorSystemUpdate);
 

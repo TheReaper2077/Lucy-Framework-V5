@@ -10,63 +10,26 @@ namespace lucy {
 		glm::vec2 pos = { 50, 50 };
 		glm::vec2 size = { 1366, 768 };
 
+		uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+
 		std::string title = "Lucy Framework V5";
 		lgl::FrameBuffer* framebuffer = nullptr;
 		SDL_Window* sdl_window = nullptr;
 		SDL_GLContext sdl_glcontext;
 
-		Window() {}
-		~Window() {
-			Destroy();
-		}
+		bool hidden = false;
 
-		void InitSDLWindow() {
-			assert(sdl_window == nullptr);
+		Window();
+		~Window();
 
-			sdl_window = SDL_CreateWindow(title.c_str(), pos.x, pos.y, size.x, size.y, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-
-			assert(sdl_window);
-
-			sdl_glcontext = SDL_GL_CreateContext(sdl_window);
-		}
-
-		void InitSDLWindow(const char* title, int pos_x, int pos_y, int width, int height, uint32_t flags) {
-			assert(sdl_window == nullptr);
-
-			sdl_window = SDL_CreateWindow(title, pos_x, pos_y, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | flags);
-
-			assert(sdl_window);
-
-			sdl_glcontext = SDL_GL_CreateContext(sdl_window);
-			pos.x = pos_x;
-			pos.y = pos_y;
-			size.x = width;
-			size.y = height;
-			this->title = std::string(title);
-		}
-
-		void SwapWindow() {
-			SDL_GL_SwapWindow(sdl_window);
-		}
-
-		void Destroy() {
-			SDL_DestroyWindow(sdl_window);
-		}
-
-		void SetCurrent() {
-			SDL_GL_MakeCurrent(sdl_window, sdl_glcontext);
-		}
-
-		void ResetSize() {
-			int w, h;
-			SDL_GetWindowSize(sdl_window, &w, &h);
-			size = { w, h };
-		}
-
-		void ResetPosition() {
-			int x, y;
-			SDL_GetWindowPosition(sdl_window, &x, &y);
-			pos = { x, y };
-		}
+		void InitSDLWindow();
+		void InitSDLWindow(const char* title, int pos_x, int pos_y, int width, int height, uint32_t flags);
+		void SwapWindow();
+		void Destroy();
+		void SetCurrent();
+		void ResetSize();
+		void ResetPosition();
+		void Hide();
+		void Show();
 	};
 }

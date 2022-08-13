@@ -41,7 +41,7 @@ namespace lucy {
 
 		glm::vec2 window_resize_size;
 		glm::vec2 window_move_position;
-		bool is_window_resized;
+		int is_window_resized;
 		bool is_window_moved;
 		bool is_window_mouse_focus;
 		bool is_window_keyboard_focus;

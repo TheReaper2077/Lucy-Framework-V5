@@ -117,19 +117,6 @@ bool lgl::MultiDrawIndexed(Primitive mode, int count, Type type, void* indices) 
 	return false;
 }
 
-void lgl::Clear(float r, float g, float b, float a, const BufferBitFlags flags) {
-	glClearColor(r, g, b, a);
-	glClear(flags);
-}
-
-void lgl::Clear(const BufferBitFlags flags) {
-	glClear(flags);
-}
-
-void lgl::ClearColor(float r, float g, float b, float a) {
-	glClearColor(r, g, b, a);
-}
-
 bool lgl::Draw(Primitive mode, int first, int count) {
 	return DrawCmd(NONE, mode, (Type)0, (Format)0, first, 0, 0, count, 0, 0, 0, 0, 0, nullptr, nullptr, nullptr);
 }

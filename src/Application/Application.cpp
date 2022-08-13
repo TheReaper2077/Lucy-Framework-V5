@@ -57,12 +57,21 @@ void InitApplication(lucy::Registry& registry) {
 		// camera.mode = lucy::ViewMode_FPS;
 		camera.type = lucy::ORTHOGRAPHIC;
 		camera.enable = true;
-		camera.is_maincamera = true;
 		camera.width = window.size.x;
 		camera.height = window.size.y;
 	}
+
+	// functions.enable_physics_caching = true;
 }
 
 void UpdateApplication(lucy::Registry& registry) {
+	auto& functions = registry.store<lucy::Functions>();
+	auto& events = registry.store<lucy::Events>();
 
+	if (!functions.IsPhysicsPlaying() && events.IsKeyPressed(SDL_SCANCODE_R))
+		functions.PlayPhysics();
+	if (!functions.IsPhysicsPaused() && events.IsKeyPressed(SDL_SCANCODE_P))
+		functions.PausePhysics();
+	if (!functions.IsPhysicsStopped() && events.IsKeyPressed(SDL_SCANCODE_S))
+		functions.StopPhysics();
 }

@@ -105,6 +105,13 @@ bool lgl::Shader::SetUniformf(std::string uniform, float v0) {
 	return (location > 0);
 }
 
+bool lgl::Shader::SetUniformVec2(std::string uniform, const float *v) {
+	auto location = GetUniformLoc(uniform);
+	glUniform2fv(location, 1, v);
+
+	return (location > 0);
+}
+
 bool lgl::Shader::SetUniformVec3(std::string uniform, const float *v) {
 	auto location = GetUniformLoc(uniform);
 	glUniform3fv(location, 1, v);

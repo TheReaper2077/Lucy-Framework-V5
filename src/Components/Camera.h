@@ -31,8 +31,8 @@ namespace lucy {
 		glm::vec3 up = world_up;
 
 		glm::vec4 clear_color = { 0, 0, 0, 0 };
+		uint32_t clear_flags = lgl::COLOR_BUFFER_BIT | lgl::DEPTH_BUFFER_BIT;
 
-		bool enable = false;
 		int width, height;
 		int lastx, lasty;
 		bool first_mouse = true;
@@ -40,12 +40,13 @@ namespace lucy {
 		float c_near = 0.01, c_far = 1000;
 		float sensitivity = 0.1;
 
-		bool is_maincamera = true;
+		bool enable = true;
 
 		ViewMode mode = ViewMode_None;
 		Projection_Type type = PERSPECTIVE;
 
 		lgl::FrameBuffer* framebuffer = nullptr;
+		std::string skybox_id;
 
 		Camera() {}
 	};

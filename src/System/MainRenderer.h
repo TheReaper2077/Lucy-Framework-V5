@@ -11,6 +11,8 @@
 namespace lucy {
 	struct MainRenderer {
 	private:
+		glm::vec2 render_resolution;
+
 		using WireVertex = lre::Vertex::P1;
 
 		using TexVertex = lre::Vertex::P1UV1T1;
@@ -67,7 +69,7 @@ namespace lucy {
 		bool shader_init = false;
 
 		void SetMaterial(lgl::Shader* shader, Material* material);
-		void RenderFramebuffer(lgl::FrameBuffer* framebuffer);
+		void RenderFramebuffer(const glm::vec2& window_size, lgl::FrameBuffer* framebuffer);
 
 	public:
 		void SetLightAndShaders(Registry& registry);

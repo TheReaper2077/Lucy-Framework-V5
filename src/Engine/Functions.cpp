@@ -9,35 +9,29 @@ lucy::Entity lucy::Functions::GetCameraEntity() {
 }
 
 void lucy::Functions::EnableDebugRender(bool enable) {
-	enable_debug_render = enable;
+	enable_physics_object_render = enable;
 }
 
 void lucy::Functions::PlayPhysics() {
-	physics_play = true;
-	physics_pause = false;
-	physics_stop = false;
+	state = PLAY;
 }
 
 void lucy::Functions::StopPhysics() {
-	physics_play = false;
-	physics_pause = false;
-	physics_stop = true;
+	state = STOP;
 }
 
 void lucy::Functions::PausePhysics() {
-	physics_play = false;
-	physics_pause = true;
-	physics_stop = false;
+	state = PAUSE;
 }
 
 bool lucy::Functions::IsPhysicsPlaying() {
-	return physics_play;
+	return (state == PLAY);
 }
 
 bool lucy::Functions::IsPhysicsStopped() {
-	return physics_stop;
+	return (state == STOP);
 }
 
 bool lucy::Functions::IsPhysicsPaused() {
-	return physics_pause;
+	return (state == PAUSE);
 }

@@ -62,6 +62,8 @@ void lucy::Engine::Mainloop() {
 		const auto& end_time = std::chrono::high_resolution_clock::now();
 		timestep.dt = std::chrono::duration<double, std::ratio<1, 60>>(end_time - start_time).count();
 	}
+
+	registry.clear();
 }
 
 void lucy::Engine::Destroy() {

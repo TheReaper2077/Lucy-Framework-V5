@@ -8,6 +8,7 @@ namespace lucy::System {
 		void EditorLayer(Registry& registry);
 		void HeirarchyLayer(Registry& registry);
 		void InspectorLayer(Registry& registry);
+		void EngineManagerLayer(Registry& registry);
 	}
 
 	void EditorSystemUpdate(Registry& registry);
