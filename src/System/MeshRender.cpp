@@ -1,5 +1,6 @@
 #include "MainRenderer.h"
 #include <Components/Components.h>
+#include <iostream>
 
 void RenderMesh(lucy::Transform& transform, lucy::MeshRenderer& meshrenderer, lucy::Mesh* mesh) {
 	if (mesh == nullptr) return;
@@ -23,23 +24,23 @@ void RenderMesh(lucy::Registry& registry, lucy::Entity entity) {
 void lucy::MainRenderer::MeshRender(Registry& registry) {
 	if (!mesh_material_entities.size()) return;
 
-	// pbr_mesh_shader->Bind();
+	pbr_mesh_shader->Bind();
 
-	// for (auto& pair: mesh_material_entities) {
-	// 	auto* material = pair.first;
+	for (auto& pair: mesh_material_entities) {
+		auto* material = pair.first;
 
-	// 	if (material == nullptr)
-	// 		continue;
+		if (material == nullptr)
+			continue;
 
-	// 	pbr_mesh_shader->SetUniformVec3("material.albedo", &material->albedo[0]);
-	// 	pbr_mesh_shader->SetUniformf("material.metallic", material->metallic);
-	// 	pbr_mesh_shader->SetUniformf("material.roughness", material->roughness);
-	// 	pbr_mesh_shader->SetUniformf("material.ao", 1.0f);
+		pbr_mesh_shader->SetUniformVec3("material.albedo", &material->albedo[0]);
+		pbr_mesh_shader->SetUniformf("material.metallic", material->metallic);
+		pbr_mesh_shader->SetUniformf("material.roughness", material->roughness);
+		pbr_mesh_shader->SetUniformf("material.ao", 1.0f);
 
-	// 	for (auto entity: pair.second) {
-	// 		RenderMesh(registry, entity);
-	// 	}
-	// }
+		for (auto entity: pair.second) {
+			RenderMesh(registry, entity);
+		}
+	}
 
 	// mesh_shader->Bind();
 

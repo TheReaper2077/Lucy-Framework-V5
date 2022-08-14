@@ -116,9 +116,9 @@ void lucy::FPSView(lucy::Registry& registry, Entity entity) {
 		transform.translation -= glm::normalize(glm::cross(camera.front, camera.up)) * speed;
 	if (events.IsKeyPressed(SDL_SCANCODE_D))
 		transform.translation += glm::normalize(glm::cross(camera.front, camera.up)) * speed;
-	if (events.IsKeyPressed(SDL_SCANCODE_LALT))
+	if (events.IsKeyPressed(SDL_SCANCODE_S) && events.IsKeyPressed(SDL_SCANCODE_LCTRL))
 		transform.translation -= camera.up * speed;
-	if (events.IsKeyPressed(SDL_SCANCODE_SPACE))
+	if (events.IsKeyPressed(SDL_SCANCODE_W) && events.IsKeyPressed(SDL_SCANCODE_LCTRL))
 		transform.translation += camera.up * speed;
 
 	camera.view = glm::lookAt(transform.translation, transform.translation + camera.front, camera.up);

@@ -4,10 +4,12 @@ project(Test VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-file(GLOB_RECURSE TARGET_SRC "src/*.cpp" "src/*.c" "./dependencies/src/*.cpp" "./dependencies/src/*.c")
+file(GLOB_RECURSE TARGET_SRC "src/*.cpp" "src/*.c" "./dependencies/src/*.cpp" "./dependencies/src/*.c" "C:/libs/Lucy Graphics Library/src/*.cpp" "C:/libs/Lucy Graphics Library/src/*.c")
 
 include(C:/Users/krishnadev/vcpkg/scripts/buildsystems/vcpkg.cmake)
 include_directories("./dependencies/include/" src C:/Users/krishnadev/vcpkg/installed/x64-windows/include "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.32.31326/include/")
+
+include_directories("C:/libs/Lucy Graphics Library/include")
 
 set(CMAKE_CXX_STANDARD 20)
 

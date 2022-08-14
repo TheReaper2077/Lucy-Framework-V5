@@ -18,6 +18,7 @@ void lucy::Engine::Init() {
 	auto null_entity = registry.create();
 	auto& events = registry.store<Events>();
 	auto& meshregistry = registry.store<MeshRegistry>();
+	auto& assetloader = registry.store<AssetLoader>();
 	auto& window = registry.store<Window>();
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -26,6 +27,7 @@ void lucy::Engine::Init() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	window.InitSDLWindow();
+	assetloader.Init();
 
 	lgl::Initialize(SDL_GL_GetProcAddress);
 	lre::Initialize();

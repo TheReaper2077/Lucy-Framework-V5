@@ -7,6 +7,14 @@ static auto& registry = lucy::Registry::Instance();
 static auto& vertexarrayregistry = registry.store<lucy::MeshVAORegistry>();
 
 void lucy::MeshBuilder::Import(aiMesh* ai_mesh) {
+	positions.clear();
+	normals.clear();
+	colors.clear();
+	uv.clear();
+	uvw.clear();
+
+	indices.clear();
+
 	for (int i = 0; i < ai_mesh->mNumVertices; i++) {
 		if (ai_mesh->HasPositions())
 			positions.push_back(glm::vec3(ai_mesh->mVertices[i].x, ai_mesh->mVertices[i].y, ai_mesh->mVertices[i].z));
@@ -37,6 +45,9 @@ void lucy::MeshBuilder::Transfer() {
 	if (normals.size() && enable_normal) flags |= MeshVAOAttribFlag_NORMAL;
 	if (colors.size() && enable_color) flags |= MeshVAOAttribFlag_COLOR;
 	if (uv.size() && enable_uv) flags |= MeshVAOAttribFlag_UV;
+
+	if (mesh == nullptr)
+		mesh = new Mesh();
 
 	mesh->vertexarray = vertexarrayregistry.GetVertexArray(flags);	
 	mesh->indexcount = indices.size();

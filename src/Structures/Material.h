@@ -29,6 +29,7 @@ namespace lucy {
 		int illum_model;
 
 		std::string name = "New Material";
+		// uuid id = "ID_NONE";
 
 		lgl::Shader* shader = nullptr;
 

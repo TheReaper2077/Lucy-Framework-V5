@@ -30,6 +30,9 @@ void lucy::AssetLoader::Init() {
 const aiScene* lucy::AssetLoader::Import(std::string filepath, uint32_t flags) {
 	const auto* ai_scene = importer->ReadFile(filepath.c_str(), flags | aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
 
+	if (ai_scene == nullptr)
+		return nullptr;
+
 	assert(ai_scene && !(ai_scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) && ai_scene->mRootNode);
 
 	if (ai_scene->HasMaterials()) {
@@ -46,7 +49,3 @@ const aiScene* lucy::AssetLoader::Import(std::string filepath, uint32_t flags) {
 
 	return ai_scene;
 }
-
-// const std::string& lucy::AssetLoader::LoadMesh(aiMesh* ai_mesh) {
-// 	// return meshregistry.AddMesh(ai_mesh->mName.C_Str(), ai_mesh);
-// }

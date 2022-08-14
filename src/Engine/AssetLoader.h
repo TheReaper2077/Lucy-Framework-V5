@@ -15,9 +15,5 @@ namespace lucy {
 
 		void Init();
 		const aiScene* Import(std::string filepath, uint32_t flags = 0);
-		const std::string& LoadMesh(aiMesh* ai_mesh);
-		const std::string& LoadMesh(const std::string& filename);
-		// const std::string& LoadFragmentedMesh(std::string filename);
-		// const std::string& LoadMaterial(std::string filename);
 	};
 }

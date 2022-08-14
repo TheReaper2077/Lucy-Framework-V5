@@ -7,6 +7,7 @@
 #include <Engine/Events.h>
 #include <Engine/Functions.h>
 #include <Editor/EditorStatus.h>
+#include <Registry/Registry.h>
 #include <Components/Components.h>
 
 void lucy::System::EditorSystemInitialize(Registry& registry) {
@@ -94,6 +95,7 @@ void lucy::System::Panel::HeirarchyLayer(Registry& registry) {
 
 void lucy::System::Panel::InspectorLayer(Registry& registry) {
 	auto& editor = registry.store<Editor::EditorStatus>();
+	auto& materialregistry = registry.store<MaterialRegistry>();
 
 	static auto selected_entity = (Entity)0;
 	static lgl::Texture* selected_texture = nullptr;
@@ -173,6 +175,17 @@ void lucy::System::Panel::InspectorLayer(Registry& registry) {
 			auto* light = registry.try_get<Light>(selected_entity);
 			if (light != nullptr) {
 				if (ImGui::TreeNodeEx("Light")) {
+					ImGui::Checkbox("Enable", &light->enable);
+					ImGui::ColorEdit4("Color", &light->color[0]);
+					ImGui::EnumComboLogic("Mode", {
+						"DIRECTIONAL_LIGHT",
+						"AREAL_LIGHT",
+						"POINT_LIGHT",
+						"SPOT_LIGHT",
+					}, light->mode, {
+						"POINT_LIGHT",
+						"SPOT_LIGHT",
+					});
 
 					ImGui::TreePop();
 				}
@@ -182,6 +195,36 @@ void lucy::System::Panel::InspectorLayer(Registry& registry) {
 			if (spriterenderer != nullptr) {
 				if (ImGui::TreeNodeEx("SpriteRenderer")) {
 					
+
+					ImGui::TreePop();
+				}
+			}
+
+			auto* meshrenderer = registry.try_get<MeshRenderer>(selected_entity);
+			if (meshrenderer != nullptr) {
+				if (ImGui::TreeNodeEx("MeshRenderer")) {
+					ImGui::Checkbox("Visible", &meshrenderer->visible);
+					ImGui::Checkbox("Lighting", &meshrenderer->enable_lighting);
+
+					if (ImGui::BeginPopup("mat_select")) {
+						for (auto& pair: materialregistry.material_registry) {
+							if (ImGui::Selectable(pair.second.name.c_str())) {
+								meshrenderer->material = &pair.second;
+							}
+						}
+
+						ImGui::EndPopup();
+					}
+
+					// if (ImGui::BeginPopup("mesh_select")) {
+					// 	for (auto& pair: meshregistry.mesh_registry) {
+					// 		if (ImGui::Selectable(pair.second.name.c_str())) {
+					// 			meshrenderer.mesh = &pair.second.mesh;
+					// 		}
+					// 	}
+
+					// 	ImGui::EndPopup();
+					// }
 
 					ImGui::TreePop();
 				}
@@ -226,6 +269,31 @@ void lucy::System::Panel::EngineManagerLayer(Registry& registry) {
 		if (ImGui::TreeNodeEx("Render")) {
 			
 			ImGui::TreePop();
+		}
+	}
+	ImGui::End();
+}
+
+void lucy::System::Panel::MaterialRegistryLayer(Registry& registry) {
+	auto& materialregistry = registry.store<MaterialRegistry>();
+
+	static bool panel_open;
+	if (ImGui::Begin("MaterialRegistry", &panel_open)) {
+		for (auto& pair: materialregistry.material_registry) {
+			auto& material = pair.second;
+
+			if (ImGui::TreeNode(pair.second.name.c_str())) {
+				ImGui::DragFloat3("albedo", &material.albedo[0], 0.01, 0, 1);
+				ImGui::DragFloat3("diffuse", &material.diffuse[0], 0.01, 0, 1);
+				ImGui::DragFloat3("ambient", &material.ambient[0], 0.01, 0, 1);
+				ImGui::DragFloat3("specular", &material.specular[0], 0.01, 0, 1);
+
+				ImGui::DragFloat("roughness", &material.roughness, 0.01, 0, 1);
+				ImGui::DragFloat("metallic", &material.metallic, 0.01, 0, 1);
+				ImGui::DragFloat("shininess", &material.shininess, 0.01, 0, 1);
+
+				ImGui::TreePop();
+			}
 		}
 	}
 	ImGui::End();
@@ -297,6 +365,7 @@ void lucy::System::EditorSystemUpdate(Registry& registry) {
 	Panel::HeirarchyLayer(registry);
 	Panel::InspectorLayer(registry);
 	Panel::EngineManagerLayer(registry);
+	Panel::MaterialRegistryLayer(registry);
 
 	static bool show_demo = false;
 	if (events.IsKeyPressed(SDL_SCANCODE_F12) && !show_demo)

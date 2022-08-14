@@ -7,20 +7,15 @@
 
 namespace lucy {
 	struct MeshRegistry {
-	private:
-		struct MeshContainer {
-			Mesh mesh;
-			std::string name;
-		};
-
 	public:
-		std::unordered_map<std::string, MeshContainer> mesh_registry;
+		std::unordered_map<uuid, Mesh> mesh_registry;
 
 		MeshRegistry() {}
 
-		// void Init();
-		std::string AddMesh(std::string name, const Mesh& mesh, uuid id = GetID());
-		// std::string AddMesh(std::string name, aiMesh* ai_mesh, uuid id = GetID());
-		// Mesh* GetMesh(const std::string& id);
+		void Init();
+		std::string AddMesh(const Mesh& mesh, uuid id = GetID());
+		std::string AddMesh(aiMesh* ai_mesh, uuid id = GetID());
+		Mesh* GetMesh(const std::string& id);
+		std::string GetMeshID(Mesh* mesh);
 	};
 }

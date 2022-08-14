@@ -72,3 +72,14 @@ void ImGui::TransformFloat3(const char* label, float *v, float resetValue, float
 
 	ImGui::PopID();
 }
+
+bool ImGui::in_expections(std::string value, const std::vector<std::string>& exceptions) {
+	if (!exceptions.size()) return false;
+
+	for (const auto& str: exceptions) {
+		if (str == value)
+			return true;
+	}
+
+	return false;
+}

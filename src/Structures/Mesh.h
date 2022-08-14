@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Engine/UUID.h>
 #include <glm/glm.hpp>
 #include <LucyGL/LucyGL.h>
 #include <array>
@@ -20,6 +21,9 @@ namespace lucy {
 		int indexcount = 0;
 
 		lgl::Primitive primitive = lgl::TRIANGLE;
+
+		uuid id = "ID_NONE";
+		std::string name = "New Mesh";
 
 		Mesh() {}
 		~Mesh() {}

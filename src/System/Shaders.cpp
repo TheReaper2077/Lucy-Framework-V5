@@ -49,6 +49,41 @@ std::string mesh_shader_fs_create() {
 	return layout;
 }
 
+// lgl::Shader* mesh_shader_fs_create() {
+
+// }
+
+lgl::Shader* mesh_pbr_shader_create(int directional_light_count, int point_light_count) {
+	static std::unordered_map<std::string, lgl::Shader> shader_map;
+
+	auto id = "_PBR_" + std::to_string(directional_light_count) + "_" + std::to_string(point_light_count);
+
+	if (shader_map.find(id) == shader_map.end()) {
+		auto vs_src = read_file("D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\vertex.glsl");
+		auto fs_src = read_file("D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Default\\");
+
+		std::string uniforms, logic;
+
+		for (int i = 0; i < directional_light_count; i++) {
+			std::string dir_light = "dir_light" + std::to_string(i);
+			uniforms += "uniform Light " + dir_light + ";\n";
+			logic += "	Lo += DirCalculatePBR(N, V, " + dir_light + ".position, " + dir_light + ".direction, " + dir_light + ".color);\n";
+		}
+		for (int i = 0; i < point_light_count; i++) {
+			auto point_light = "point_light" + std::to_string(i);
+			uniforms += "uniform Light " + point_light + ";\n";
+			logic += "	Lo += PointCalculatePBR(N, V, " + point_light + ".position, " + point_light + ".color);\n";
+		}
+
+		replace_first(fs_src, "#define SET_UNIFORMS", uniforms);
+		replace_first(fs_src, "#define SET_LOGIC", logic);
+
+		shader_map[id] = lgl::Shader(vs_src, fs_src, false);
+	}
+
+	return &shader_map[id];
+}
+
 void lucy::MainRenderer::SetLightAndShaders(Registry& registry) {
 	if (sprite_shader == nullptr) {
 		auto vs = read_file("D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\vertex.glsl");
@@ -64,53 +99,50 @@ void lucy::MainRenderer::SetLightAndShaders(Registry& registry) {
 		screen_shader = new lgl::Shader(vs, fs, true);
 	}
 
-	// renderer.directional_light_count = 0;
-	// renderer.point_light_count = 0;
+	directional_light_count = 0;
+	point_light_count = 0;
 	
-	// for (auto [entity, tag, transform, light]: registry.view<Tag, Transform, Light>().each()) {
-	// 	renderer.directional_light_count += (light.mode == DIRECTIONAL_LIGHT);
-	// 	renderer.point_light_count += (light.mode == POINT_LIGHT);
-	// }
+	for (auto [entity, tag, transform, light]: registry.view<Tag, Transform, Light>().each()) {
+		directional_light_count += (light.mode == DIRECTIONAL_LIGHT);
+		point_light_count += (light.mode == POINT_LIGHT);
+	}
 
-	// auto directional_light_count = renderer.directional_light_count;
-	// auto point_light_count = renderer.point_light_count;
+	int directional_light_count_temp = directional_light_count;
+	int point_light_count_temp = point_light_count;
 
-	// pbr_mesh_shader = renderer.GetPBRShader("pbrmesh");
+	pbr_mesh_shader = mesh_pbr_shader_create(directional_light_count, point_light_count);
 
-	// int directional_light_count_temp = directional_light_count;
-	// int point_light_count_temp = point_light_count;
+	pbr_mesh_shader->Bind();
 
-	// pbr_mesh_shader->Bind();
+	for (auto [entity, tag, transform, light]: registry.view<Tag, Transform, Light>().each()) {
+		if (light.mode == DIRECTIONAL_LIGHT) {
+			directional_light_count_temp--;
 
-	// for (auto [entity, tag, transform, light]: registry.view<Tag, Transform, Light>().each()) {
-	// 	if (light.mode == DIRECTIONAL_LIGHT) {
-	// 		auto direction = glm::normalize(transform.GetRotationQuat() * glm::vec3(0, -1.0, 0));
-	// 		auto dir_light = "dir_light" + std::to_string(directional_light_count_temp);
+			auto direction = glm::normalize(transform.GetRotationQuat() * glm::vec3(0, -1.0, 0));
+			auto dir_light = "dir_light" + std::to_string(directional_light_count_temp);
 
-	// 		directional_light_count_temp--;
+			pbr_mesh_shader->SetUniformVec3(dir_light + ".position", &transform.translation[0]);
+			pbr_mesh_shader->SetUniformVec3(dir_light + ".color", &light.color[0]);
+			pbr_mesh_shader->SetUniformVec3(dir_light + ".direction", &direction[0]);
+		}
+		if (light.mode == POINT_LIGHT) {
+			point_light_count_temp--;
 
-	// 		pbr_mesh_shader->SetUniformVec3(dir_light + ".position", &transform.translation[0]);
-	// 		pbr_mesh_shader->SetUniformVec3(dir_light + ".color", &light.color[0]);
-	// 		pbr_mesh_shader->SetUniformVec3(dir_light + ".direction", &direction[0]);
-	// 	}
-	// 	if (light.mode == POINT_LIGHT) {
-	// 		point_light_count_temp--;
+			auto point_light = "point_light" + std::to_string(point_light_count_temp);
 
-	// 		auto point_light = "point_light" + std::to_string(point_light_count_temp);
+			pbr_mesh_shader->SetUniformVec3(point_light + ".position", &transform.translation[0]);
+			pbr_mesh_shader->SetUniformVec3(point_light + ".color", &light.color[0]);
+		}
+	}
 
-	// 		pbr_mesh_shader->SetUniformVec3(point_light + ".position", &transform.translation[0]);
-	// 		pbr_mesh_shader->SetUniformVec3(point_light + ".color", &light.color[0]);
-	// 	}
-	// }
-
-	// pbr_mesh_shader->UnBind();
+	pbr_mesh_shader->UnBind();
 
 	lighting_entities.clear();
 	mesh_material_entities.clear();
 
 	for (auto [entity, tag, transform, meshrenderer]: registry.view<Tag, Transform, MeshRenderer>().each()) {
 		if (meshrenderer.mesh == nullptr) continue;
-		
+
 		if (meshrenderer.enable_lighting) {
 			lighting_entities.insert(entity);
 		}

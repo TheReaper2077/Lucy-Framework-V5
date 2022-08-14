@@ -7,7 +7,8 @@
 namespace lucy {
 	struct Transform {
 		glm::vec3 translation = { 0, 0, 0 };
-		glm::vec3 rotation = { 0, 0, 0 };
+		// glm::vec3 rotation = { 0, 0, 0 };
+		glm::quat rotation;
 		glm::vec3 scale = { 1, 1, 1 };
 
 		Transform() {}
@@ -24,7 +25,7 @@ namespace lucy {
 		}
 
 		glm::quat GetRotationQuat() {
-			return glm::quat(glm::radians(rotation));
+			return quaternion;
 		}
 
 		glm::mat4 GetRotationMatrix() {

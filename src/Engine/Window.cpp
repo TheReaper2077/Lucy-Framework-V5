@@ -1,7 +1,7 @@
 #include "Window.h"
 
 lucy::Window::Window() {
-	size = { 1270, 640 };
+	size = { 1280, 640 };
 }
 
 lucy::Window::~Window() {

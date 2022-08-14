@@ -1,4 +1,4 @@
-// #include "MeshRegistry.h"
+#include "MeshRegistry.h"
 
 // static auto& registry = lucy::Registry::Instance();
 
@@ -52,4 +52,21 @@
 // 	mesh_registry[id] = MeshContainer { Mesh(ai_mesh), name };
 
 // 	return id;
+// }
+
+// std::string lucy::MeshRegistry::AddMesh(const Mesh& mesh, uuid id) {
+// 	// mesh.id = id;
+// 	mesh_registry[id] = mesh;
+// }
+
+// std::string lucy::MeshRegistry::AddMesh(aiMesh* ai_mesh, uuid id) {
+
+// }
+
+// lucy::Mesh* lucy::MeshRegistry::GetMesh(const std::string& id) {
+	
+// }
+
+// std::string lucy::MeshRegistry::GetMeshID(Mesh* mesh) {
+	
 // }
