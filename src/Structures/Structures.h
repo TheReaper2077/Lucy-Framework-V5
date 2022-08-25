@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Sprite.h"
-#include "Mesh.h"
-#include "Material.h"
-#include "RawTexture.h"
-#include "MeshBuilder.h"
+#include "Tag.h"
+#include "Transform.h"
+#include "Camera.h"
+#include "Light.h"
+#include "MeshRenderer.h"

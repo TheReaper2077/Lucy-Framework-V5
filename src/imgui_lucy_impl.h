@@ -9,9 +9,7 @@
 
 namespace ImGui {
 	void SanitisedInputText(const char* label, std::string& text);
-
 	void TransformFloat3(const char* label, float *v, float resetValue = 0.0f, float columnWidth = 100.0f);
-
 	bool in_expections(std::string value, const std::vector<std::string>& exceptions);
 
 	template <typename T>

@@ -1,11 +1,7 @@
 #include "Engine.h"
 #include "Window.h"
 
-#include <Registry/Registry.h>
-#include <LucyRE/LucyRE.h>
-#include <Components/Components.h>
 #include <Structures/Structures.h>
-#include <System/System.h>
 
 #include <iostream>
 #include <assert.h>
@@ -16,8 +12,6 @@
 
 void lucy::Engine::Init() {
 	auto null_entity = registry.create();
-	auto& events = registry.store<Events>();
-	auto& meshregistry = registry.store<MeshRegistry>();
 	auto& window = registry.store<Window>();
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -27,7 +21,6 @@ void lucy::Engine::Init() {
 
 	window.InitSDLWindow();
 
-	AssetLoader::Init();
 	lgl::Initialize(SDL_GL_GetProcAddress);
 	lre::Initialize();
 
@@ -35,19 +28,17 @@ void lucy::Engine::Init() {
 }
 
 void lucy::Engine::Mainloop() {
-	auto& events = registry.store<Events>();
-	auto& timestep = registry.store<TimeStep>();
 	auto& window = registry.store<Window>();
 
 	for (auto system_func: init_systems) {
 		system_func(registry);
 	}
 
-	while (!events.IsQuittable()) {
+	while (!Events::IsQuittable()) {
 		const auto& start_time = std::chrono::high_resolution_clock::now();
 
-		events.Update();
-		timestep.Update();
+		Events::Update();
+		TimeStep::Update();
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
@@ -69,7 +60,7 @@ void lucy::Engine::Mainloop() {
 		window.SwapWindow();
 
 		const auto& end_time = std::chrono::high_resolution_clock::now();
-		timestep.dt = std::chrono::duration<double, std::ratio<1, 60>>(end_time - start_time).count();
+		TimeStep::dt = std::chrono::duration<double, std::ratio<1, 60>>(end_time - start_time).count();
 	}
 
 	registry.clear();

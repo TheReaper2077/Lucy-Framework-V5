@@ -52,47 +52,61 @@ namespace lucy {
 		bool drag_begin;
 
 	private:
-		void Init();
+		static void Init();
+
+		#define self Instance()
+		static Events* Instance() {
+			static Events instance;
+			return &instance;
+		}
 
 	public:
-		void AddFunction(event_func func);
-		void Update();
+		static void AddFunction(event_func func);
+		static void Update();
 
-		bool IsKeyPressed(SDL_Scancode scancode);
-		bool IsKeyPressedAny(SDL_Scancode scancode);
-		bool IsKeyPressed(const std::vector<SDL_Scancode>& scancodes);
-		bool IsKeyToggled(SDL_Scancode scancode);
-		bool IsKeyChord(const std::vector<SDL_Scancode>& scancodes);
+		static bool IsKeyPressed(SDL_Scancode scancode);
+		static bool IsKeyPressedAny(SDL_Scancode scancode);
+		static bool IsKeyPressed(const std::vector<SDL_Scancode>& scancodes);
+		static bool IsKeyToggled(SDL_Scancode scancode);
+		static bool IsKeyChord(const std::vector<SDL_Scancode>& scancodes);
 
-		bool& IsQuittable();
-		const glm::vec2& GetWindowSize();
-		const glm::vec2& GetWindowPosition();
-		bool IsWindowResized();
-		bool IsWindowMoved();
-		bool IsWindowMouseFocused();
-		bool IsWindowKeyboardFocused();
+		static bool& IsQuittable();
+		static const glm::vec2& GetWindowSize();
+		static const glm::vec2& GetWindowPosition();
+		static bool IsWindowResized();
+		static bool IsWindowMoved();
+		static bool IsWindowMouseFocused();
+		static bool IsWindowKeyboardFocused();
 
-		bool IsButtonPressed(unsigned int button);
-		bool IsButtonPressedAny();
-		bool IsButtonToggled(unsigned int button);
+		static bool IsButtonPressed(unsigned int button);
+		static bool IsButtonPressedAny();
+		static bool IsButtonToggled(unsigned int button);
 
-		const glm::vec3& GetCursorPos();
-		const glm::vec3& GetCursorPosNormalized();
-		const glm::vec3& GetCursorPosNormalized(Window* window);
-		const glm::vec3& GetGameWindowCursorPosNormalized();
-		const glm::vec3& GetRelCursorPos();
-		const glm::vec3& GetRelCursorPosNormalized();
-		const glm::vec3& GetRelCursorPosNormalized(Window* window);
-		const glm::vec3& GetRelCursorOffset();
+		static bool IsMouseScrolling();
+		static bool IsMouseScrollingUp();
+		static bool IsMouseScrollingDown();
 
-		const std::string& GetDroppedFile();
-		bool IsFileDropped();
+		static const glm::vec3& GetCursorPos();
+		static const glm::vec3& GetCursorPosNormalized(Window* window);
+		static const glm::vec3& GetRelCursorPos();
+		static const glm::vec3& GetRelCursorPosNormalized(Window* window);
+		static const glm::vec3& GetRelCursorOffset();
+	
+		static const glm::vec3& Get_MainWindow_CursorPosNormalized();
+		static const glm::vec3& Get_MainWindow_Relative_CursorPosNormalized();
+		static const glm::vec3& Get_GameWindow_CursorPosNormalized();
+		static const glm::vec3& Get_GameWindow_Relative_CursorPosNormalized();
+		static const glm::vec3& Get_EditorWindow_CursorPosNormalized();
+		static const glm::vec3& Get_EditorWindow_Relative_CursorPosNormalized();
 
-		void SetPayload(void* data, const std::string& type);
-		bool IsPayloadPresent();
-		void* GetPayloadData();
-		std::string GetPayloadType();
+		static const std::string& GetDroppedFile();
+		static bool IsFileDropped();
 
-		SDL_Event& GetEvent();
+		static void SetPayload(void* data, const std::string& type);
+		static bool IsPayloadPresent();
+		static void* GetPayloadData();
+		static std::string GetPayloadType();
+
+		static SDL_Event& GetEvent();
 	};
 }
