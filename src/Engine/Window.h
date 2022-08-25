@@ -32,4 +32,7 @@ namespace lucy {
 		void Hide();
 		void Show();
 	};
+
+	struct GameWindow: public Window {};
+	struct EditorWindow: public Window {};
 }

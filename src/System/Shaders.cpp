@@ -60,7 +60,7 @@ lgl::Shader* mesh_pbr_shader_create(int directional_light_count, int point_light
 
 	if (shader_map.find(id) == shader_map.end()) {
 		auto vs_src = read_file("D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\vertex.glsl");
-		auto fs_src = read_file("D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Default\\");
+		auto fs_src = read_file("D:\\C++\\Lucy Framework V5\\src\\LucyRE\\Shaders\\Default\\pbr.frag");
 
 		std::string uniforms, logic;
 
@@ -79,6 +79,8 @@ lgl::Shader* mesh_pbr_shader_create(int directional_light_count, int point_light
 		replace_first(fs_src, "#define SET_LOGIC", logic);
 
 		shader_map[id] = lgl::Shader(vs_src, fs_src, false);
+
+		std::cout << vs_src << '\n';
 	}
 
 	return &shader_map[id];

@@ -49,7 +49,7 @@ void lucy::MeshBuilder::Transfer() {
 	if (mesh == nullptr)
 		mesh = new Mesh();
 
-	mesh->vertexarray = vertexarrayregistry.GetVertexArray(flags);	
+	mesh->vertexarray = vertexarrayregistry.GetVertexArray(flags);
 	mesh->indexcount = indices.size();
 	mesh->vertexcount = positions.size();
 

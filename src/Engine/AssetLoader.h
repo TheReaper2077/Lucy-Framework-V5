@@ -10,10 +10,15 @@ namespace lucy {
 	private:
 		Assimp::Importer* importer = nullptr;
 
+		static AssetLoader& Instance() {
+			static AssetLoader instance;
+			return instance;
+		}
+
 	public:
 		AssetLoader() {}
 
-		void Init();
-		const aiScene* Import(std::string filepath, uint32_t flags = 0);
+		static void Init();
+		static const aiScene* Import(std::string filepath, uint32_t flags = 0);
 	};
 }

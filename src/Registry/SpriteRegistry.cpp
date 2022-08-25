@@ -4,6 +4,25 @@ lucy::RawTexture* lucy::SpriteRegistry::GetTexture(const std::string& filename) 
 	return LoadTexture(filename.substr(filename.find_last_of('\\') + 1, filename.find_last_of(".") - 1 - filename.find_last_of('\\')), filename, GetID());
 }
 
+lucy::RawTexture* lucy::SpriteRegistry::GetTexturebyId(const std::string& id) {
+	if (texture_store.find(id) != texture_store.end())
+		return &texture_store[id];
+	
+	return nullptr;
+}
+
+// lucy::Sprite* lucy::SpriteRegistry::GetSpritebyId(const std::string& id) {
+// 	for (auto& pair: sprite_store) {
+// 		for (auto& sprite: pair.second) {
+// 			if (id == sprite.id) {
+// 				return &sprite;
+// 			}
+// 		}
+// 	}
+
+// 	return nullptr;
+// }
+
 lucy::RawTexture* lucy::SpriteRegistry::GetTexture(const std::string& filename, int x, int y, int w, int h) {
 	return LoadTextureArray(filename.substr(filename.find_last_of('\\') + 1, filename.find_last_of(".") - 1 - filename.find_last_of('\\')), filename, x, y, w, h, GetID());
 }

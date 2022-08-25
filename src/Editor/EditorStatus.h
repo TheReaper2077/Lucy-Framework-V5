@@ -2,7 +2,6 @@
 
 #include <Engine/ECS.h>
 #include <LucyGL/LucyGL.h>
-#include "Window.h"
 
 namespace lucy::Editor {
 	struct EditorStatus {

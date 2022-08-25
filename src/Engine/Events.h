@@ -79,6 +79,7 @@ namespace lucy {
 		const glm::vec3& GetCursorPos();
 		const glm::vec3& GetCursorPosNormalized();
 		const glm::vec3& GetCursorPosNormalized(Window* window);
+		const glm::vec3& GetGameWindowCursorPosNormalized();
 		const glm::vec3& GetRelCursorPos();
 		const glm::vec3& GetRelCursorPosNormalized();
 		const glm::vec3& GetRelCursorPosNormalized(Window* window);

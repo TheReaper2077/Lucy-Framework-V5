@@ -11,5 +11,7 @@ namespace lucy {
 
 		Tag(const std::string& name, const uuid& id): name(name), id(id) {}
 		Tag(const std::string& name): name(name) {}
+		Tag() {}
+		~Tag() {}
 	};
 }

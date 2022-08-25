@@ -10,57 +10,28 @@
 #include <Registry/Registry.h>
 #include <Components/Components.h>
 
-void lucy::System::EditorSystemInitialize(Registry& registry) {
-	auto& window = registry.store<Window>();
-	auto& mainwindow = registry.store<Editor::MainWindow>();
-	auto& editorstatus = registry.store<Editor::EditorStatus>();
-	auto& events = registry.store<Events>();
-	auto& functions = registry.store<Functions>();
-
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
-	io.ConfigWindowsMoveFromTitleBarOnly = true;
-	io.ConfigDockingWithShift = true;
-
-	io.BackendFlags |= ImGuiBackendFlags_PlatformHasViewports;
-
-	ImGui_ImplSDL2_InitForOpenGL(window.sdl_window, (void*)window.sdl_glcontext);
-	ImGui_ImplOpenGL3_Init("#version 400");
-
-	ImGui::StyleColorsDark();
-
-	functions.render_target_to_screen = true;
-
-	events.AddFunction([](SDL_Event& event) {
-		ImGui_ImplSDL2_ProcessEvent(&event);
-	});
-}
-
 void lucy::System::Panel::GameLayer(lucy::Registry& registry) {
+	auto& gamewindow = registry.store<GameWindow>();
 	auto& window = registry.store<Window>();
+	auto& functions = registry.store<Functions>();
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
 	static bool panel_open;
-	ImGui::Begin(window.title.c_str(), &panel_open);
+	ImGui::Begin(gamewindow.title.c_str(), &panel_open);
 	ImGui::PopStyleVar();
 
-	// window.window_focus = ImGui::IsWindowFocused();
-	// window.mouse_hover = ImGui::IsWindowHovered();
+	// gamewindow.window_focus = ImGui::IsWindowFocused();
+	// gamewindow.mouse_hover = ImGui::IsWindowHovered();
 
-	window.pos.x = ImGui::GetWindowPos().x;
-	window.pos.y = ImGui::GetWindowPos().y;
-	window.size.x = ImGui::GetWindowSize().x;
-	window.size.y = ImGui::GetWindowSize().y;
+	gamewindow.pos.x = ImGui::GetWindowPos().x;
+	gamewindow.pos.y = ImGui::GetWindowPos().y;
+	gamewindow.size.x = ImGui::GetWindowSize().x;
+	gamewindow.size.y = ImGui::GetWindowSize().y;
 
-	if (window.framebuffer != nullptr)
-		if (window.framebuffer->width == window.size.x && window.framebuffer->height == window.size.y)
-			ImGui::GetWindowDrawList()->AddImage((void*)window.framebuffer->texture->id, ImVec2(window.pos.x, window.pos.y), ImVec2(window.pos.x + window.size.x, window.pos.y + window.size.y), ImVec2(0, (float)window.size.y / window.size.y), ImVec2((float)window.size.x / window.size.x, 0));
+	if (gamewindow.framebuffer != nullptr)
+		if (gamewindow.framebuffer->width == gamewindow.size.x && gamewindow.framebuffer->height == gamewindow.size.y)
+			ImGui::GetWindowDrawList()->AddImage((void*)gamewindow.framebuffer->texture->id, ImVec2(gamewindow.pos.x, gamewindow.pos.y), ImVec2(gamewindow.pos.x + gamewindow.size.x, gamewindow.pos.y + gamewindow.size.y), ImVec2(0, (float)gamewindow.size.y / window.size.y), ImVec2((float)gamewindow.size.x / window.size.x, 0));
 
 	ImGui::End();
 }
@@ -206,6 +177,10 @@ void lucy::System::Panel::InspectorLayer(Registry& registry) {
 					ImGui::Checkbox("Visible", &meshrenderer->visible);
 					ImGui::Checkbox("Lighting", &meshrenderer->enable_lighting);
 
+					if (ImGui::Selectable("Material")) {
+						ImGui::OpenPopup("mat_select");
+					}
+
 					if (ImGui::BeginPopup("mat_select")) {
 						for (auto& pair: materialregistry.material_registry) {
 							if (ImGui::Selectable(pair.second.name.c_str())) {
@@ -267,7 +242,8 @@ void lucy::System::Panel::EngineManagerLayer(Registry& registry) {
 			ImGui::TreePop();
 		}
 		if (ImGui::TreeNodeEx("Render")) {
-			
+			ImGui::InputFloat2("Render Resolution", &functions.render_resolution[0]);
+
 			ImGui::TreePop();
 		}
 	}
@@ -304,68 +280,6 @@ void lucy::System::EditorSystemUpdate(Registry& registry) {
 	auto& window = registry.store<Window>();
 	auto& events = registry.store<Events>();
 	auto& functions = registry.store<Functions>();
-	auto& mainwindow = registry.store<Editor::MainWindow>();
-	
-	static bool toggle = false;
-	if (!functions.render_target_to_screen && !toggle) {
-		mainwindow.size = window.size;
-		mainwindow.title = window.title;
-		toggle = true;
-	} else if (functions.render_target_to_screen && toggle) {
-		window.ResetPosition();
-		window.ResetSize();
-		toggle = false;
-	}
-
-	if (!functions.render_target_to_screen) {
-		// window.Hide();
-
-		if (events.IsWindowResized())
-			mainwindow.size = events.GetWindowSize();
-		if (events.IsWindowMoved())
-			mainwindow.pos = events.GetWindowPosition();
-	} else {
-		// window.Show();
-	}
-
-	if (events.IsKeyChord({ SDL_SCANCODE_LALT, SDL_SCANCODE_F4 })) {
-		events.IsQuittable() = true;
-	}
-
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-
-	if (!functions.render_target_to_screen) {
-		static bool p_open = false;
-		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
-
-		ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-
-		ImGui::SetNextWindowPos(ImVec2(mainwindow.pos.x, mainwindow.pos.y));
-		ImGui::SetNextWindowSize(ImVec2(mainwindow.size.x, mainwindow.size.y));
-
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-
-		ImGui::Begin("DockSpace", &p_open, window_flags);
-
-		ImGui::PopStyleVar(3);
-		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable) {
-			
-			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-		}
-		ImGui::End();
-
-		Panel::GameLayer(registry);
-	}
-
-	Panel::HeirarchyLayer(registry);
-	Panel::InspectorLayer(registry);
-	Panel::EngineManagerLayer(registry);
-	Panel::MaterialRegistryLayer(registry);
 
 	static bool show_demo = false;
 	if (events.IsKeyPressed(SDL_SCANCODE_F12) && !show_demo)
@@ -376,11 +290,12 @@ void lucy::System::EditorSystemUpdate(Registry& registry) {
 	if (show_demo)
 		ImGui::ShowDemoWindow(&show_demo);
 
-	ImGui::EndFrame();
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	ImGui::UpdatePlatformWindows();
-	ImGui::RenderPlatformWindowsDefault();
+	if (events.IsKeyChord({ SDL_SCANCODE_LALT, SDL_SCANCODE_F4 }))
+		events.IsQuittable() = true;
 
-	window.SetCurrent();
+	Panel::GameLayer(registry);
+	Panel::HeirarchyLayer(registry);
+	Panel::InspectorLayer(registry);
+	Panel::EngineManagerLayer(registry);
+	Panel::MaterialRegistryLayer(registry);
 }

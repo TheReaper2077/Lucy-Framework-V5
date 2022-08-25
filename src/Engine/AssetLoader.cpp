@@ -24,11 +24,15 @@ void process_node(const aiScene *ai_scene, aiNode *ai_node) {
 };
 
 void lucy::AssetLoader::Init() {
-	importer = new Assimp::Importer();
+	auto& instance = Instance();
+
+	instance.importer = new Assimp::Importer();
 }
 
 const aiScene* lucy::AssetLoader::Import(std::string filepath, uint32_t flags) {
-	const auto* ai_scene = importer->ReadFile(filepath.c_str(), flags | aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
+	auto& instance = Instance();
+
+	const auto* ai_scene = instance.importer->ReadFile(filepath.c_str(), flags | aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
 
 	if (ai_scene == nullptr)
 		return nullptr;

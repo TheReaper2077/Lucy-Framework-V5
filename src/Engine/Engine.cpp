@@ -12,13 +12,12 @@
 #include <SDL2/SDL.h>
 #include <glm/gtx/string_cast.hpp>
 #include <glad/glad.h>
-#include "Scene.h"
+#include "ImGuiLayer.h"
 
 void lucy::Engine::Init() {
 	auto null_entity = registry.create();
 	auto& events = registry.store<Events>();
 	auto& meshregistry = registry.store<MeshRegistry>();
-	auto& assetloader = registry.store<AssetLoader>();
 	auto& window = registry.store<Window>();
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -27,10 +26,12 @@ void lucy::Engine::Init() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	window.InitSDLWindow();
-	assetloader.Init();
 
+	AssetLoader::Init();
 	lgl::Initialize(SDL_GL_GetProcAddress);
 	lre::Initialize();
+
+	ImGuiLayer::Init();
 }
 
 void lucy::Engine::Mainloop() {
@@ -53,11 +54,17 @@ void lucy::Engine::Mainloop() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDepthFunc(GL_LEQUAL);
 
-		if (timestep.dt < 1) {
-			for (auto system_func: systems_array) {
-				system_func(registry);
-			}
+		for (auto system_func: systems_array) {
+			system_func(registry);
 		}
+
+		ImGuiLayer::RenderBegin();
+
+		for (auto system_func: imgui_systems) {
+			system_func(registry);
+		}
+
+		ImGuiLayer::RenderEnd();
 
 		window.SwapWindow();
 
@@ -84,4 +91,11 @@ void lucy::Engine::AddInitializationSystem(system_func func) {
 		assert(func != fn);
 
 	init_systems.push_back(func);
+}
+
+void lucy::Engine::AddImGuiSystem(system_func func) {
+	for (auto fn: imgui_systems)
+		assert(func != fn);
+
+	imgui_systems.push_back(func);
 }

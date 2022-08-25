@@ -12,6 +12,7 @@ namespace lucy {
 
 		std::vector<system_func> systems_array;
 		std::vector<system_func> init_systems;
+		std::vector<system_func> imgui_systems;
 
 	public:
 		void Init();
@@ -20,5 +21,6 @@ namespace lucy {
 
 		void AddRuntimeSystem(system_func func);
 		void AddInitializationSystem(system_func func);
+		void AddImGuiSystem(system_func func);
 	};
 }

@@ -34,21 +34,22 @@ void lucy::MainRenderer::RenderFramebuffer(const glm::vec2& window_size, lgl::Fr
 }
 
 void lucy::MainRenderer::Render(Registry& registry) {
+	auto& gamewindow = registry.store<GameWindow>();
 	auto& window = registry.store<Window>();
 	auto& events = registry.store<Events>();
 	auto& functions = registry.store<Functions>();
 
-	render_resolution = functions.render_resolution;
+	render_resolution = gamewindow.size;
 
-	if (window.framebuffer != nullptr) {
-		if (window.framebuffer->width != render_resolution.x || window.framebuffer->height != render_resolution.y) {
-			free(window.framebuffer);
-			window.framebuffer = nullptr;
+	if (gamewindow.framebuffer != nullptr) {
+		if (gamewindow.framebuffer->width != render_resolution.x || gamewindow.framebuffer->height != render_resolution.y) {
+			free(gamewindow.framebuffer);
+			gamewindow.framebuffer = nullptr;
 		}
 	}
 
-	if (window.framebuffer == nullptr) {
-		window.framebuffer = new lgl::FrameBuffer(render_resolution.x, render_resolution.y, false);
+	if (gamewindow.framebuffer == nullptr) {
+		gamewindow.framebuffer = new lgl::FrameBuffer(render_resolution.x, render_resolution.y, false);
 	}
 
 	lre::Clear({ 0, 0, 0, 0 });
@@ -58,7 +59,7 @@ void lucy::MainRenderer::Render(Registry& registry) {
 		if (!camera.enable) continue;
 
 		if (entity == functions.main_camera)
-			camera.framebuffer = window.framebuffer;
+			camera.framebuffer = gamewindow.framebuffer;
 
 		if (camera.framebuffer != nullptr)
 			camera.framebuffer->Bind();
@@ -69,19 +70,19 @@ void lucy::MainRenderer::Render(Registry& registry) {
 
 		lgl::Clear(camera.clear_color.x, camera.clear_color.y, camera.clear_color.z, camera.clear_color.w, camera.clear_flags);
 
-		lgl::Viewport(0, 0, window.size.x, window.size.y);
+		lgl::Viewport(0, 0, gamewindow.size.x, gamewindow.size.y);
 
 		SetLightAndShaders(registry);
 
-		SpriteRender(registry);
+		// SpriteRender(registry);
 		MeshRender(registry);
-		DebugRender(registry);
+		// DebugRender(registry);
 
 		if (camera.framebuffer != nullptr)
 			camera.framebuffer->UnBind();
 
 		if (functions.render_target_to_screen)
-			RenderFramebuffer(window.size, camera.framebuffer);
+			RenderFramebuffer(gamewindow.size, camera.framebuffer);
 	}
 
 	if (events.IsWindowResized()) {

@@ -26,28 +26,31 @@ void lucy::MainRenderer::MeshRender(Registry& registry) {
 
 	pbr_mesh_shader->Bind();
 
-	for (auto& pair: mesh_material_entities) {
-		auto* material = pair.first;
+	// for (auto& pair: mesh_material_entities) {
+	// 	auto* material = pair.first;
 
-		if (material == nullptr)
-			continue;
+	// 	if (material == nullptr)
+	// 		continue;
 
-		pbr_mesh_shader->SetUniformVec3("material.albedo", &material->albedo[0]);
-		pbr_mesh_shader->SetUniformf("material.metallic", material->metallic);
-		pbr_mesh_shader->SetUniformf("material.roughness", material->roughness);
-		pbr_mesh_shader->SetUniformf("material.ao", 1.0f);
+	// 	pbr_mesh_shader->SetUniformVec3("material.albedo", &material->albedo[0]);
+	// 	pbr_mesh_shader->SetUniformf("material.metallic", material->metallic);
+	// 	pbr_mesh_shader->SetUniformf("material.roughness", material->roughness);
+	// 	pbr_mesh_shader->SetUniformf("material.ao", 1.0f);
 
-		for (auto entity: pair.second) {
-			RenderMesh(registry, entity);
-		}
-	}
+	// 	for (auto entity: pair.second) {
+	// 		RenderMesh(registry, entity);
+	// 	}
+	// }
+
+	// pbr_mesh_shader->UnBind();
 
 	// mesh_shader->Bind();
 
-	// for (auto entity: mesh_material_entities[nullptr]) {
-	// 	if (registry.contains<MeshRenderer>(entity))
-	// 		RenderMesh(registry, entity);
-	// }
+	for (auto entity: mesh_material_entities[nullptr]) {
+		if (registry.contains<MeshRenderer>(entity))
+			RenderMesh(registry, entity);
+	}
 
+	pbr_mesh_shader->UnBind();
 	// mesh_shader->UnBind();
 }

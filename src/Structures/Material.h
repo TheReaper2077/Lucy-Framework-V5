@@ -7,7 +7,7 @@
 #include <assimp/postprocess.h>
 
 namespace lucy {
-	struct Material {		
+	struct Material {
 		glm::vec3 albedo = { 1, 0, 0 };
 		glm::vec3 diffuse = { 0.2, 0.001, 0.8 };
 		glm::vec3 ambient = { 0.5, 0.6, 0.5 };
@@ -29,7 +29,7 @@ namespace lucy {
 		int illum_model;
 
 		std::string name = "New Material";
-		// uuid id = "ID_NONE";
+		std::string id = "ID_NONE";
 
 		lgl::Shader* shader = nullptr;
 

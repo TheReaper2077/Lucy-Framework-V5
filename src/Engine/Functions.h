@@ -32,6 +32,6 @@ namespace lucy {
 		void PausePhysics();
 		bool IsPhysicsPlaying();
 		bool IsPhysicsStopped();
-		bool IsPhysicsPaused();
+	bool IsPhysicsPaused();
 	};
 }

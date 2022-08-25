@@ -29,7 +29,6 @@ void InitApplication(lucy::Registry& registry) {
 	auto& timestep = registry.store<lucy::TimeStep>();
 	auto& events = registry.store<lucy::Events>();
 	auto& meshregistry = registry.store<lucy::MeshRegistry>();
-	auto& assetloader = registry.store<lucy::AssetLoader>();
 	auto& spriteregistry = registry.store<lucy::SpriteRegistry>();
 	auto& materialregistry = registry.store<lucy::MaterialRegistry>();
 	auto& functions = registry.store<lucy::Functions>();
@@ -114,7 +113,7 @@ void InitApplication(lucy::Registry& registry) {
 
 	mesh_builder.Transfer();
 
-	assetloader.Import("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
+	lucy::AssetLoader::Import("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
 
 	mesh_entity = registry.create();
 	{
@@ -126,6 +125,7 @@ void InitApplication(lucy::Registry& registry) {
 		meshrenderer.mesh = mesh_builder.mesh;
 		meshrenderer.enable_lighting = true;
 		meshrenderer.visible = true;
+		// meshrenderer.material = new lucy::Material();
 	}
 
 	auto light_entity = registry.create();
@@ -171,58 +171,55 @@ void UpdateApplication(lucy::Registry& registry) {
 
 	auto& sprite_transform = registry.get<lucy::Transform>(sprite_entity);
 
-	if (arduino->isConnected()) {
-		bool init = false;
-		while (true) {
-			auto size = arduino->readSerialPort(output, MAX_DATA_LENGTH);
+	// if (arduino->isConnected()) {
+	// 	bool init = false;
+	// 	while (true) {
+	// 		auto size = arduino->readSerialPort(output, MAX_DATA_LENGTH);
 
-			if (size > 0) {
-				init = true;
+	// 		if (size > 0) {
+	// 			init = true;
 
-				std::cout.write(output, size);
-				std::cout << "| - " << size << '\n';
+	// 			// std::cout.write(output, size);
+	// 			// std::cout << "| - " << size << '\n';
 
-				glm::quat q;
+	// 			glm::quat q;
 
-				// ((uint8_t*)&q.w)[0] = output[2];
-				// ((uint8_t*)&q.w)[1] = output[3];
-				// ((uint8_t*)&q.w)[2] = output[4];
-				// ((uint8_t*)&q.w)[3] = output[5];
+	// 			((uint8_t*)&q.w)[0] = output[2];
+	// 			((uint8_t*)&q.w)[1] = output[3];
+	// 			((uint8_t*)&q.w)[2] = output[4];
+	// 			((uint8_t*)&q.w)[3] = output[5];
 				
-				// ((uint8_t*)&q.x)[0] = output[6];
-				// ((uint8_t*)&q.x)[1] = output[7];
-				// ((uint8_t*)&q.x)[2] = output[8];
-				// ((uint8_t*)&q.x)[3] = output[9];
+	// 			((uint8_t*)&q.x)[0] = output[6];
+	// 			((uint8_t*)&q.x)[1] = output[7];
+	// 			((uint8_t*)&q.x)[2] = output[8];
+	// 			((uint8_t*)&q.x)[3] = output[9];
 
-				// ((uint8_t*)&q.y)[0] = output[10];
-				// ((uint8_t*)&q.y)[1] = output[11];
-				// ((uint8_t*)&q.y)[2] = output[12];
-				// ((uint8_t*)&q.y)[3] = output[13];
+	// 			((uint8_t*)&q.y)[0] = output[10];
+	// 			((uint8_t*)&q.y)[1] = output[11];
+	// 			((uint8_t*)&q.y)[2] = output[12];
+	// 			((uint8_t*)&q.y)[3] = output[13];
 				
-				// ((uint8_t*)&q.z)[0] = output[14];
-				// ((uint8_t*)&q.z)[1] = output[15];
-				// ((uint8_t*)&q.z)[2] = output[16];
-				// ((uint8_t*)&q.z)[3] = output[17];
+	// 			((uint8_t*)&q.z)[0] = output[14];
+	// 			((uint8_t*)&q.z)[1] = output[15];
+	// 			((uint8_t*)&q.z)[2] = output[16];
+	// 			((uint8_t*)&q.z)[3] = output[17];
 
-				q[0] = ((output[2] << 8) | output[3]) / 16384.0f;
-                q[1] = ((output[4] << 8) | output[5]) / 16384.0f;
-                q[2] = ((output[6] << 8) | output[7]) / 16384.0f;
-                q[3] = ((output[8] << 8) | output[9]) / 16384.0f;
-                for (int i = 0; i < 4; i++)
-					if (q[i] >= 2) q[i] = -4 + q[i];
+	// 			// std::cout << glm::to_string(q) << '\n';
+	// 			float angle = 2 * acos(q.w);
+	// 			float x = q.x / sqrt(1-q.w*q.w);
+	// 			float y = q.y / sqrt(1-q.w*q.w);
+	// 			float z = q.z / sqrt(1-q.w*q.w);
+	// 			// std::cout << angle << ' ' << x << ' ' << y << ' ' << z << '\n';
 
-				glm::vec3 norm = glm::normalize(q * glm::vec3(1, 0, 0));
+	// 			sprite_transform.use_rotation_quat = false;
+	// 			sprite_transform.rotation = (glm::normalize(glm::vec3(x, y, z)) * angle) * (180.0f / (float)PI);
+	// 		} else {
+	// 			if (init)
+	// 				// std::cout << "\n\nend\n\n";
+	// 			init = false;
 
-				std::cout << glm::to_string(norm) << '\n';
-
-				// sprite_transform.rotation = { atan2(norm.x, norm.z), asin(-norm.y),  };
-			} else {
-				if (init)
-					std::cout << "\n\nend\n\n";
-				init = false;
-
-				break;
-			}
-		}
-	}
+	// 			break;
+	// 		}
+	// 	}
+	// }
 }
