@@ -52,10 +52,12 @@ void lre::Initialize() {
 void lre::InitializeMainShaders() {
 	assert(lgl::IsInitialized());
 
-	std::cout << SHADER_PATH("screen.vs");
-
 	lgl::Shader screen_shader;
-	screen_shader.VertexShader("")
+	screen_shader.VertexShader(SHADER_PATH("screen.vs"));
+	screen_shader.FragmentShader(SHADER_PATH("regular_uv.fs"));
+	screen_shader.Link();
+
+	
 }
 
 void lre::SetFrameBuffer(lgl::FrameBuffer* framebuffer) {
