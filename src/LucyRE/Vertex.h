@@ -16,6 +16,30 @@ namespace lre {
 		INDEX_COUNT
 	};
 
+	struct C1;
+	struct C1N1;
+	struct C1N1T1;
+	struct C1N1UV1;
+	struct C1N1UV1T1;
+	struct C1N1UV1UVW1;
+	struct C1N1UV1UVW1T1;
+	struct C1N1UVW1;
+	struct C1N1UVW1T1;
+	struct C1T1;
+	struct C1UV1;
+	struct C1UV1T1;
+	struct C1UV1UVW1;
+	struct C1UV1UVW1T1;
+	struct C1UVW1;
+	struct C1UVW1T1;
+	struct N1;
+	struct N1T1;
+	struct N1UV1;
+	struct N1UV1T1;
+	struct N1UV1UVW1;
+	struct N1UV1UVW1T1;
+	struct N1UVW1;
+	struct N1UVW1T1;
 	struct P1;
 	struct P1C1;
 	struct P1C1N1;
@@ -48,6 +72,13 @@ namespace lre {
 	struct P1UV1UVW1T1;
 	struct P1UVW1;
 	struct P1UVW1T1;
+	struct T1;
+	struct UV1;
+	struct UV1T1;
+	struct UV1UVW1;
+	struct UV1UVW1T1;
+	struct UVW1;
+	struct UVW1T1;
 }
 
 

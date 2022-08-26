@@ -6,8 +6,6 @@
 #include <imgui_stdlib.h>
 #include "Events.h"
 #include "Window.h"
-#include "Functions.h"
-#include <Registry/Registry.h>
 
 namespace lucy {
 	class ImGuiLayer {
@@ -16,9 +14,7 @@ namespace lucy {
 		~ImGuiLayer() {}
 
 		static void Init();
-
 		static void RenderBegin();
-
 		static void RenderEnd();
 	};
 }

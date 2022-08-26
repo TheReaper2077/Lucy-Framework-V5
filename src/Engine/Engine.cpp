@@ -9,6 +9,7 @@
 #include <glm/gtx/string_cast.hpp>
 #include <glad/glad.h>
 #include "ImGuiLayer.h"
+#include <LucyRE/LucyRE.h>
 
 void lucy::Engine::Init() {
 	auto null_entity = registry.create();
@@ -38,7 +39,6 @@ void lucy::Engine::Mainloop() {
 		const auto& start_time = std::chrono::high_resolution_clock::now();
 
 		Events::Update();
-		TimeStep::Update();
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);

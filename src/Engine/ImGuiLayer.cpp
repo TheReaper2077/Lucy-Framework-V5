@@ -1,11 +1,11 @@
 #include "ImGuiLayer.h"
+#include "Window.h"
+#include "ECS.h"
 
 static auto& registry = lucy::Registry::Instance();
 
 void lucy::ImGuiLayer::Init() {
 	auto& window = registry.store<Window>();
-	auto& events = registry.store<Events>();
-	auto& functions = registry.store<Functions>();
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -24,7 +24,7 @@ void lucy::ImGuiLayer::Init() {
 
 	ImGui::StyleColorsDark();
 
-	events.AddFunction([](SDL_Event& event) {
+	Events::AddFunction([](SDL_Event& event) {
 		ImGui_ImplSDL2_ProcessEvent(&event);
 	});
 }
@@ -35,8 +35,6 @@ void lucy::ImGuiLayer::RenderBegin() {
 	ImGui::NewFrame();
 
 	auto& window = registry.store<Window>();
-	auto& events = registry.store<Events>();
-	auto& functions = registry.store<Functions>();
 
 	// Screen
 	static bool p_open = false;
@@ -65,7 +63,6 @@ void lucy::ImGuiLayer::RenderBegin() {
 void lucy::ImGuiLayer::RenderEnd() {
 	auto& window = registry.store<Window>();
 	auto& events = registry.store<Events>();
-	auto& functions = registry.store<Functions>();
 
 	ImGui::EndFrame();
 	ImGui::Render();
