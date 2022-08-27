@@ -8,6 +8,7 @@
 
 namespace lre::Vertex {
 	typedef lgl::VertexArray*(*function)();
+
 	extern std::unordered_map<uint64_t, function> MAP;
 
 	enum Index {
