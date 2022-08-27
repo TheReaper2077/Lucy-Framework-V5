@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Component.h"
 #include <glm/glm.hpp>
 #include <LucyGL/LucyGL.h>
+#include <LucyRE/LucyRE.h>
 
 namespace lucy {
-	enum LightMode {
+	enum LightType {
 		DIRECTIONAL_LIGHT,
 		AREAL_LIGHT,
 		POINT_LIGHT,
@@ -14,19 +14,16 @@ namespace lucy {
 		LightType_COUNT
 	};
 
-	struct Light: public ComponentTemplate {
+	struct Light {
 		glm::vec3 color = { 1, 1, 1 };
-		LightMode mode = LightMode::DIRECTIONAL_LIGHT;
+		LightType mode = LightType::DIRECTIONAL_LIGHT;
 
 		bool enable = true;
 
+		float radius;
+		float angle;
+		float intensity;
+
 		Light() {}
-
-		/// @brief Bind Shader Before Use
-		/// @param shader 
-		/// @param idx 
-		void Bind(lgl::Shader* shader, int idx);
-
-		void ImGuiRender() override;
 	};
 }

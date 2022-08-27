@@ -87,17 +87,13 @@ namespace lucy {
 		static bool IsMouseScrollingDown();
 
 		static const glm::vec3& GetCursorPos();
-		static const glm::vec3& GetCursorPosNormalized(Window* window);
+		static const glm::vec3& GetCursorPosNormalized(float posx, float posy, float width, float height);
 		static const glm::vec3& GetRelCursorPos();
-		static const glm::vec3& GetRelCursorPosNormalized(Window* window);
+		static const glm::vec3& GetRelCursorPosNormalized(float posx, float posy, float width, float height);
 		static const glm::vec3& GetRelCursorOffset();
 	
-		static const glm::vec3& Get_MainWindow_CursorPosNormalized();
-		static const glm::vec3& Get_MainWindow_Relative_CursorPosNormalized();
-		static const glm::vec3& Get_GameWindow_CursorPosNormalized();
-		static const glm::vec3& Get_GameWindow_Relative_CursorPosNormalized();
-		static const glm::vec3& Get_EditorWindow_CursorPosNormalized();
-		static const glm::vec3& Get_EditorWindow_Relative_CursorPosNormalized();
+		// static const glm::vec3& Get_MainWindow_CursorPosNormalized();
+		// static const glm::vec3& Get_MainWindow_Relative_CursorPosNormalized();
 
 		static const std::string& GetDroppedFile();
 		static bool IsFileDropped();

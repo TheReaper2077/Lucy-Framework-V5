@@ -1,6 +1,7 @@
 #include "Events.h"
 #include <imgui_impl_sdl.h>
 #include "ECS.h"
+#include "WindowManager.h"
 #include "Window.h"
 #include <iostream>
 
@@ -211,60 +212,42 @@ bool lucy::Events::IsMouseScrollingDown() {
 	return self->scrolldown;
 }
 
-const glm::vec3& lucy::Events::Get_MainWindow_CursorPosNormalized() {
-	return GetCursorPosNormalized(&registry.store<Window>());
-}
+// const glm::vec3& lucy::Events::Get_MainWindow_CursorPosNormalized() {
+// 	auto& window = registry.store<Window>();
+// 	return GetCursorPosNormalized(0, 0, window.size.x, window.size.y);
+// }
 
 const glm::vec3& lucy::Events::GetCursorPos() {
 	return self->mousepos;
 }
 
-const glm::vec3& lucy::Events::GetCursorPosNormalized(Window* window) {
-	assert(window);
-
+const glm::vec3& lucy::Events::GetCursorPosNormalized(float posx, float posy, float width, float height) {
 	return glm::vec3 {
-		self->mousepos.x - window->pos.x / (window->size.x * 0.5) - 1.0,
-		1.0 - ((self->mousepos.y - window->pos.y) / (window->size.y * 0.5)),
+		((self->mousepos.x - posx) / (width * 0.5)) - 1.0,
+		1.0 - ((self->mousepos.y - posy) / (height * 0.5)),
 		0
 	};
 }
 
-const glm::vec3& lucy::Events::Get_MainWindow_Relative_CursorPosNormalized() {
-	return GetRelCursorPosNormalized(&registry.store<Window>());
-}
+// const glm::vec3& lucy::Events::Get_MainWindow_Relative_CursorPosNormalized() {
+// 	auto& window = registry.store<Window>();
+// 	return GetRelCursorPosNormalized(0, 0, window.size.x, window.size.y);
+// }
 
 const glm::vec3& lucy::Events::GetRelCursorPos() {
 	return self->relmousepos;
 }
 
-const glm::vec3& lucy::Events::GetRelCursorPosNormalized(Window* window) {
-	assert(window);
-
+const glm::vec3& lucy::Events::GetRelCursorPosNormalized(float posx, float posy, float width, float height) {
 	return glm::vec3 {
-		self->relmousepos.x - window->pos.x / (window->size.x * 0.5) - 1.0,
-		1.0 - ((self->relmousepos.y - window->pos.y) / (window->size.y * 0.5)),
+		((self->relmousepos.x - posx) / (width * 0.5)) - 1.0,
+		1.0 - ((self->relmousepos.y - posy) / (height * 0.5)),
 		0
 	};
 }
 
 const glm::vec3& lucy::Events::GetRelCursorOffset() {
 	return self->relmouseoffset;
-}
-
-const glm::vec3& lucy::Events::Get_GameWindow_CursorPosNormalized() {
-	return GetCursorPosNormalized(&registry.store<GameWindow>());
-}
-
-const glm::vec3& lucy::Events::Get_GameWindow_Relative_CursorPosNormalized() {
-	return GetRelCursorPosNormalized(&registry.store<GameWindow>());
-}
-
-const glm::vec3& lucy::Events::Get_EditorWindow_CursorPosNormalized() {
-	return GetCursorPosNormalized(&registry.store<EditorWindow>());
-}
-
-const glm::vec3& lucy::Events::Get_EditorWindow_Relative_CursorPosNormalized() {
-	return GetRelCursorPosNormalized(&registry.store<EditorWindow>());
 }
 
 const std::string& lucy::Events::GetDroppedFile() {

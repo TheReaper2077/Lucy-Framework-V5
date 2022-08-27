@@ -20,10 +20,7 @@ namespace lre {
 		lgl::VertexBuffer* vertexbuffer = nullptr;
 		lgl::IndexBuffer* indexbuffer = nullptr;
 
-		int dir_light = 0;
-		int point_light = 0;
-
-		std::unordered_map<std::string, lgl::Shader> shader_registry;
+		std::unordered_map<std::string, lgl::Shader*> shader_registry;
 
 		static Renderer* Instance() {
 			static Renderer instance;
@@ -36,6 +33,8 @@ namespace lre {
 	void SetProjection(const glm::mat4& projection);
 	void SetViewPosition(const glm::vec3& view_position);
 
+	void Clear(const glm::vec4& clearcolor, uint32_t flags);
+
 	void Initialize();
 	void InitializeMainShaders();
 
@@ -47,8 +46,10 @@ namespace lre {
 	void SetVertexBuffer(lgl::VertexBuffer* vertexbuffer);
 	void SetIndexBuffer(lgl::IndexBuffer* indexbuffer);
 
-	void InsertShader(std::string name, lgl::Shader shader);
+	void InsertShader(std::string name, lgl::Shader* shader);
 	lgl::Shader* GetShader(std::string name);
 
-	void RederFrameBufferToScreen(lgl::FrameBuffer* framebuffer);
+	void RenderFrameBufferToScreen(lgl::FrameBuffer* framebuffer);
+
+	void Destroy();
 }

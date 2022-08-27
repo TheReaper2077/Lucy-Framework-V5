@@ -1,14 +1,6 @@
 #include "Camera.h"
+#include "Transform.h"
+#include <Lucy/Lucy.h>
+#include <glm/gtc/matrix_transform.hpp>
 
-void lucy::Camera::SetProjection() {
-	
-}
-
-void lucy::Camera::SetViewFPS() {
-	
-}
-
-void lucy::Camera::SetViewEditorPan() {
-	
-}
-
+static auto& registry = lucy::Registry::Instance();

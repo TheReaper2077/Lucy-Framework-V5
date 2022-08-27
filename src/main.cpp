@@ -1,10 +1,24 @@
-#include "Engine/Engine.h"
+#include "Lucy/Engine.h"
+#include <Systems/Systems.h>
+#include <TestApp/App.h>
+#include <Editor/Editor.h>
+#include <Editor/EditorSystem.h>
 
 int main(int argcount, char** args) {
-	lucy::Engine engine;
+	// App
+	lucy::Engine::AddInitializationSystem(InitializeApp);
+	lucy::Engine::AddRuntimeSystem(UpdateApp);
 
-	engine.Init();
-	engine.Mainloop();
+	// Systems
+	lucy::Engine::AddRuntimeSystem(lucy::MainSystems);
+
+	// Editor
+	lucy::Engine::AddInitializationSystem(lucy::Editor::Initialize);
+	lucy::Engine::AddRuntimeSystem(lucy::Editor::Update);
+	lucy::Editor::AddLayer(lucy::System::EditorSystem);
+
+	lucy::Engine::Initialize();
+	lucy::Engine::Mainloop();
 
 	return 0;
 }

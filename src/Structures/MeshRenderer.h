@@ -1,10 +1,9 @@
 #pragma once
 
-#include "Component.h"
 #include <string>
 
 namespace lucy {
-	struct MeshRenderer: public ComponentTemplate {
+	struct MeshRenderer {
 		std::string mesh_id;
 		std::string material_id;
 
@@ -12,7 +11,5 @@ namespace lucy {
 		bool enable_lighting = false;
 
 		MeshRenderer() {}
-
-		void ImGuiRender() override;
 	};
 }
