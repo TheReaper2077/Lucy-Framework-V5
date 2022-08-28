@@ -128,4 +128,6 @@ void lre::Destroy() {
 	for (auto& pair: self->shader_registry) {
 		delete pair.second;
 	}
+
+	Vertex::FreeVertexArray();
 }

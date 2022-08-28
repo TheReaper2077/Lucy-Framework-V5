@@ -31,15 +31,30 @@ namespace lre::Vertex {
 	extern std::unordered_map<uint64_t, vertexarray_function> MAP;
 	extern std::unordered_map<uint64_t, std::array<int, STRIDE + 1>> OFFSET;
 
+	void FreeVertexArray();
+
 	struct C1 {
 		glm::vec4 color;
 	
 		// static const uint64_t flag = color_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 				});
@@ -56,9 +71,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | normal_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -77,9 +105,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | normal_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -99,9 +140,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | normal_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -122,9 +176,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | normal_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -146,9 +213,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | normal_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -171,9 +251,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -195,9 +288,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | normal_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -218,9 +324,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | normal_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -240,9 +359,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::tex, 1, lgl::FLOAT },
@@ -260,9 +392,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -281,9 +426,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -303,9 +461,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -326,9 +497,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -348,9 +532,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::uvw, 3, lgl::FLOAT },
@@ -369,9 +566,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = color_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::color, 4, lgl::FLOAT },
 					{ Index::uvw, 3, lgl::FLOAT },
@@ -389,9 +599,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = normal_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::normal, 3, lgl::FLOAT },
 				});
@@ -408,9 +631,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = normal_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::normal, 3, lgl::FLOAT },
 					{ Index::tex, 1, lgl::FLOAT },
@@ -428,9 +664,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = normal_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::normal, 3, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -449,9 +698,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = normal_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::normal, 3, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -471,9 +733,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = normal_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::normal, 3, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -494,9 +769,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = normal_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::normal, 3, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -516,9 +804,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = normal_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::normal, 3, lgl::FLOAT },
 					{ Index::uvw, 3, lgl::FLOAT },
@@ -537,9 +838,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = normal_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::normal, 3, lgl::FLOAT },
 					{ Index::uvw, 3, lgl::FLOAT },
@@ -557,9 +871,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = 0;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					
 				});
@@ -575,9 +902,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 				});
@@ -594,9 +934,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -615,9 +968,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | normal_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -638,9 +1004,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | normal_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -662,9 +1041,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -687,9 +1079,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -713,9 +1118,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -740,9 +1158,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -766,9 +1197,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | normal_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -791,9 +1235,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | normal_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -815,9 +1272,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -837,9 +1307,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -860,9 +1343,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -884,9 +1380,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -909,9 +1418,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -933,9 +1455,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -956,9 +1491,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | color_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::color, 4, lgl::FLOAT },
@@ -978,9 +1526,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | normal_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -999,9 +1560,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | normal_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -1021,9 +1595,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | normal_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -1044,9 +1631,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | normal_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -1068,9 +1668,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | normal_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -1093,9 +1706,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -1117,9 +1743,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | normal_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -1140,9 +1779,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | normal_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::normal, 3, lgl::FLOAT },
@@ -1162,9 +1814,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::tex, 1, lgl::FLOAT },
@@ -1182,9 +1847,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -1203,9 +1881,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -1225,9 +1916,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -1248,9 +1952,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::uv, 2, lgl::FLOAT },
@@ -1270,9 +1987,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::uvw, 3, lgl::FLOAT },
@@ -1291,9 +2021,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = position_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::position, 3, lgl::FLOAT },
 					{ Index::uvw, 3, lgl::FLOAT },
@@ -1311,9 +2054,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::tex, 1, lgl::FLOAT },
 				});
@@ -1329,9 +2085,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::uv, 2, lgl::FLOAT },
 				});
@@ -1348,9 +2117,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::uv, 2, lgl::FLOAT },
 					{ Index::tex, 1, lgl::FLOAT },
@@ -1368,9 +2150,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::uv, 2, lgl::FLOAT },
 					{ Index::uvw, 3, lgl::FLOAT },
@@ -1389,9 +2184,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::uv, 2, lgl::FLOAT },
 					{ Index::uvw, 3, lgl::FLOAT },
@@ -1409,9 +2217,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::uvw, 3, lgl::FLOAT },
 				});
@@ -1428,9 +2249,22 @@ namespace lre::Vertex {
 		// static const uint64_t flag = uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
+			return GetVertexArray(false);
+		}
+	
+		static lgl::VertexArray* FreeVertexArray() {
+			return GetVertexArray(true);
+		}
+	
+		static lgl::VertexArray* GetVertexArray(bool free) {
 			static lgl::VertexArray* instance = nullptr;
 	
-			if (instance == nullptr) {
+			if (free) {
+				if (instance != nullptr) {
+					delete instance;
+					instance = nullptr;
+				}
+			} else if (instance == nullptr) {
 				instance = new lgl::VertexArray({
 					{ Index::uvw, 3, lgl::FLOAT },
 					{ Index::tex, 1, lgl::FLOAT },
