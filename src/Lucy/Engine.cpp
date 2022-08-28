@@ -10,6 +10,7 @@
 #include <glad/glad.h>
 #include <LucyRE/LucyRE.h>
 #include "WindowManager.h"
+#include "AssetLoader.h"
 
 static auto& registry = lucy::Registry::Instance();
 
@@ -25,6 +26,7 @@ void lucy::Engine::Initialize() {
 
 	lgl::Initialize(SDL_GL_GetProcAddress);
 	lre::Initialize();
+	AssetLoader::Initialize();
 }
 
 void lucy::Engine::Mainloop() {

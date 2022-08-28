@@ -1,5 +1,7 @@
 #pragma once
 
+#include "MeshRegistry.h"
+#include "AssetLoader.h"
 #include <Structures/Structures.h>
 #include "WindowManager.h"
 #include "Events.h"

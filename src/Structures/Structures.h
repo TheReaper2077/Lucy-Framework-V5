@@ -6,6 +6,7 @@
 #include "Light.h"
 #include "MeshRenderer.h"
 
+#include "Model.h"
 #include "Mesh.h"
 #include "MeshBuilder.h"
 #include "Material.h"

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Mesh.h"
+#include "Material.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <vector>
@@ -8,10 +10,12 @@
 #include <Lucy/UUID.h>
 
 namespace lucy {
-	struct Material {
-		
+	struct Model {
+		std::vector<Mesh*> meshes;
+		std::vector<Material*> materials;
 
-		Material() {}
-		Material(aiMaterial* ai_material);
+		std::map<Mesh*, Material*> mesh_material_link;
+
+		Model() {}
 	};
 }

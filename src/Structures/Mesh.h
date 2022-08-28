@@ -5,6 +5,7 @@
 #include <vector>
 #include <LucyGL/LucyGL.h>
 #include <glm/glm.hpp>
+#include <Lucy/UUID.h>
 
 namespace lucy {
 	struct Mesh {
@@ -17,6 +18,7 @@ namespace lucy {
 
 		lgl::Primitive primitive = lgl::TRIANGLE;
 
-		Mesh(aiMesh* mesh);
+		Mesh() {}
+		Mesh(aiMesh* ai_mesh);
 	};
 }

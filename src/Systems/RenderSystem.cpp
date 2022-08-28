@@ -1,10 +1,13 @@
 #include "RenderSystem.h"
 #include <LucyRE/LucyRE.h>
 #include <Lucy/ECS.h>
+#include <iostream>
 #include <Structures/Structures.h>
+#include <Lucy/MeshRegistry.h>
 
 static auto& registry = lucy::Registry::Instance();
 static auto& window = registry.store<lucy::Window>();
+static auto& meshregistry = registry.store<lucy::MeshRegistry>();
 
 void Test() {
 	lre::Vertex::P1N1 test_vertices[] = {
@@ -52,10 +55,21 @@ namespace lucy {
 	void Render() {
 		lre::SetModel(glm::mat4(1.0f));
 
-		Test();
+		auto* shader = lre::GetShader("normal");
+		shader->Bind();
 
 		for (auto [entity, transform, meshrenderer]: registry.view<Transform, MeshRenderer>().each()) {
+			auto* mesh = meshregistry.GetByID(meshrenderer.mesh_id);
 
+			if (mesh != nullptr) {
+				lre::SetModel(transform.GetModelMatrix());
+
+				mesh->vertexarray->Bind();
+				mesh->vertexarray->BindVertexBuffer(mesh->vertexbuffer, mesh->vertexarray->stride);
+				mesh->vertexarray->BindIndexBuffer(mesh->indexbuffer);
+
+				lgl::DrawIndexed(lgl::TRIANGLE, mesh->indexcount, lgl::UNSIGNED_INT, nullptr);
+			}
 		}
 	}
 }
