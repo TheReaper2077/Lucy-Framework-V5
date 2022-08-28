@@ -9,47 +9,47 @@ static auto& registry = lucy::Registry::Instance();
 static auto& window = registry.store<lucy::Window>();
 static auto& meshregistry = registry.store<lucy::MeshRegistry>();
 
-void Test() {
-	lre::Vertex::P1N1 test_vertices[] = {
-		{{ -0.5, -0.5, -0.5 }, { 0.0, 0.0, 1.0 }},
-		{{ -0.5, +0.5, -0.5 }, { 0.0, 0.0, 1.0 }},
-		{{ +0.5, +0.5, -0.5 }, { 0.0, 0.0, 1.0 }},
-		{{ +0.5, -0.5, -0.5 }, { 0.0, 0.0, 1.0 }},
-	};
+// void Test() {
+// 	lre::Vertex::P1N1 test_vertices[] = {
+// 		{{ -0.5, -0.5, -0.5 }, { 0.0, 0.0, 1.0 }},
+// 		{{ -0.5, +0.5, -0.5 }, { 0.0, 0.0, 1.0 }},
+// 		{{ +0.5, +0.5, -0.5 }, { 0.0, 0.0, 1.0 }},
+// 		{{ +0.5, -0.5, -0.5 }, { 0.0, 0.0, 1.0 }},
+// 	};
 
-	uint32_t test_indices[] = {
-		0 + 4 * 0, 1 + 4 * 0, 2 + 4 * 0, 2 + 4 * 0, 3 + 4 * 0, 0 + 4 * 0,
-	};
+// 	uint32_t test_indices[] = {
+// 		0 + 4 * 0, 1 + 4 * 0, 2 + 4 * 0, 2 + 4 * 0, 3 + 4 * 0, 0 + 4 * 0,
+// 	};
 
-	static lgl::VertexArray* vertexarray = lre::Vertex::P1N1::VertexArray();
-	static lgl::VertexBuffer* vertexbuffer = nullptr;
-	static lgl::IndexBuffer* indexbuffer = nullptr;
+// 	static lgl::VertexArray* vertexarray = lre::Vertex::P1N1::VertexArray();
+// 	static lgl::VertexBuffer* vertexbuffer = nullptr;
+// 	static lgl::IndexBuffer* indexbuffer = nullptr;
 
-	if (vertexbuffer == nullptr) {
-		vertexbuffer = new lgl::VertexBuffer();
+// 	if (vertexbuffer == nullptr) {
+// 		vertexbuffer = new lgl::VertexBuffer();
 
-		vertexbuffer->Bind();
-		vertexbuffer->Allocate(sizeof(test_vertices));
-		vertexbuffer->AddDataDynamic(test_vertices, sizeof(test_vertices));
-	}
+// 		vertexbuffer->Bind();
+// 		vertexbuffer->Allocate(sizeof(test_vertices));
+// 		vertexbuffer->AddDataDynamic(test_vertices, sizeof(test_vertices));
+// 	}
 
-	if (indexbuffer == nullptr) {
-		indexbuffer = new lgl::IndexBuffer();
+// 	if (indexbuffer == nullptr) {
+// 		indexbuffer = new lgl::IndexBuffer();
 
-		indexbuffer->Bind();
-		indexbuffer->Allocate(sizeof(test_indices));
-		indexbuffer->AddData(test_indices, sizeof(test_indices));
-	}
+// 		indexbuffer->Bind();
+// 		indexbuffer->Allocate(sizeof(test_indices));
+// 		indexbuffer->AddData(test_indices, sizeof(test_indices));
+// 	}
 
-	auto* shader = lre::GetShader("normal");
-	shader->Bind();
+// 	auto* shader = lre::GetShader("normal");
+// 	shader->Bind();
 
-	vertexarray->Bind();
-	vertexarray->BindVertexBuffer(vertexbuffer, vertexarray->stride);
-	vertexarray->BindIndexBuffer(indexbuffer);
+// 	vertexarray->Bind();
+// 	vertexarray->BindVertexBuffer(vertexbuffer, vertexarray->stride);
+// 	vertexarray->BindIndexBuffer(indexbuffer);
 
-	lgl::DrawIndexed(lgl::TRIANGLE, 6, lgl::UNSIGNED_INT, nullptr);
-}
+// 	lgl::DrawIndexed(lgl::TRIANGLE, 6, lgl::UNSIGNED_INT, nullptr);
+// }
 
 namespace lucy {
 	void Render() {

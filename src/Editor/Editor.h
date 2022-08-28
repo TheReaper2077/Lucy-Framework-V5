@@ -27,5 +27,6 @@ namespace lucy {
 		static void RenderBegin();
 		static void RenderEnd();
 		static void Update();
+		static void ShutDown();
 	};
 }

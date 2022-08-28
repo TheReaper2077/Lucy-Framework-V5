@@ -126,7 +126,6 @@ lgl::Shader* lre::GetShader(std::string name) {
 
 void lre::Destroy() {
 	for (auto& pair: self->shader_registry) {
-		free(pair.second);
+		delete pair.second;
 	}
 }
-

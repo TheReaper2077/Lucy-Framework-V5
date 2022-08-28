@@ -19,6 +19,7 @@ namespace lucy {
 		lgl::Primitive primitive = lgl::TRIANGLE;
 
 		Mesh() {}
+		~Mesh();
 		Mesh(aiMesh* ai_mesh);
 	};
 }

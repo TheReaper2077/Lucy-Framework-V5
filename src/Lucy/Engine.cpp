@@ -13,6 +13,7 @@
 #include "AssetLoader.h"
 
 static auto& registry = lucy::Registry::Instance();
+static auto& window = registry.store<lucy::Window>();
 
 void lucy::Engine::Initialize() {
 	auto null_entity = registry.create();
@@ -53,13 +54,19 @@ void lucy::Engine::Mainloop() {
 		const auto& end_time = std::chrono::high_resolution_clock::now();
 		TimeStep::dt = std::chrono::duration<double, std::ratio<1, 60>>(end_time - start_time).count();
 	}
+}
+
+void lucy::Engine::ShutDown() {
+	lre::Destroy();
+
+	if (window.framebuffer != nullptr) {
+		delete window.framebuffer;
+		window.framebuffer = nullptr;
+	}
 
 	registry.clear();
 }
 
-void lucy::Engine::Destroy() {
-	
-}
 
 void lucy::Engine::AddRuntimeSystem(system_func func) {
 	for (auto fn: self->systems_array)

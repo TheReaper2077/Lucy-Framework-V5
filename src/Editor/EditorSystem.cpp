@@ -21,7 +21,7 @@ namespace lucy {
 		auto& camera = registry.get<Camera>(editor_state.camera_entity);
 
 		if (camera.width != size.x || camera.height != size.y && camera.framebuffer != nullptr) {
-			free(camera.framebuffer);
+			delete camera.framebuffer;
 			camera.framebuffer = nullptr;
 		}
 
@@ -49,7 +49,7 @@ namespace lucy {
 		auto& camera = registry.get<Camera>(editor_state.camera_entity);
 
 		if (camera.width != size.x || camera.height != size.y && camera.framebuffer != nullptr) {
-			free(camera.framebuffer);
+			delete camera.framebuffer;
 			camera.framebuffer = nullptr;
 		}
 

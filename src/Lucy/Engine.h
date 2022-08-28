@@ -21,7 +21,7 @@ namespace lucy {
 	public:
 		static void Initialize();
 		static void Mainloop();
-		static void Destroy();
+		static void ShutDown();
 
 		static void AddRuntimeSystem(system_func func);
 		static void AddInitializationSystem(system_func func);

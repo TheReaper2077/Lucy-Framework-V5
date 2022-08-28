@@ -40,5 +40,6 @@ namespace lucy {
 		CAMERA_UPDATE_FUNC update = nullptr;
 
 		Camera() {}
+		~Camera();
 	};
 }

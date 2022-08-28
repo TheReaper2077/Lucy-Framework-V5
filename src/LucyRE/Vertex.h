@@ -16,7 +16,7 @@ namespace lre::Vertex {
 		uvw,
 		tex,
 
-		INDEX_COUNT,
+		STRIDE,
 		
 		position_flag = (1 << position),
 		color_flag = (1 << color),
@@ -29,12 +29,12 @@ namespace lre::Vertex {
 	typedef lgl::VertexArray*(*vertexarray_function)();
 
 	extern std::unordered_map<uint64_t, vertexarray_function> MAP;
-	extern std::unordered_map<uint64_t, std::array<int, INDEX_COUNT + 1>> OFFSET;
+	extern std::unordered_map<uint64_t, std::array<int, STRIDE + 1>> OFFSET;
 
 	struct C1 {
 		glm::vec4 color;
 	
-		static const uint64_t flag = color_flag;
+		// static const uint64_t flag = color_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -53,7 +53,7 @@ namespace lre::Vertex {
 		glm::vec4 color;
 		glm::vec3 normal;
 	
-		static const uint64_t flag = color_flag | normal_flag;
+		// static const uint64_t flag = color_flag | normal_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -74,7 +74,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		float tex;
 	
-		static const uint64_t flag = color_flag | normal_flag | tex_flag;
+		// static const uint64_t flag = color_flag | normal_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -96,7 +96,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		glm::vec2 uv;
 	
-		static const uint64_t flag = color_flag | normal_flag | uv_flag;
+		// static const uint64_t flag = color_flag | normal_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -119,7 +119,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		float tex;
 	
-		static const uint64_t flag = color_flag | normal_flag | uv_flag | tex_flag;
+		// static const uint64_t flag = color_flag | normal_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -143,7 +143,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = color_flag | normal_flag | uv_flag | uvw_flag;
+		// static const uint64_t flag = color_flag | normal_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -168,7 +168,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = color_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = color_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -192,7 +192,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = color_flag | normal_flag | uvw_flag;
+		// static const uint64_t flag = color_flag | normal_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -215,7 +215,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = color_flag | normal_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = color_flag | normal_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -237,7 +237,7 @@ namespace lre::Vertex {
 		glm::vec4 color;
 		float tex;
 	
-		static const uint64_t flag = color_flag | tex_flag;
+		// static const uint64_t flag = color_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -257,7 +257,7 @@ namespace lre::Vertex {
 		glm::vec4 color;
 		glm::vec2 uv;
 	
-		static const uint64_t flag = color_flag | uv_flag;
+		// static const uint64_t flag = color_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -278,7 +278,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		float tex;
 	
-		static const uint64_t flag = color_flag | uv_flag | tex_flag;
+		// static const uint64_t flag = color_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -300,7 +300,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = color_flag | uv_flag | uvw_flag;
+		// static const uint64_t flag = color_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -323,7 +323,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = color_flag | uv_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = color_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -345,7 +345,7 @@ namespace lre::Vertex {
 		glm::vec4 color;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = color_flag | uvw_flag;
+		// static const uint64_t flag = color_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -366,7 +366,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = color_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = color_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -386,7 +386,7 @@ namespace lre::Vertex {
 	struct N1 {
 		glm::vec3 normal;
 	
-		static const uint64_t flag = normal_flag;
+		// static const uint64_t flag = normal_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -405,7 +405,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		float tex;
 	
-		static const uint64_t flag = normal_flag | tex_flag;
+		// static const uint64_t flag = normal_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -425,7 +425,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		glm::vec2 uv;
 	
-		static const uint64_t flag = normal_flag | uv_flag;
+		// static const uint64_t flag = normal_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -446,7 +446,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		float tex;
 	
-		static const uint64_t flag = normal_flag | uv_flag | tex_flag;
+		// static const uint64_t flag = normal_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -468,7 +468,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = normal_flag | uv_flag | uvw_flag;
+		// static const uint64_t flag = normal_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -491,7 +491,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = normal_flag | uv_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = normal_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -513,7 +513,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = normal_flag | uvw_flag;
+		// static const uint64_t flag = normal_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -534,7 +534,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = normal_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = normal_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -554,7 +554,7 @@ namespace lre::Vertex {
 	struct NullVertex {
 		
 	
-		static const uint64_t flag = 0;
+		// static const uint64_t flag = 0;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -572,7 +572,7 @@ namespace lre::Vertex {
 	struct P1 {
 		glm::vec3 position;
 	
-		static const uint64_t flag = position_flag;
+		// static const uint64_t flag = position_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -591,7 +591,7 @@ namespace lre::Vertex {
 		glm::vec3 position;
 		glm::vec4 color;
 	
-		static const uint64_t flag = position_flag | color_flag;
+		// static const uint64_t flag = position_flag | color_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -612,7 +612,7 @@ namespace lre::Vertex {
 		glm::vec4 color;
 		glm::vec3 normal;
 	
-		static const uint64_t flag = position_flag | color_flag | normal_flag;
+		// static const uint64_t flag = position_flag | color_flag | normal_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -635,7 +635,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		float tex;
 	
-		static const uint64_t flag = position_flag | color_flag | normal_flag | tex_flag;
+		// static const uint64_t flag = position_flag | color_flag | normal_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -659,7 +659,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		glm::vec2 uv;
 	
-		static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag;
+		// static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -684,7 +684,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		float tex;
 	
-		static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | tex_flag;
+		// static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -710,7 +710,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | uvw_flag;
+		// static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -737,7 +737,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = position_flag | color_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -763,7 +763,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = position_flag | color_flag | normal_flag | uvw_flag;
+		// static const uint64_t flag = position_flag | color_flag | normal_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -788,7 +788,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = position_flag | color_flag | normal_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = position_flag | color_flag | normal_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -812,7 +812,7 @@ namespace lre::Vertex {
 		glm::vec4 color;
 		float tex;
 	
-		static const uint64_t flag = position_flag | color_flag | tex_flag;
+		// static const uint64_t flag = position_flag | color_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -834,7 +834,7 @@ namespace lre::Vertex {
 		glm::vec4 color;
 		glm::vec2 uv;
 	
-		static const uint64_t flag = position_flag | color_flag | uv_flag;
+		// static const uint64_t flag = position_flag | color_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -857,7 +857,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		float tex;
 	
-		static const uint64_t flag = position_flag | color_flag | uv_flag | tex_flag;
+		// static const uint64_t flag = position_flag | color_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -881,7 +881,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = position_flag | color_flag | uv_flag | uvw_flag;
+		// static const uint64_t flag = position_flag | color_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -906,7 +906,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = position_flag | color_flag | uv_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = position_flag | color_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -930,7 +930,7 @@ namespace lre::Vertex {
 		glm::vec4 color;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = position_flag | color_flag | uvw_flag;
+		// static const uint64_t flag = position_flag | color_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -953,7 +953,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = position_flag | color_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = position_flag | color_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -975,7 +975,7 @@ namespace lre::Vertex {
 		glm::vec3 position;
 		glm::vec3 normal;
 	
-		static const uint64_t flag = position_flag | normal_flag;
+		// static const uint64_t flag = position_flag | normal_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -996,7 +996,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		float tex;
 	
-		static const uint64_t flag = position_flag | normal_flag | tex_flag;
+		// static const uint64_t flag = position_flag | normal_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1018,7 +1018,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		glm::vec2 uv;
 	
-		static const uint64_t flag = position_flag | normal_flag | uv_flag;
+		// static const uint64_t flag = position_flag | normal_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1041,7 +1041,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		float tex;
 	
-		static const uint64_t flag = position_flag | normal_flag | uv_flag | tex_flag;
+		// static const uint64_t flag = position_flag | normal_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1065,7 +1065,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = position_flag | normal_flag | uv_flag | uvw_flag;
+		// static const uint64_t flag = position_flag | normal_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1090,7 +1090,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = position_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = position_flag | normal_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1114,7 +1114,7 @@ namespace lre::Vertex {
 		glm::vec3 normal;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = position_flag | normal_flag | uvw_flag;
+		// static const uint64_t flag = position_flag | normal_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1137,7 +1137,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = position_flag | normal_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = position_flag | normal_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1159,7 +1159,7 @@ namespace lre::Vertex {
 		glm::vec3 position;
 		float tex;
 	
-		static const uint64_t flag = position_flag | tex_flag;
+		// static const uint64_t flag = position_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1179,7 +1179,7 @@ namespace lre::Vertex {
 		glm::vec3 position;
 		glm::vec2 uv;
 	
-		static const uint64_t flag = position_flag | uv_flag;
+		// static const uint64_t flag = position_flag | uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1200,7 +1200,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		float tex;
 	
-		static const uint64_t flag = position_flag | uv_flag | tex_flag;
+		// static const uint64_t flag = position_flag | uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1222,7 +1222,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = position_flag | uv_flag | uvw_flag;
+		// static const uint64_t flag = position_flag | uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1245,7 +1245,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = position_flag | uv_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = position_flag | uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1267,7 +1267,7 @@ namespace lre::Vertex {
 		glm::vec3 position;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = position_flag | uvw_flag;
+		// static const uint64_t flag = position_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1288,7 +1288,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = position_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = position_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1308,7 +1308,7 @@ namespace lre::Vertex {
 	struct T1 {
 		float tex;
 	
-		static const uint64_t flag = tex_flag;
+		// static const uint64_t flag = tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1326,7 +1326,7 @@ namespace lre::Vertex {
 	struct UV1 {
 		glm::vec2 uv;
 	
-		static const uint64_t flag = uv_flag;
+		// static const uint64_t flag = uv_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1345,7 +1345,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		float tex;
 	
-		static const uint64_t flag = uv_flag | tex_flag;
+		// static const uint64_t flag = uv_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1365,7 +1365,7 @@ namespace lre::Vertex {
 		glm::vec2 uv;
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = uv_flag | uvw_flag;
+		// static const uint64_t flag = uv_flag | uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1386,7 +1386,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = uv_flag | uvw_flag | tex_flag;
+		// static const uint64_t flag = uv_flag | uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1406,7 +1406,7 @@ namespace lre::Vertex {
 	struct UVW1 {
 		glm::vec3 uvw;
 	
-		static const uint64_t flag = uvw_flag;
+		// static const uint64_t flag = uvw_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;
@@ -1425,7 +1425,7 @@ namespace lre::Vertex {
 		glm::vec3 uvw;
 		float tex;
 	
-		static const uint64_t flag = uvw_flag | tex_flag;
+		// static const uint64_t flag = uvw_flag | tex_flag;
 	
 		static lgl::VertexArray* VertexArray() {
 			static lgl::VertexArray* instance = nullptr;

@@ -20,5 +20,8 @@ int main(int argcount, char** args) {
 	lucy::Engine::Initialize();
 	lucy::Engine::Mainloop();
 
+	lucy::Editor::ShutDown();
+	lucy::Engine::ShutDown();
+
 	return 0;
 }

@@ -107,3 +107,8 @@ void lucy::Editor::Update() {
 
 	RenderEnd();
 }
+
+void lucy::Editor::ShutDown() {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+}

@@ -69,7 +69,7 @@ namespace lre::Vertex {
 		{ position_flag | color_flag | normal_flag | uv_flag | uvw_flag | tex_flag, P1C1N1UV1UVW1T1::VertexArray }
 	};
 
-	std::unordered_map<uint64_t, std::array<int, INDEX_COUNT + 1>> OFFSET = {
+	std::unordered_map<uint64_t, std::array<int, STRIDE + 1>> OFFSET = {
 		{ 0, { -1, -1, -1, -1, -1, -1, 0 }},
 		{ position_flag, { 0, -1, -1, -1, -1, -1, 3 }},
 		{ color_flag, { -1, 0, -1, -1, -1, -1, 4 }},

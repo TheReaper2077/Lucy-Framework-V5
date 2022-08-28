@@ -4,6 +4,11 @@
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
 
+lucy::Mesh::~Mesh() {
+	delete vertexbuffer;
+	delete indexbuffer;
+}
+
 lucy::Mesh::Mesh(aiMesh* ai_mesh) {
 	vertexcount = ai_mesh->mNumVertices;
 
@@ -14,11 +19,11 @@ lucy::Mesh::Mesh(aiMesh* ai_mesh) {
 		flag |= lre::Vertex::normal_flag;
 	if (ai_mesh->mColors[0])
 		flag |= lre::Vertex::color_flag;
-	// if (ai_mesh->mTextureCoords[0])
-	// 	flag |= lre::Vertex::uv_flag;
+	if (ai_mesh->mTextureCoords[0])
+		flag |= lre::Vertex::uv_flag;
 
 	auto& offset = lre::Vertex::OFFSET[flag];
-	int stride = offset[lre::Vertex::INDEX_COUNT];
+	int stride = offset[lre::Vertex::STRIDE];
 
 	if (stride == 0) return;
 
