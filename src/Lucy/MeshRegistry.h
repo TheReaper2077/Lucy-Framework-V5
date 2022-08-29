@@ -18,7 +18,8 @@ namespace lucy {
 		void Add(Mesh* mesh, const std::string& name, const std::string& filepath, const std::string& id = GetID());
 		const std::string& GetMeshID(Mesh* mesh);
 		lucy::Mesh* GetByID(const std::string& id);
-		lucy::Mesh* GetByFilepath(const std::string& filename);
+		lucy::Mesh* GetByFilepath(const std::string& filepath);
+		lucy::Mesh* GetByFilepathAndName(const std::string& filepath, const std::string& name);
 		lucy::Mesh* GetByName(const std::string& name);
 	};
 }

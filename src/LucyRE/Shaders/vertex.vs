@@ -24,7 +24,7 @@ out vec3 frag_pos;
 out vec3 view_pos;
 
 void main() {
-	normal = mat3(transpose(inverse(model))) * v_normal;
+	normal = mat3(transpose(inverse(model))) * normalize(v_normal);
 	color = v_color;
 	tex = v_tex;
 	uvw = v_uvw;

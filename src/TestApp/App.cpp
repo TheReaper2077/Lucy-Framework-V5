@@ -39,7 +39,7 @@ void InitializeApp() {
 		lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
 
 		tag.name = "Mesh Entity";
-		meshrenderer.mesh_id = meshregistry.GetMeshID(meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\cube.obj"));
+		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
 	}
 }
 

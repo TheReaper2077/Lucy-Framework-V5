@@ -8,8 +8,7 @@ static auto& editor_state = registry.store<lucy::EditorState>();
 
 void lucy::Editor::Initialize() {
 	engine_state.render_to_screen = false;
-
-	editor_state.enable_viewports = true;
+	editor_state.enable_viewports = false;
 
 	auto& window = registry.store<Window>();
 

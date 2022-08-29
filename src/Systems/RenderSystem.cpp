@@ -55,20 +55,22 @@ namespace lucy {
 	void Render() {
 		lre::SetModel(glm::mat4(1.0f));
 
-		auto* shader = lre::GetShader("normal");
+		auto* shader = lre::GetShader("phong");
 		shader->Bind();
 
-		for (auto [entity, transform, meshrenderer]: registry.view<Transform, MeshRenderer>().each()) {
-			auto* mesh = meshregistry.GetByID(meshrenderer.mesh_id);
+		shader->SetUniformVec4("light_color", &glm::vec4(1, 1, 1, 1)[0]);
+		shader->SetUniformVec3("light_dir", &glm::vec4(1, 1, 0, 0)[0]);
+		shader->SetUniformVec3("light_pos", &glm::vec4(3, 3, 3, 0)[0]);
 
-			if (mesh != nullptr) {
+		for (auto [entity, transform, meshrenderer]: registry.view<Transform, MeshRenderer>().each()) {
+			if (meshrenderer.mesh != nullptr) {
 				lre::SetModel(transform.GetModelMatrix());
 
-				mesh->vertexarray->Bind();
-				mesh->vertexarray->BindVertexBuffer(mesh->vertexbuffer, mesh->vertexarray->stride);
-				mesh->vertexarray->BindIndexBuffer(mesh->indexbuffer);
+				meshrenderer.mesh->vertexarray->Bind();
+				meshrenderer.mesh->vertexarray->BindVertexBuffer(meshrenderer.mesh->vertexbuffer, meshrenderer.mesh->vertexarray->stride);
+				meshrenderer.mesh->vertexarray->BindIndexBuffer(meshrenderer.mesh->indexbuffer);
 
-				lgl::DrawIndexed(lgl::TRIANGLE, mesh->indexcount, lgl::UNSIGNED_INT, nullptr);
+				lgl::DrawIndexed(lgl::TRIANGLE, meshrenderer.mesh->indexcount, lgl::UNSIGNED_INT, nullptr);
 			}
 		}
 	}

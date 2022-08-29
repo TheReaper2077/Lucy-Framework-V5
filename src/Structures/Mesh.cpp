@@ -27,27 +27,23 @@ lucy::Mesh::Mesh(aiMesh* ai_mesh) {
 
 	if (stride == 0) return;
 
-	float* vertices = (float*)malloc(vertexcount * stride * sizeof(float));
+	float* vertices = new float[vertexcount * stride * sizeof(float)];
 
 	for (int i = 0; i < vertexcount; i++) {
 		if (offset[lre::Vertex::position] >= 0) {
 			*(glm::vec3*)(&vertices[i * stride + offset[lre::Vertex::position]]) = *(glm::vec3*)(&ai_mesh->mVertices[i]);
-			// std::cout << glm::to_string(*(glm::vec3*)(&vertices[i * stride + offset[lre::Vertex::position]])) << '\n';
 		}
 
 		if (offset[lre::Vertex::normal] >= 0) {
 			*(glm::vec3*)(&vertices[i * stride + offset[lre::Vertex::normal]]) = *(glm::vec3*)(&ai_mesh->mNormals[i]);
-			// std::cout << glm::to_string(*(glm::vec3*)(&vertices[i * stride + offset[lre::Vertex::normal]])) << '\n';
 		}
 		
 		if (offset[lre::Vertex::color] >= 0) {
 			*(glm::vec4*)(&vertices[i * stride + offset[lre::Vertex::color]]) = *(glm::vec4*)(&ai_mesh->mColors[0][i]);
-			// std::cout << glm::to_string(*(glm::vec4*)(&vertices[i * stride + offset[lre::Vertex::color]])) << '\n';
 		}
 
 		if (offset[lre::Vertex::uv] >= 0) {
 			*(glm::vec2*)(&vertices[i * stride + offset[lre::Vertex::uv]]) = *(glm::vec2*)(&ai_mesh->mTextureCoords[0][i]);
-			// std::cout << glm::to_string(*(glm::vec2*)(&vertices[i * stride + offset[lre::Vertex::uv]])) << '\n';
 		}
 	}
 
@@ -79,5 +75,5 @@ lucy::Mesh::Mesh(aiMesh* ai_mesh) {
 	vertexbuffer->Allocate(vertexcount * stride * sizeof(float));
 	vertexbuffer->AddDataDynamic(vertices, vertexcount * stride * sizeof(float));
 
-	free(vertices);
+	delete[] vertices;
 }

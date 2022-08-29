@@ -93,6 +93,12 @@ void lre::InitializeMainShaders() {
 	uvw->FragmentShader(SHADER_PATH("uvw.fs"));
 	uvw->Link();
 	self->shader_registry["uvw"] = uvw;
+
+	lgl::Shader* phong = new lgl::Shader();
+	phong->VertexShader(SHADER_PATH("vertex.vs"));
+	phong->FragmentShader(SHADER_PATH("phong.fs"));
+	phong->Link();
+	self->shader_registry["phong"] = phong;
 }
 
 void lre::SetFrameBuffer(lgl::FrameBuffer* framebuffer) {

@@ -18,6 +18,10 @@ namespace lucy {
 	public:
 		static void Initialize();
 
+		static lgl::Texture* CreateTexture();
+		static Mesh* CreateMesh();
+		static Material* CreateMaterial();
+
 		static void LoadMesh(std::string filename);
 		static void LoadMaterial(std::string filename);
 	};

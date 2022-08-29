@@ -1,11 +1,13 @@
 #pragma once
 
 #include <string>
+#include "Mesh.h"
+#include "Material.h"
 
 namespace lucy {
 	struct MeshRenderer {
-		std::string mesh_id;
-		std::string material_id;
+		Mesh* mesh = nullptr;
+		Material* material = nullptr;
 
 		bool visible = true;
 		bool enable_lighting = false;

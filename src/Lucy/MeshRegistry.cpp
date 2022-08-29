@@ -31,6 +31,15 @@ lucy::Mesh* lucy::MeshRegistry::GetByFilepath(const std::string& filepath) {
 	return nullptr;
 }
 
+lucy::Mesh* lucy::MeshRegistry::GetByFilepathAndName(const std::string& filepath, const std::string& name) {
+	for (auto& pair: mesh_store) {
+		if (pair.second.filepath == filepath && pair.second.name == name)
+			return pair.second.mesh;
+	}
+
+	return nullptr;
+}
+
 lucy::Mesh* lucy::MeshRegistry::GetByName(const std::string& name) {
 	for (auto& pair: mesh_store) {
 		if (pair.second.name == name)
