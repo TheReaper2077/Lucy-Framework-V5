@@ -1,21 +1,21 @@
 #include "MeshRegistry.h"
 
-void lucy::MeshRegistry::Add(Mesh* mesh, const std::string& name, const std::string& filepath, const std::string& id) {
+void lucy::MeshRegistry::Add(Mesh* mesh, const std::string& name, const std::string& filepath, const LUTIL_UUID& id) {
 	assert(mesh_store.find(id) == mesh_store.end());
 
 	mesh_store[id] = { mesh, name, filepath };
 }
 
-const std::string& lucy::MeshRegistry::GetMeshID(Mesh* mesh) {
+const LUTIL_UUID& lucy::MeshRegistry::GetMeshID(Mesh* mesh) {
 	for (auto& pair: mesh_store) {
 		if (pair.second.mesh == mesh)
 			return pair.first;
 	}
 
-	return "";
+	return LUTIL_NULL_UUID;
 }
 
-lucy::Mesh* lucy::MeshRegistry::GetByID(const std::string& id) {
+lucy::Mesh* lucy::MeshRegistry::GetByID(const LUTIL_UUID& id) {
 	if (mesh_store.find(id) == mesh_store.end())
 		return nullptr;
 

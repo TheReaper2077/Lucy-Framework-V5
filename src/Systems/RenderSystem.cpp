@@ -6,8 +6,6 @@
 #include <Lucy/MeshRegistry.h>
 
 static auto& registry = lucy::Registry::Instance();
-static auto& window = registry.store<lucy::Window>();
-static auto& meshregistry = registry.store<lucy::MeshRegistry>();
 
 // void Test() {
 // 	lre::Vertex::P1N1 test_vertices[] = {
@@ -77,6 +75,8 @@ namespace lucy {
 }
 
 void lucy::System::RenderSystem() {
+	auto& window = registry.store<lucy::Window>();
+
 	if (window.framebuffer == nullptr) {
 		window.framebuffer = new lgl::FrameBuffer(window.size.x, window.size.y, false);
 	}

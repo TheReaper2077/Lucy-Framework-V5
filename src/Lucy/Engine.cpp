@@ -13,7 +13,6 @@
 #include "AssetLoader.h"
 
 static auto& registry = lucy::Registry::Instance();
-static auto& window = registry.store<lucy::Window>();
 
 void lucy::Engine::Initialize() {
 	auto null_entity = registry.create();
@@ -58,12 +57,7 @@ void lucy::Engine::Mainloop() {
 
 void lucy::Engine::ShutDown() {
 	lre::Destroy();
-
-	if (window.framebuffer != nullptr) {
-		delete window.framebuffer;
-		window.framebuffer = nullptr;
-	}
-
+	registry.store<Window>().Destroy();
 	registry.clear();
 }
 

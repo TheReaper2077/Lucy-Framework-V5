@@ -34,6 +34,11 @@ void lucy::Window::SwapWindow() {
 }
 
 void lucy::Window::Destroy() {
+	if (framebuffer != nullptr) {
+		delete framebuffer;
+		framebuffer = nullptr;
+	}
+
 	SDL_DestroyWindow(sdl_window);
 }
 

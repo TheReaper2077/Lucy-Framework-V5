@@ -4,12 +4,12 @@
 #include "EditorState.h"
 
 static auto& registry = lucy::Registry::Instance();
-static auto& window = registry.store<lucy::Window>();
-static auto& editor_state = registry.store<lucy::EditorState>();
-static auto& engine_state = registry.store<lucy::State>();
 
 namespace lucy {
 	void EditorPanel() {
+		auto& editor_state = registry.store<lucy::EditorState>();
+		auto& window = registry.store<lucy::Window>();
+
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0.0f, 0.0f });
 
 		ImGui::Begin("Editor");
@@ -38,6 +38,9 @@ namespace lucy {
 	}
 
 	void GamePanel() {
+		auto& editor_state = registry.store<lucy::EditorState>();
+		auto& window = registry.store<lucy::Window>();
+
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0.0f, 0.0f });
 
 		ImGui::Begin(window.title.c_str());
@@ -66,11 +69,14 @@ namespace lucy {
 	}
 
 	void InspectorPanel() {
-
+		
 	}
 }
 
 void lucy::System::EditorSystem() {
+	auto& editor_state = registry.store<lucy::EditorState>();
+	auto& engine_state = registry.store<lucy::State>();
+	
 	engine_state.render_to_screen = false;
 
 	if (editor_state.camera_entity == (Entity)0) {

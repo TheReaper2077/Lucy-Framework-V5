@@ -7,7 +7,6 @@
 #include <vector>
 #include <LucyGL/LucyGL.h>
 #include <glm/glm.hpp>
-#include <Lucy/UUID.h>
 
 namespace lucy {
 	struct Model {

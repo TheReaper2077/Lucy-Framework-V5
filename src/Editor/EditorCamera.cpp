@@ -4,7 +4,6 @@
 #include <iostream>
 
 static auto& registry = lucy::Registry::Instance();
-static auto& state = registry.store<lucy::EditorState>();
 static bool toggle = false;
 static float scrollspeed = .75;
 
@@ -18,6 +17,8 @@ static float last_height, last_width;
 // std::unordered_map<lucy::Entity, Info> camera_info_map;
 
 void lucy::EditorCameraUpdate(Entity entity, Transform& transform, Camera& camera) {
+	auto& state = registry.store<lucy::EditorState>();
+
 	auto norm_cursor_pos = Events::GetCursorPosNormalized(0, 0, camera.width, camera.height);
 	auto cursor_pos = Events::GetCursorPos();
 

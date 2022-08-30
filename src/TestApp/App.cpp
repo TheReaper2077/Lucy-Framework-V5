@@ -7,12 +7,14 @@
 #include <Lucy/Events.h>
 #include <Lucy/MeshRegistry.h>
 #include <iostream>
+#include <LucyUtil/LucyUtil.h>
 
 static auto& registry = lucy::Registry::Instance();
-static auto& meshregistry = registry.store<lucy::MeshRegistry>();
 lucy::Entity camera_entity;
 
 void InitializeApp() {
+	auto& meshregistry = registry.store<lucy::MeshRegistry>();
+
 	{
 		// camera_entity = registry.create();
 
@@ -36,10 +38,10 @@ void InitializeApp() {
 		auto& transform = registry.emplace<lucy::Transform>(entity);
 		auto& meshrenderer = registry.emplace<lucy::MeshRenderer>(entity);
 
-		lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
+		lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\flat_ico.obj");
 
 		tag.name = "Mesh Entity";
-		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
+		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\flat_ico.obj");
 	}
 }
 

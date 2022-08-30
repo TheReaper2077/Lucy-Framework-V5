@@ -3,10 +3,11 @@
 #include <Lucy/Lucy.h>
 
 static auto& registry = lucy::Registry::Instance();
-static auto& engine_state = registry.store<lucy::State>();
-static auto& editor_state = registry.store<lucy::EditorState>();
 
 void lucy::Editor::Initialize() {
+	auto& engine_state = registry.store<lucy::State>();
+	auto& editor_state = registry.store<lucy::EditorState>();
+
 	engine_state.render_to_screen = false;
 	editor_state.enable_viewports = false;
 
@@ -37,11 +38,12 @@ void lucy::Editor::Initialize() {
 }
 
 void lucy::Editor::RenderBegin() {
+	auto& editor_state = registry.store<lucy::EditorState>();
+	auto& window = registry.store<Window>();
+
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
-
-	auto& window = registry.store<Window>();
 
 	// Screen
 	{
@@ -75,6 +77,7 @@ void lucy::Editor::RenderBegin() {
 }
 
 void lucy::Editor::RenderEnd() {
+	auto& editor_state = registry.store<lucy::EditorState>();
 	auto& window = registry.store<Window>();
 	auto& events = registry.store<Events>();
 

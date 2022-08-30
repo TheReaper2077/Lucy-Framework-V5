@@ -5,8 +5,6 @@
 #include <Structures/Structures.h>
 
 static auto& registry = lucy::Registry::Instance();
-static auto& window = registry.store<lucy::Window>();
-static auto& state = registry.store<lucy::State>();
 static bool toggle = false;
 static float scrollspeed = .75;
 

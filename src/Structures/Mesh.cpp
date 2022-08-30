@@ -12,7 +12,7 @@ lucy::Mesh::~Mesh() {
 lucy::Mesh::Mesh(aiMesh* ai_mesh) {
 	vertexcount = ai_mesh->mNumVertices;
 
-	uint64_t flag = 0;
+	uint32_t flag = 0;
 	if (ai_mesh->HasPositions())
 		flag |= lre::Vertex::position_flag;
 	if (ai_mesh->HasNormals())

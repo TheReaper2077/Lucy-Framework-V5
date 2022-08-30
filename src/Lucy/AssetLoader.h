@@ -2,6 +2,8 @@
 
 #include <string>
 #include <assimp/Importer.hpp>
+#include <LucyGL/LucyGL.h>
+#include <Structures/Structures.h>
 
 namespace lucy {
 	struct AssetLoader {
