@@ -59,7 +59,7 @@ void lre::InitializeMainShaders() {
 	assert(lgl::IsInitialized());
 
 	lgl::Shader* screen = new lgl::Shader();
-	screen->VertexShader(SHADER_PATH("screen.vs"));
+	screen->VertexShader(SHADER_PATH("screen_tex.vs"));
 	screen->FragmentShader(SHADER_PATH("uv.fs"));
 	screen->Link();
 	self->shader_registry["screen"] = screen;
@@ -131,16 +131,33 @@ lgl::Shader* lre::GetShader(std::string name) {
 }
 
 void lre::RenderFrameBufferToScreen(lgl::FrameBuffer* framebuffer, const glm::vec2& size) {
+	// framebuffer->UnBind();
+
+	// screen_shader->Bind();
+
+	// static auto* vertexarray = new lgl::VertexArray({});
+	
+	// vertexarray->Bind();
+
+	// framebuffer->texture->BindUnit(0);
+	// screen_shader->SetUniformi("u_texture", 0);
+
+	// glm::vec2 res_uv = { framebuffer->width / window_size.x, framebuffer->height / window_size.y };
+	// screen_shader->SetUniformVec2("res_uv", &res_uv[0]);
+
+	// lgl::Draw(lgl::TRIANGLE, 0, 6);
+
+	// screen_shader->UnBind();
+	framebuffer->UnBind();
 	auto* shader = GetShader("screen");
 
 	shader->Bind();
-	shader->SetUniformVec2("res_uv", &size[0]);
+	std::cout << shader->SetUniformVec2("res_uv", &size[0]) << '\n';
+	std::cout << shader->SetUniformi("u_texture", 0) << '\n';
 
 	framebuffer->texture->BindUnit(0);
-	shader->SetUniformi("u_texture", 0);
 
-	auto* vertexarray = Vertex::NullVertex::VertexArray();
-
+	static auto* vertexarray = new lgl::VertexArray({});
 	vertexarray->Bind();
 
 	lgl::Draw(lgl::TRIANGLE, 0, 6);
