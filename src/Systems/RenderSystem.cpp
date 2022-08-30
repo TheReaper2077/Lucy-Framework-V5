@@ -83,8 +83,10 @@ void lucy::System::RenderSystem() {
 		window.framebuffer = new lgl::FrameBuffer(window.size.x, window.size.y, false);
 	}
 
-	lre::Clear({ 0, 0, 0, 1}, lgl::COLOR_BUFFER_BIT);
-	lgl::Viewport(0, 0, window.pos.x, window.pos.y);
+	int w = 0, h = 0;
+	lre::Clear({ 0, 0, 0, 1}, lgl::COLOR_BUFFER_BIT | lgl::DEPTH_BUFFER_BIT);
+	SDL_GetWindowSize(window.sdl_window, &w, &h);
+	lgl::Viewport(0, 0, w, h);
 
 	for (auto [entity, transform, camera]: registry.view<Transform, Camera>().each()) {
 		if (!camera.enable || camera.framebuffer == nullptr) continue;

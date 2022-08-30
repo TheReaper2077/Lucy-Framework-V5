@@ -5,8 +5,6 @@
 #include <Structures/Structures.h>
 
 static auto& registry = lucy::Registry::Instance();
-static bool toggle = false;
-static float scrollspeed = .75;
 
 void lucy::System::CameraSystem() {
 	auto& engine_state = registry.store<lucy::State>();
@@ -18,6 +16,8 @@ void lucy::System::CameraSystem() {
 		if (entity == engine_state.camera_entity) {
 			camera.width = window.size.x;
 			camera.height = window.size.y;
+			camera.posx = window.pos.x;
+			camera.posy = window.pos.y;
 
 			camera.framebuffer = window.framebuffer;
 		}

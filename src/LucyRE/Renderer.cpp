@@ -131,29 +131,13 @@ lgl::Shader* lre::GetShader(std::string name) {
 }
 
 void lre::RenderFrameBufferToScreen(lgl::FrameBuffer* framebuffer, const glm::vec2& size) {
-	// framebuffer->UnBind();
-
-	// screen_shader->Bind();
-
-	// static auto* vertexarray = new lgl::VertexArray({});
-	
-	// vertexarray->Bind();
-
-	// framebuffer->texture->BindUnit(0);
-	// screen_shader->SetUniformi("u_texture", 0);
-
-	// glm::vec2 res_uv = { framebuffer->width / window_size.x, framebuffer->height / window_size.y };
-	// screen_shader->SetUniformVec2("res_uv", &res_uv[0]);
-
-	// lgl::Draw(lgl::TRIANGLE, 0, 6);
-
-	// screen_shader->UnBind();
 	framebuffer->UnBind();
 	auto* shader = GetShader("screen");
 
 	shader->Bind();
-	std::cout << shader->SetUniformVec2("res_uv", &size[0]) << '\n';
-	std::cout << shader->SetUniformi("u_texture", 0) << '\n';
+	glm::vec2 res_uv = { framebuffer->width / size.x, framebuffer->height / size.y };
+	shader->SetUniformVec2("res_uv", &res_uv[0]);
+	shader->SetUniformi("u_texture", 0);
 
 	framebuffer->texture->BindUnit(0);
 

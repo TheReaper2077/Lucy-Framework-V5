@@ -1,25 +1,38 @@
 #include <Lucy/Lucy.h>
 #include "EditorCamera.h"
-#include "EditorState.h"
 #include <iostream>
 
 static auto& registry = lucy::Registry::Instance();
-static bool toggle = false;
-static float scrollspeed = .75;
 
-std::unordered_map<lucy::Entity, glm::vec2> camera_last;
+struct CameraInfo {
+	glm::vec2 size = { 0, 0 };
+	float scrollspeed = 0.75 * 3;
+	bool toggle = false;
+	
+	glm::vec3 delta;
+	glm::vec3 initpos;
+};
+
+std::unordered_map<lucy::Entity, CameraInfo> camera_last;
 
 void lucy::EditorCameraUpdate(Entity entity, Transform& transform, Camera& camera) {
 	auto norm_cursor_pos = Events::GetCursorPosNormalized(0, 0, camera.width, camera.height);
 	auto cursor_pos = Events::GetCursorPos();
 
 	if (camera_last.find(entity) == camera_last.end()) {
-		camera_last[entity] = { 0, 0 };
+		camera_last[entity] = {};
 	}
 
-	if (camera.width != camera_last[entity].x || camera.height != camera_last[entity].y) {
-		camera_last[entity].x = camera.width;
-		camera_last[entity].y = camera.height;
+	auto& last_size = camera_last[entity].size;
+	auto& scrollspeed = camera_last[entity].scrollspeed;
+	auto& toggle = camera_last[entity].toggle;
+
+	auto& delta = camera_last[entity].delta;
+	auto& initpos = camera_last[entity].initpos;
+
+	if (camera.width != last_size.x || camera.height != last_size.y) {
+		last_size.x = camera.width;
+		last_size.y = camera.height;
 
 		camera.lastx = camera.width / 2;
 		camera.lasty = camera.height / 2;
@@ -28,6 +41,14 @@ void lucy::EditorCameraUpdate(Entity entity, Transform& transform, Camera& camer
 
 		camera.projection = glm::perspective(glm::radians(camera.fov), (float)camera.width / camera.height, camera.c_near, camera.c_far);
 	}
+
+	// if (camera.posx > cursor_pos.x || camera.posx < cursor_pos.x + camera.width || camera.posy > cursor_pos.y || camera.posy < cursor_pos.y + camera.height)
+	// 	return;
+	// if (cursor_pos.x > camera.posx && cursor_pos.x < camera.posx + camera.width && cursor_pos.y > camera.posy && cursor_pos.y < camera.posy + camera.height) {
+
+	// } else {
+	// 	return;
+	// }
 
 	if (Events::IsButtonPressed(SDL_BUTTON_MIDDLE)) {
 		if (camera.first_mouse) {
@@ -58,9 +79,6 @@ void lucy::EditorCameraUpdate(Entity entity, Transform& transform, Camera& camer
 	float distance = glm::length(camera.position);
 	scrollspeed = distance / 10;
 	camera.position = distance * -camera.front;
-
-	static glm::vec3 delta;
-	static glm::vec3 initpos;
 
 	if (Events::IsButtonPressed(SDL_BUTTON_LEFT) && Events::IsKeyPressed(SDL_SCANCODE_LALT)) {
 		glm::vec4 ray_clip = glm::vec4(norm_cursor_pos.x, norm_cursor_pos.y, -1.0, 1.0);

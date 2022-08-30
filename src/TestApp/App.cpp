@@ -24,12 +24,12 @@ void InitializeApp() {
 		auto& transform = registry.emplace<lucy::Transform>(camera_entity);
 		auto& camera = registry.emplace<lucy::Camera>(camera_entity);
 
-		tag.name = "Camera Entity";
+		tag.name = "Game Camera";
 
 		camera.enable = true;
 		camera.view = glm::mat4(1.0f);
-		camera.clear_color = { 1, 1, 0, 1 };
-		camera.position = { 0, 0, 10 };
+		camera.clear_color = { 0, 0, 0, 1 };
+		camera.position = { 0, 0, 50 };
 		camera.update = lucy::EditorCameraUpdate;
 
 		engine_state.camera_entity = camera_entity;
@@ -42,7 +42,7 @@ void InitializeApp() {
 
 		lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\flat_ico.obj");
 
-		tag.name = "Mesh Entity";
+		tag.name = "Sphere";
 		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\flat_ico.obj");
 	}
 	{
@@ -56,7 +56,7 @@ void InitializeApp() {
 
 		lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
 
-		tag.name = "Mesh Entity";
+		tag.name = "Cube";
 		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
 	}
 }

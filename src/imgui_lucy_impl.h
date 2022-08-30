@@ -1,11 +1,16 @@
 #pragma once
 
+// #define USE_IMGUI_API
+
 #include <vector>
+#include <implot.h>
+#include <implot_internal.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 #include <imgui_stdlib.h>
 #include <imgui_internal.h>
+#include <ImGuizmo.h>
 
 namespace ImGui {
 	void SanitisedInputText(const char* label, std::string& text);

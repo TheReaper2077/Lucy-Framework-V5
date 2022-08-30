@@ -1,4 +1,6 @@
 #include "Transform.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
 
 glm::mat4 lucy::Transform::GetTranslationMatrix() {
 	if (!use_translation_matrix)
@@ -20,7 +22,7 @@ glm::quat lucy::Transform::GetRotationQuat() {
 
 glm::mat4 lucy::Transform::GetRotationMatrix() {
 	if (!use_rotation_matrix)
-		rotation_matrix = glm::mat4_cast(glm::conjugate(GetRotationQuat()));
+		rotation_matrix = glm::toMat4(GetRotationQuat());
 	return rotation_matrix;
 }
 

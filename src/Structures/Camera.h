@@ -26,6 +26,7 @@ namespace lucy {
 		uint32_t clear_flags = lgl::COLOR_BUFFER_BIT | lgl::DEPTH_BUFFER_BIT;
 
 		int width, height;
+		int posx, posy;
 		int lastx, lasty;
 		bool first_mouse = true;
 		float fov = 45;

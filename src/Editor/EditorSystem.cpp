@@ -28,8 +28,9 @@ void lucy::System::EditorSystem() {
 		camera.update = EditorCameraUpdate;
 	}
 
+	Panel::GamePanel();
+	Panel::HeirarchyPanel();
+	Panel::InspectorPanel();
+	Panel::StatusPanel();
 	Panel::EditorPanel();
-	// Panel::HeirarchyPanel();
-	// Panel::InspectorPanel();
-	// Panel::StatusPanel();
 }
