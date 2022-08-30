@@ -10,3 +10,4 @@
 #include "Mesh.h"
 #include "MeshBuilder.h"
 #include "Material.h"
+#include "RenderTarget.h"

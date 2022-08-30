@@ -13,14 +13,15 @@ int main(int argcount, char** args) {
 	lucy::Engine::AddRuntimeSystem(lucy::MainSystems);
 
 	// Editor
-	lucy::Engine::AddInitializationSystem(lucy::Editor::Initialize);
-	lucy::Engine::AddRuntimeSystem(lucy::Editor::Update);
-	lucy::Editor::AddLayer(lucy::System::EditorSystem);
+	// lucy::Engine::AddInitializationSystem(lucy::Editor::Initialize);
+	// lucy::Engine::AddRuntimeSystem(lucy::Editor::Update);
+
+	// lucy::Editor::AddLayer(lucy::System::EditorSystem);
 
 	lucy::Engine::Initialize();
 	lucy::Engine::Mainloop();
 
-	lucy::Editor::ShutDown();
+	// lucy::Editor::ShutDown();
 	lucy::Engine::ShutDown();
 
 	return 0;

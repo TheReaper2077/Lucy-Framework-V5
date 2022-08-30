@@ -7,33 +7,19 @@ static auto& registry = lucy::Registry::Instance();
 static bool toggle = false;
 static float scrollspeed = .75;
 
-static float last_height, last_width;
-
-// struct Info {
-// 	bool toggle = false;
-// 	float scrollspeed = 0.75;
-// };
-
-// std::unordered_map<lucy::Entity, Info> camera_info_map;
+std::unordered_map<lucy::Entity, glm::vec2> camera_last;
 
 void lucy::EditorCameraUpdate(Entity entity, Transform& transform, Camera& camera) {
-	auto& state = registry.store<lucy::EditorState>();
-
 	auto norm_cursor_pos = Events::GetCursorPosNormalized(0, 0, camera.width, camera.height);
 	auto cursor_pos = Events::GetCursorPos();
 
-	// if (camera_info_map.find(entity) == camera_info_map.end()) {
-	// 	camera_info_map[entity] = Info{};
-	// }
+	if (camera_last.find(entity) == camera_last.end()) {
+		camera_last[entity] = { 0, 0 };
+	}
 
-	// auto& info = camera_info_map[entity];
-
-	// toggle = info.toggle;
-	// scrollspeed = info.scrollspeed;
-
-	if (camera.width != last_width || camera.height != last_height) {
-		last_width = camera.width;
-		last_height = camera.height;
+	if (camera.width != camera_last[entity].x || camera.height != camera_last[entity].y) {
+		camera_last[entity].x = camera.width;
+		camera_last[entity].y = camera.height;
 
 		camera.lastx = camera.width / 2;
 		camera.lasty = camera.height / 2;

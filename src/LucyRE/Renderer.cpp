@@ -130,6 +130,25 @@ lgl::Shader* lre::GetShader(std::string name) {
 	return self->shader_registry[name];
 }
 
+void lre::RenderFrameBufferToScreen(lgl::FrameBuffer* framebuffer, const glm::vec2& size) {
+	auto* shader = GetShader("screen");
+
+	shader->Bind();
+	shader->SetUniformVec2("res_uv", &size[0]);
+
+	framebuffer->texture->BindUnit(0);
+	shader->SetUniformi("u_texture", 0);
+
+	auto* vertexarray = Vertex::NullVertex::VertexArray();
+
+	vertexarray->Bind();
+
+	lgl::Draw(lgl::TRIANGLE, 0, 6);
+
+	vertexarray->UnBind();
+	shader->UnBind();
+}
+
 void lre::Destroy() {
 	for (auto& pair: self->shader_registry) {
 		delete pair.second;

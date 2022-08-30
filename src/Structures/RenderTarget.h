@@ -3,7 +3,6 @@
 #include <vector>
 #include <LucyGL/LucyGL.h>
 #include <glm/glm.hpp>
-#include <Lucy/UUID.h>
 #include <unordered_map>
 
 namespace lucy {

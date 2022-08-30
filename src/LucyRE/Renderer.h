@@ -49,7 +49,7 @@ namespace lre {
 	void InsertShader(std::string name, lgl::Shader* shader);
 	lgl::Shader* GetShader(std::string name);
 
-	void RenderFrameBufferToScreen(lgl::FrameBuffer* framebuffer);
+	void RenderFrameBufferToScreen(lgl::FrameBuffer* framebuffer, const glm::vec2& size);
 
 	void Destroy();
 }

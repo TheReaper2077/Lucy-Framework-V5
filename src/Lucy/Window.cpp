@@ -1,7 +1,10 @@
 #include "Window.h"
 
 lucy::Window::Window() {
-	size = { 1280, 640 };
+	pos = { 30, 15 };
+	size = { 1920 * .77, 1080 * .77 };
+
+	flags |= SDL_WINDOW_BORDERLESS;
 }
 
 lucy::Window::~Window() {

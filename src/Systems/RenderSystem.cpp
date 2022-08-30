@@ -1,4 +1,5 @@
 #include "RenderSystem.h"
+#include <Lucy/State.h>
 #include <LucyRE/LucyRE.h>
 #include <Lucy/ECS.h>
 #include <iostream>
@@ -75,7 +76,8 @@ namespace lucy {
 }
 
 void lucy::System::RenderSystem() {
-	auto& window = registry.store<lucy::Window>();
+	auto& window = registry.store<Window>();
+	auto& state = registry.store<State>();
 
 	if (window.framebuffer == nullptr) {
 		window.framebuffer = new lgl::FrameBuffer(window.size.x, window.size.y, false);
@@ -99,5 +101,9 @@ void lucy::System::RenderSystem() {
 		Render();
 
 		camera.framebuffer->UnBind();
+
+		if (state.render_to_screen) {
+			lre::RenderFrameBufferToScreen(camera.framebuffer, window.size);
+		}
 	}
 }

@@ -27,14 +27,14 @@ void main() {
 
 	vec3 light_dir = normalize(light_pos - frag_pos);
 	float diffuse = max(dot(light_dir, normal), 0.0);
+	float specular = 0.0;
 
-	vec3 view_dir = normalize(view_pos - frag_pos);
+	if (diffuse != 0.0) {
+		vec3 view_dir = normalize(view_pos - frag_pos);
 
-	// vec3 reflect_dir = reflect(-light_dir, normal);
-	// float specular = pow(max(dot(normal, reflect_dir), 0.0), 8) * specular_lighting;
-
-	vec3 halfway = normalize(view_dir + light_dir);
-	float specular = pow(max(dot(normal, halfway), 0.0), 8) * specular_lighting;
+		vec3 halfway = normalize(view_dir + light_dir);
+		specular = pow(max(dot(normal, halfway), 0.0), 8) * specular_lighting;
+	}
 
 	result = color * light_color * (diffuse + ambient + specular);
 

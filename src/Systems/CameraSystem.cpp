@@ -9,8 +9,18 @@ static bool toggle = false;
 static float scrollspeed = .75;
 
 void lucy::System::CameraSystem() {
+	auto& engine_state = registry.store<lucy::State>();
+	auto& window = registry.store<Window>();
+
 	for (auto [entity, transform, camera]: registry.view<Transform, Camera>().each()) {
 		if (!camera.enable);
+
+		if (entity == engine_state.camera_entity) {
+			camera.width = window.size.x;
+			camera.height = window.size.y;
+
+			camera.framebuffer = window.framebuffer;
+		}
 
 		camera.update(entity, transform, camera);
 	}

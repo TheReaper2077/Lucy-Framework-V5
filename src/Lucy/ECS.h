@@ -30,4 +30,6 @@ namespace lucy {
 			return instance;
 		}
 	};
+
+	#define NULL_ENTITY (lucy::Entity)0
 }

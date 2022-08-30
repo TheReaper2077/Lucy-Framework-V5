@@ -3,6 +3,7 @@
 
 #include <Structures/Structures.h>
 
+#include "State.h"
 #include <iostream>
 #include <assert.h>
 #include <SDL2/SDL.h>
@@ -16,6 +17,7 @@ static auto& registry = lucy::Registry::Instance();
 
 void lucy::Engine::Initialize() {
 	auto null_entity = registry.create();
+	auto& state = registry.store<State>();
 
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -27,6 +29,8 @@ void lucy::Engine::Initialize() {
 	lgl::Initialize(SDL_GL_GetProcAddress);
 	lre::Initialize();
 	AssetLoader::Initialize();
+
+	state.render_to_screen = true;
 }
 
 void lucy::Engine::Mainloop() {
@@ -35,14 +39,32 @@ void lucy::Engine::Mainloop() {
 	}
 
 	while (!Events::IsQuittable()) {
+		auto& state = registry.store<State>();
+
 		const auto& start_time = std::chrono::high_resolution_clock::now();
 
 		Events::Update();
+
+		if (Events::IsKeyChord({ SDL_SCANCODE_LALT, SDL_SCANCODE_F4 })) {
+			Events::IsQuittable() = true;
+		}
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		// glDepthFunc(GL_LEQUAL);
+
+		static double count = 0;
+		static int fps = 0;
+
+		if (count >= 60) {
+			state.fps = fps;
+			count = 0;
+			fps = 0;
+		}
+
+		fps++;
+		count += TimeStep::dt;
 
 		for (auto system_func: self->systems_array) {
 			system_func();
