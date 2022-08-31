@@ -8,9 +8,9 @@ glm::mat4 lucy::Transform::GetTranslationMatrix() {
 	if (!use_translation_matrix) {
 		if (parent_entity != nullptr) {
 			translation_matrix = -glm::translate(glm::mat4(1.0f), glm::normalize(parent_entity->GetRotationQuat() * glm::normalize(translation - parent_entity->translation)) * glm::length(translation - parent_entity->translation));
-		}
-		else
+		} else {
 			translation_matrix = glm::translate(glm::mat4(1.0f), translation);
+		}
 	}
 	return translation_matrix;
 }
