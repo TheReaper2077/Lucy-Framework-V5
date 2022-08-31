@@ -34,6 +34,7 @@ void InitializeApp() {
 
 		engine_state.camera_entity = camera_entity;
 	}
+	lucy::Transform* parent = nullptr;
 	{
 		auto entity = registry.create();
 		auto& tag = registry.emplace<lucy::Tag>(entity);
@@ -45,6 +46,7 @@ void InitializeApp() {
 		tag.name = "Sphere";
 		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\flat_ico.obj");
 		meshrenderer.material = new lucy::Material;
+		parent = &transform;
 	}
 	{
 		auto entity = registry.create();
@@ -52,14 +54,15 @@ void InitializeApp() {
 		auto& transform = registry.emplace<lucy::Transform>(entity);
 		auto& meshrenderer = registry.emplace<lucy::MeshRenderer>(entity);
 
-		transform.translation = { 0, -2, 0};
-		transform.scale = { 100, 1, 100};
+		transform.translation = { 0, -2, 0 };
+		transform.scale = { 1, 1, 1 };
 
 		lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
 
 		tag.name = "Cube";
 		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
 		meshrenderer.material = new lucy::Material;
+		transform.parent_entity = parent;
 	}
 	{
 		auto entity = registry.create();
@@ -67,8 +70,8 @@ void InitializeApp() {
 		auto& transform = registry.emplace<lucy::Transform>(entity);
 		auto& meshrenderer = registry.emplace<lucy::MeshRenderer>(entity);
 
-		transform.translation = { 0, 2, 0};
-		transform.scale = { 1, 1, 1};
+		transform.translation = { 0, 2, 0 };
+		transform.scale = { 1, 1, 1 };
 
 		lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\sphere.obj");
 

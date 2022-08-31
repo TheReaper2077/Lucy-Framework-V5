@@ -1,10 +1,17 @@
 #include "Transform.h"
 #define GLM_ENABLE_EXPERIMENTAL
+#include <iostream>
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 glm::mat4 lucy::Transform::GetTranslationMatrix() {
-	if (!use_translation_matrix)
-		translation_matrix = glm::translate(glm::mat4(1.0f), translation);
+	if (!use_translation_matrix) {
+		if (parent_entity != nullptr) {
+			translation_matrix = -glm::translate(glm::mat4(1.0f), glm::normalize(parent_entity->GetRotationQuat() * glm::normalize(translation - parent_entity->translation)) * glm::length(translation - parent_entity->translation));
+		}
+		else
+			translation_matrix = glm::translate(glm::mat4(1.0f), translation);
+	}
 	return translation_matrix;
 }
 
@@ -15,14 +22,18 @@ glm::mat4 lucy::Transform::GetScaleMatrix() {
 }
 
 glm::quat lucy::Transform::GetRotationQuat() {
-	if (!use_rotation_quat)
+	if (!use_rotation_quat) {
 		rotation_quat = glm::quat(glm::radians(rotation));
+	}
 	return rotation_quat;
 }
 
 glm::mat4 lucy::Transform::GetRotationMatrix() {
-	if (!use_rotation_matrix)
+	if (!use_rotation_matrix) {
 		rotation_matrix = glm::toMat4(GetRotationQuat());
+		if (parent_entity != nullptr)
+			rotation_matrix *= parent_entity->GetRotationMatrix();
+	}
 	return rotation_matrix;
 }
 

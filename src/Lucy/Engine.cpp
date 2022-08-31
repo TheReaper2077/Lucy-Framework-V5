@@ -82,7 +82,7 @@ void lucy::Engine::ShutDown() {
 	registry.store<Window>().Destroy();
 	registry.clear();
 
-	SDL_Quit();
+	// SDL_Quit();
 }
 
 
