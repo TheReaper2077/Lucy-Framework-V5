@@ -3,3 +3,5 @@
 #include "UUID.h"
 #include "FileIO.h"
 #include "SerialIO.h"
+#include "CommandQueue.h"
+#include "UndoStack.h"

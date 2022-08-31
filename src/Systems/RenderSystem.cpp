@@ -57,11 +57,29 @@ namespace lucy {
 		auto* shader = lre::GetShader("phong");
 		shader->Bind();
 
-		shader->SetUniformVec4("light_color", &glm::vec4(1, 1, 1, 1)[0]);
-		shader->SetUniformVec3("light_dir", &glm::vec4(1, 1, 0, 0)[0]);
-		shader->SetUniformVec3("light_pos", &glm::vec4(3, 3, 3, 0)[0]);
+		for (auto [entity, transform, light]: registry.view<Transform, Light>().each()) {
+			glm::vec4 light_pos;
+			if (light.mode == DIRECTIONAL_LIGHT)
+				light_pos = { glm::normalize(transform.GetRotationQuat() * glm::vec3(0, 1, 0)), 0 };
+			if (light.mode == POINT_LIGHT)
+				light_pos = { transform.translation, 1 };
+
+			shader->SetUniformVec4("light.color", &light.color[0]);
+			shader->SetUniformVec4("light.pos", &light_pos[0]);
+			shader->SetUniformf("light.ambient", light.ambient);
+			shader->SetUniformf("light.diffuse", light.diffuse);
+			shader->SetUniformf("light.specular", light.specular);
+
+			break;
+		}
 
 		for (auto [entity, transform, meshrenderer]: registry.view<Transform, MeshRenderer>().each()) {
+			if (meshrenderer.material != nullptr) {
+				shader->SetUniformVec3("material.ambient", &meshrenderer.material->ambient[0]);
+				shader->SetUniformVec3("material.specular", &meshrenderer.material->specular[0]);
+				shader->SetUniformVec3("material.diffuse", &meshrenderer.material->diffuse[0]);
+				shader->SetUniformf("material.shininess", meshrenderer.material->shininess);
+			}
 			if (meshrenderer.mesh != nullptr) {
 				lre::SetModel(transform.GetModelMatrix());
 

@@ -45,10 +45,6 @@ void lucy::Engine::Mainloop() {
 
 		Events::Update();
 
-		if (Events::IsKeyChord({ SDL_SCANCODE_LALT, SDL_SCANCODE_F4 })) {
-			Events::IsQuittable() = true;
-		}
-
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -72,6 +68,10 @@ void lucy::Engine::Mainloop() {
 
 		registry.store<Window>().SwapWindow();
 
+		if (Events::IsKeyChord({ SDL_SCANCODE_LALT, SDL_SCANCODE_F4 })) {
+			Events::IsQuittable() = true;
+		}
+
 		const auto& end_time = std::chrono::high_resolution_clock::now();
 		TimeStep::dt = std::chrono::duration<double, std::ratio<1, 60>>(end_time - start_time).count();
 	}
@@ -81,6 +81,8 @@ void lucy::Engine::ShutDown() {
 	lre::Destroy();
 	registry.store<Window>().Destroy();
 	registry.clear();
+
+	SDL_Quit();
 }
 
 

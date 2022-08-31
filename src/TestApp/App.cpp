@@ -44,6 +44,7 @@ void InitializeApp() {
 
 		tag.name = "Sphere";
 		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\flat_ico.obj");
+		meshrenderer.material = new lucy::Material;
 	}
 	{
 		auto entity = registry.create();
@@ -58,6 +59,30 @@ void InitializeApp() {
 
 		tag.name = "Cube";
 		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
+		meshrenderer.material = new lucy::Material;
+	}
+	{
+		auto entity = registry.create();
+		auto& tag = registry.emplace<lucy::Tag>(entity);
+		auto& transform = registry.emplace<lucy::Transform>(entity);
+		auto& meshrenderer = registry.emplace<lucy::MeshRenderer>(entity);
+
+		transform.translation = { 0, 2, 0};
+		transform.scale = { 1, 1, 1};
+
+		lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\sphere.obj");
+
+		tag.name = "Smooth Sphere";
+		meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\sphere.obj");
+		meshrenderer.material = new lucy::Material;
+	}
+	{
+		auto entity = registry.create();
+		auto& tag = registry.emplace<lucy::Tag>(entity);
+		auto& transform = registry.emplace<lucy::Transform>(entity);
+		auto& light = registry.emplace<lucy::Light>(entity);
+
+		tag.name = "Light Entity";
 	}
 }
 

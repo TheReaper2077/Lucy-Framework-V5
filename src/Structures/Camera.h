@@ -22,7 +22,7 @@ namespace lucy {
 		glm::vec3 world_up = { 0.0, 1.0, 0.0 };
 		glm::vec3 up = world_up;
 
-		glm::vec4 clear_color = { 0, 0, 0, 0 };
+		glm::vec4 clear_color = { 0, 0, 0, 1 };
 		uint32_t clear_flags = lgl::COLOR_BUFFER_BIT | lgl::DEPTH_BUFFER_BIT;
 
 		int width, height;

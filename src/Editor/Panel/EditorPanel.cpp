@@ -48,7 +48,7 @@ void lucy::Panel::EditorPanel() {
 			glm::mat4 model = transform->GetModelMatrix();
 			glm::mat4 delta;
 
-			float snap = 5;
+			float snap = 0;
 			ImGuizmo::Manipulate(&camera.view[0][0], &camera.projection[0][0], ImGuizmo::OPERATION::ROTATE | ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, &model[0][0], &delta[0][0], &snap);
 
 			if (ImGuizmo::IsUsing()) {
