@@ -56,7 +56,8 @@ void lucy::Events::Update() {
 			func(self->event);
 		}
 
-		self->is_quit = (self->event.type == SDL_QUIT);
+		if (self->event.type == SDL_QUIT)
+			self->is_quit = true;
 
 		if (self->event.type == SDL_MOUSEMOTION) {
 			self->relmousepos.x += self->event.motion.xrel;

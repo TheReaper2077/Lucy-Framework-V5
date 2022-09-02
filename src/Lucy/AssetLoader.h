@@ -4,27 +4,40 @@
 #include <assimp/Importer.hpp>
 #include <LucyGL/LucyGL.h>
 #include <Structures/Structures.h>
+#include <unordered_map>
+#include <LucyUtil/LucyUtil.h>
 
 namespace lucy {
-	struct AssetLoader {
+	struct Assets {
 	private:
 		Assimp::Importer* importer = nullptr;
 
 		#define self Instance()
 
-		static AssetLoader* Instance() {
-			static AssetLoader instance;
+		static Assets* Instance() {
+			static Assets instance;
 			return &instance;
 		}
+
+		enum PTR_TYPE {
+			Material,
+			Texture,
+			Mesh,
+
+			PTR_TYPE_COUNT
+		};
+
+		// std::map<LUTIL_UUID, PTR_TYPE> asset_type;
+		// std::vector<LUTIL_UUID, void*> asset_store;
+		// std::unordered_map<std::string, LUTIL_UUID> asset_id_map;
 
 	public:
 		static void Initialize();
 
 		static lgl::Texture* CreateTexture();
-		static Mesh* CreateMesh();
-		static Material* CreateMaterial();
 
-		static void LoadMesh(std::string filename);
+		static void GetLoadedMeshes();
+		static void Load(std::string filename);
 		static void LoadMaterial(std::string filename);
 	};
 }

@@ -24,7 +24,7 @@ void lucy::System::EditorSystem() {
 
 		camera.enable = true;
 		camera.clear_color = { 0, 0, 0, 1 };
-		camera.position = { 0, 0, 10 };
+		camera.position = { 0, 0, 50 };
 		camera.update = EditorCameraUpdate;
 	}
 

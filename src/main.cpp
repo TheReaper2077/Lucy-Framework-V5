@@ -3,6 +3,9 @@
 #include <TestApp/App.h>
 #include <Editor/Editor.h>
 #include <Editor/EditorSystem.h>
+#include <vector>
+#include <array>
+#include <map>
 
 int main(int argcount, char** args) {
 	// App

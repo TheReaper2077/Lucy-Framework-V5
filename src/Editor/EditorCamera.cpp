@@ -42,8 +42,8 @@ void lucy::EditorCameraUpdate(Entity entity, Transform& transform, Camera& camer
 		camera.projection = glm::perspective(glm::radians(camera.fov), (float)camera.width / camera.height, camera.c_near, camera.c_far);
 	}
 
-	// if (camera.posx > cursor_pos.x || camera.posx < cursor_pos.x + camera.width || camera.posy > cursor_pos.y || camera.posy < cursor_pos.y + camera.height)
-	// 	return;
+	if (camera.posx > cursor_pos.x || camera.posx + camera.width < cursor_pos.x || camera.posy > cursor_pos.y || camera.posy + camera.height < cursor_pos.y)
+		return;
 	// if (cursor_pos.x > camera.posx && cursor_pos.x < camera.posx + camera.width && cursor_pos.y > camera.posy && cursor_pos.y < camera.posy + camera.height) {
 
 	// } else {

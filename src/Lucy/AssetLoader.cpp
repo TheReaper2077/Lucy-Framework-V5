@@ -23,11 +23,11 @@ void process_node(const aiScene* ai_scene, aiNode* ai_node, const std::string& f
 	}
 }
 
-void lucy::AssetLoader::Initialize() {
+void lucy::Assets::Initialize() {
 	self->importer = new Assimp::Importer();
 }
 
-void lucy::AssetLoader::LoadMesh(std::string filename) {
+void lucy::Assets::Load(std::string filename) {
 	const auto* ai_scene = self->importer->ReadFile(filename.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
 
 	assert(ai_scene && !(ai_scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) && ai_scene->mRootNode);

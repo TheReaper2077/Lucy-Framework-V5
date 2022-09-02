@@ -31,7 +31,7 @@ lucy::Mesh::Mesh(aiMesh* ai_mesh) {
 
 	for (int i = 0; i < vertexcount; i++) {
 		if (offset[lre::Vertex::position] >= 0) {
-			*(glm::vec3*)(&vertices[i * stride + offset[lre::Vertex::position]]) = *(glm::vec3*)(&ai_mesh->mVertices[i]);
+			*(glm::vec3*)(&vertices[i * stride + offset[lre::Vertex::position]]) = *(glm::vec3*)(&ai_mesh->mVertices[i]) + glm::vec3(-55.25, -44.0448, -71.6270);
 		}
 
 		if (offset[lre::Vertex::normal] >= 0) {

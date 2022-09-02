@@ -28,7 +28,7 @@ void lucy::Engine::Initialize() {
 
 	lgl::Initialize(SDL_GL_GetProcAddress);
 	lre::Initialize();
-	AssetLoader::Initialize();
+	Assets::Initialize();
 
 	state.render_to_screen = true;
 }
@@ -67,10 +67,6 @@ void lucy::Engine::Mainloop() {
 		}
 
 		registry.store<Window>().SwapWindow();
-
-		if (Events::IsKeyChord({ SDL_SCANCODE_LALT, SDL_SCANCODE_F4 })) {
-			Events::IsQuittable() = true;
-		}
 
 		const auto& end_time = std::chrono::high_resolution_clock::now();
 		TimeStep::dt = std::chrono::duration<double, std::ratio<1, 60>>(end_time - start_time).count();

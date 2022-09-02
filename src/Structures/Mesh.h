@@ -20,5 +20,6 @@ namespace lucy {
 		Mesh() {}
 		~Mesh();
 		Mesh(aiMesh* ai_mesh);
+		void Load(const std::string& filename, const std::string mesh_name);
 	};
 }

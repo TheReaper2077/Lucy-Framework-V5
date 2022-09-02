@@ -19,6 +19,9 @@ namespace lucy {
 
 		lgl::Primitive primitive = lgl::TRIANGLE;
 
-		void Initialize(aiMesh* ai_mesh);
+		Mesh* mesh = nullptr;
+
+		void Load(std::string filename, std::string mesh_name);
+		void Build();
 	};
 }
