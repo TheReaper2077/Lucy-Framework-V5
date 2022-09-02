@@ -26,13 +26,13 @@ uniform Material material;
 
 void main() {
 	// blinn-phong
-	vec4 color = vec4(normal, 1);
-	if (color.x < 0)
-		color.x = -color.x;
-	if (color.y < 0)
-		color.y = -color.y;
-	if (color.z < 0)
-		color.z = -color.z;
+	// vec4 color = vec4(normal, 1);
+	// if (color.x < 0)
+	// 	color.x = -color.x;
+	// if (color.y < 0)
+	// 	color.y = -color.y;
+	// if (color.z < 0)
+	// 	color.z = -color.z;
 
 	vec3 light_dir;
 	if (light.pos.w == 0.0)
@@ -52,5 +52,5 @@ void main() {
 		result += pow(max(dot(normal, halfway), 0.0), material.shininess) * material.specular * light.specular;
 	}
 
-	gl_FragData[0] = light.color * /* vec4(result, 1) */color;
+	gl_FragData[0] = light.color * vec4(result, 1);//color;
 }

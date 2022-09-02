@@ -4,6 +4,14 @@
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
 
+lucy::Mesh::Mesh(const std::string& filename, const std::string& mesh_name) {
+	Load(filename, mesh_name);
+}
+
+lucy::Mesh::Mesh(const std::string& filename, const std::string& mesh_name, const glm::vec3& offset, bool reconstruct_normals) {
+	Load(filename, mesh_name, offset, reconstruct_normals);
+}
+
 lucy::Mesh::~Mesh() {
 	delete vertexbuffer;
 	delete indexbuffer;

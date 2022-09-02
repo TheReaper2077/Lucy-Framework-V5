@@ -17,6 +17,8 @@ namespace lucy {
 		lgl::Primitive primitive = lgl::TRIANGLE;
 
 		Mesh() {}
+		Mesh(const std::string& filename, const std::string& mesh_name);
+		Mesh(const std::string& filename, const std::string& mesh_name, const glm::vec3& offset, bool reconstruct_normals = false);
 		~Mesh();
 
 		void Load(const std::string& filename, const std::string& mesh_name);
