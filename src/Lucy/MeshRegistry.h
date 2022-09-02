@@ -14,11 +14,11 @@ namespace lucy {
 			std::string filepath;
 		};
 
-		std::unordered_map<LUTIL_UUID, MeshContainer> mesh_store;
+		std::unordered_map<UTIL_UUID, MeshContainer> mesh_store;
 
-		void Add(Mesh* mesh, const std::string& name, const std::string& filepath, const LUTIL_UUID& id = LUTIL_GENERATE_UUID);
-		const LUTIL_UUID& GetMeshID(Mesh* mesh);
-		lucy::Mesh* GetByID(const LUTIL_UUID& id);
+		void Add(Mesh* mesh, const std::string& name, const std::string& filepath, const UTIL_UUID& id = UTIL_GENERATE_UUID);
+		const UTIL_UUID& GetMeshID(Mesh* mesh);
+		lucy::Mesh* GetByID(const UTIL_UUID& id);
 		lucy::Mesh* GetByFilepath(const std::string& filepath);
 		lucy::Mesh* GetByFilepathAndName(const std::string& filepath, const std::string& name);
 		lucy::Mesh* GetByName(const std::string& name);

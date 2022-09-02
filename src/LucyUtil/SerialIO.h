@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <tuple>
 
-namespace lutil {
+namespace util::serial {
 	enum {
 		BAUDRATE_110 = 110,
 		BAUDRATE_300 = 300,

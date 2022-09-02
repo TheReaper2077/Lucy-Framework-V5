@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lutil {
+namespace util {
 	class Logger {
 		
 	};

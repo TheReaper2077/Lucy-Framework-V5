@@ -6,7 +6,7 @@
 #include <assimp/scene.h>
 #include <assert.h>
 
-lutil::TYPE_MESH LoadMesh(aiMesh* ai_mesh);
+util::TYPE_MESH LoadMesh(aiMesh* ai_mesh);
 
 #define ai_importer ImporterInstance()
 static Assimp::Importer* ImporterInstance() {
@@ -16,7 +16,7 @@ static Assimp::Importer* ImporterInstance() {
 	return instance;
 }
 
-lutil::TYPE_MESH lutil::LoadMesh(const std::string& filename, const std::string& mesh_name) {
+util::TYPE_MESH util::LoadMesh(const std::string& filename, const std::string& mesh_name) {
 	const auto* ai_scene = ai_importer->ReadFile(filename.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
 
 	if (!(ai_scene && !(ai_scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) && ai_scene->mRootNode)) {
@@ -36,57 +36,57 @@ lutil::TYPE_MESH lutil::LoadMesh(const std::string& filename, const std::string&
 	}
 
 
-	auto tmp = LoadMesh(ai_mesh);
+	const auto& tmp = LoadMesh(ai_mesh);
 
 	ai_importer->FreeScene();
 
 	return tmp;
 }
 
-inline lutil::TYPE_MESH LoadMesh(aiMesh* ai_mesh) {
+inline util::TYPE_MESH LoadMesh(aiMesh* ai_mesh) {
 	int indexcount = 0;
 	int vertexcount = ai_mesh->mNumVertices;
 
-	lutil::position_array* position_array = nullptr;
-	lutil::normal_array* normal_array = nullptr;
-	lutil::color_2d_array* color_array = nullptr;
-	lutil::uv_2d_array* uv_array = nullptr;
-	lutil::uvw_2d_array* uvw_array = nullptr;
+	util::position_array* position_array = nullptr;
+	util::normal_array* normal_array = nullptr;
+	util::color_2d_array* color_array = nullptr;
+	util::uv_2d_array* uv_array = nullptr;
+	util::uvw_2d_array* uvw_array = nullptr;
 	uint32_t* indices = nullptr;
 
 	if (vertexcount > 0) {
 		if (ai_mesh->HasPositions())
-			position_array = new lutil::position_array[vertexcount];
+			position_array = new util::position_array[vertexcount];
 		if (ai_mesh->HasNormals())
-			normal_array = new lutil::normal_array[vertexcount];
+			normal_array = new util::normal_array[vertexcount];
 
 		for (int i = 0; i < ai_mesh->GetNumColorChannels(); i++) {
 			if (color_array == nullptr)
-				color_array = new lutil::color_2d_array[AI_MAX_NUMBER_OF_COLOR_SETS];
+				color_array = new util::color_2d_array[AI_MAX_NUMBER_OF_COLOR_SETS];
 
-			color_array[i] = new lutil::color_array[vertexcount];
+			color_array[i] = new util::color_array[vertexcount];
 		}
 
 		for (int i = 0; i < 8; i++) {
 			if (ai_mesh->mNumUVComponents[i] == 2) {
 				if (uv_array == nullptr) {
-					uv_array = new lutil::uv_2d_array[8];
+					uv_array = new util::uv_2d_array[8];
 
 					for (int idx = 0; idx < 8; idx++)
 						uv_array[idx] = nullptr;
 				}
 
-				uv_array[i] = new lutil::uv_array[vertexcount];
+				uv_array[i] = new util::uv_array[vertexcount];
 			}
 			if (ai_mesh->mNumUVComponents[i] == 3) {
 				if (uvw_array == nullptr) {
-					uvw_array = new lutil::uvw_2d_array[8];
+					uvw_array = new util::uvw_2d_array[8];
 
 					for (int idx = 0; idx < 8; idx++)
 						uvw_array[idx] = nullptr;
 				}
 
-				uvw_array[i] = new lutil::uvw_array[vertexcount];
+				uvw_array[i] = new util::uvw_array[vertexcount];
 			}
 		}
 
@@ -133,4 +133,57 @@ inline lutil::TYPE_MESH LoadMesh(aiMesh* ai_mesh) {
 	}
 
 	return { vertexcount, position_array, normal_array, color_array, uv_array, uvw_array, indexcount, indices };
+}
+
+void util::Free(TYPE_MESH& mesh) {
+	auto& [vertexcount, position_array, normal_array, color_array, uv_array, uvw_array, indexcount, indices] = mesh;
+
+	if (position_array != nullptr) {
+		delete[] position_array;
+		position_array = nullptr;
+	}
+	if (normal_array != nullptr) {
+		delete[] normal_array;
+		normal_array = nullptr;
+	}
+	if (color_array != nullptr) {
+		for (int i = 0; i < 8; i++) {
+			if (color_array[i] != nullptr) {
+				delete[] color_array[i];
+				color_array[i] = nullptr;
+			}
+		}
+
+		delete[] color_array;
+		color_array = nullptr;
+	}
+	if (uv_array != nullptr) {
+		for (int i = 0; i < 8; i++) {
+			if (uv_array[i] != nullptr) {
+				delete[] uv_array[i];
+				uv_array[i] = nullptr;
+			}
+		}
+
+		delete[] uv_array;
+		uv_array = nullptr;
+	}
+	if (uvw_array != nullptr) {
+		for (int i = 0; i < 8; i++) {
+			if (uvw_array[i] != nullptr) {
+				delete[] uvw_array[i];
+				uvw_array[i] = nullptr;
+			}
+		}
+
+		delete[] uvw_array;
+		uvw_array = nullptr;
+	}
+	if (indices != nullptr) {
+		delete[] indices;
+		indices = nullptr;
+	}
+
+	vertexcount = 0;
+	indexcount = 0;
 }

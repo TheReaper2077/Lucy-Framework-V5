@@ -19,7 +19,7 @@ static SerialIOContext* context = nullptr;
 
 #define self (context)
 
-bool lutil::connect_port(const char* port, uint32_t baudrate) {
+bool util::serial::connect_port(const char* port, uint32_t baudrate) {
 	if (self != nullptr)
 		disconnect_port();
 
@@ -66,7 +66,7 @@ bool lutil::connect_port(const char* port, uint32_t baudrate) {
 	return self->connected;
 }
 
-void lutil::disconnect_port() {
+void util::serial::disconnect_port() {
 	if (self != nullptr) {
 		if (self->connected) {
 			self->connected = false;
@@ -79,15 +79,15 @@ void lutil::disconnect_port() {
 	self = nullptr;
 }
 
-bool lutil::is_port_connected() {
+bool util::serial::is_port_connected() {
 	return self->connected;
 }
 
-void lutil::set_wait_time(uint32_t time) {
+void util::serial::set_wait_time(uint32_t time) {
 	self->wait_time = time;
 }
 
-int lutil::read_bytes_from_port(uint8_t* data, uint32_t size) {
+int util::serial::read_bytes_from_port(uint8_t* data, uint32_t size) {
 	DWORD bytesRead;
 	unsigned int toRead = 0;
 
@@ -107,7 +107,7 @@ int lutil::read_bytes_from_port(uint8_t* data, uint32_t size) {
 	return 0;
 }
 
-bool lutil::write_bytes_to_port(uint8_t* data, uint32_t size) {
+bool util::serial::write_bytes_to_port(uint8_t* data, uint32_t size) {
 	DWORD bytesSend;
  	if (!WriteFile(self->handler, (void*)data, size, &bytesSend, 0)) {
         ClearCommError(self->handler, &self->errors, &self->status);

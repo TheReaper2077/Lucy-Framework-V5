@@ -93,12 +93,22 @@ void InitializeApp() {
 	auto& meshregistry = registry.store<lucy::MeshRegistry>();
 	auto& engine_state = registry.store<lucy::State>();
 
-	auto [vertexcount, positions, normals, colors, uvs, uvws, indexcount, indices] = lutil::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\cube.obj", "Cube");
+	static lucy::Mesh* mesh = new lucy::Mesh;
+	mesh->Load("D:\\C++\\Lucy Framework V5\\assets\\cube.obj", "Cube");
 
-	for (int i = 0; i < vertexcount; i++) {
-		std::cout << positions[i].x << ' ' << positions[i].y << ' ' << positions[i].z << '\n';
+	{
+		auto entity = registry.create();
+		auto& tag = registry.emplace<lucy::Tag>(entity);
+		auto& transform = registry.emplace<lucy::Transform>(entity);
+		auto& meshrenderer = registry.emplace<lucy::MeshRenderer>(entity);
+
+		transform.translation = { 0, 0, 0 };
+		transform.scale = { 1, 1, 1 };
+
+		tag.name = "Cube";
+		meshrenderer.mesh = mesh;
+		meshrenderer.material = new lucy::Material;
 	}
-
 	{
 		camera_entity = registry.create();
 
@@ -116,51 +126,6 @@ void InitializeApp() {
 
 		engine_state.camera_entity = camera_entity;
 	}
-	// lucy::Transform* parent = nullptr;
-	// {
-	// 	auto entity = registry.create();
-	// 	auto& tag = registry.emplace<lucy::Tag>(entity);
-	// 	auto& transform = registry.emplace<lucy::Transform>(entity);
-	// 	auto& meshrenderer = registry.emplace<lucy::MeshRenderer>(entity);
-
-	// 	lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\flat_ico.obj");
-
-	// 	tag.name = "Sphere";
-	// 	meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\flat_ico.obj");
-	// 	meshrenderer.material = new lucy::Material;
-	// 	// parent = &transform;
-	// }
-	// {
-	// 	auto entity = registry.create();
-	// 	auto& tag = registry.emplace<lucy::Tag>(entity);
-	// 	auto& transform = registry.emplace<lucy::Transform>(entity);
-	// 	auto& meshrenderer = registry.emplace<lucy::MeshRenderer>(entity);
-
-	// 	transform.translation = { 0, -2, 0 };
-	// 	transform.scale = { 1, 1, 1 };
-
-	// 	lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
-
-	// 	tag.name = "Cube";
-	// 	meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\cube.obj");
-	// 	meshrenderer.material = new lucy::Material;
-	// 	transform.parent_entity = parent;
-	// }
-	// {
-	// 	auto entity = registry.create();
-	// 	auto& tag = registry.emplace<lucy::Tag>(entity);
-	// 	auto& transform = registry.emplace<lucy::Transform>(entity);
-	// 	auto& meshrenderer = registry.emplace<lucy::MeshRenderer>(entity);
-
-	// 	transform.translation = { 0, 2, 0 };
-	// 	transform.scale = { 1, 1, 1 };
-
-	// 	lucy::AssetLoader::LoadMesh("D:\\C++\\Lucy Framework V5\\assets\\sphere.obj");
-
-	// 	tag.name = "Smooth Sphere";
-	// 	meshrenderer.mesh = meshregistry.GetByFilepath("D:\\C++\\Lucy Framework V5\\assets\\sphere.obj");
-	// 	meshrenderer.material = new lucy::Material;
-	// }
 	{
 		auto entity = registry.create();
 		auto& tag = registry.emplace<lucy::Tag>(entity);
@@ -171,7 +136,7 @@ void InitializeApp() {
 		transform.rotation = { -27, -11, -2 };
 	}
 
-	LoadArmModel();
+	// LoadArmModel();
 }
 
 void UpdateApp() {

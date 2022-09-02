@@ -1,10 +1,9 @@
 #pragma once
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
 #include <vector>
 #include <LucyGL/LucyGL.h>
 #include <glm/glm.hpp>
+#include <LucyUtil/LucyUtil.h>
 
 namespace lucy {
 	struct Mesh {
@@ -19,7 +18,13 @@ namespace lucy {
 
 		Mesh() {}
 		~Mesh();
-		Mesh(aiMesh* ai_mesh);
-		void Load(const std::string& filename, const std::string mesh_name);
+
+		void Load(const std::string& filename, const std::string& mesh_name);
+		void Load(const util::TYPE_MESH& mesh);
+
+		void Load(const std::string& filename, const std::string& mesh_name, const glm::vec3& offset, bool reconstruct_normals = false);
+		void Load(const util::TYPE_MESH& mesh, const glm::vec3& offset, bool reconstruct_normals = false);
+
+		void Load(const int vertexcount = 0, const util::position_array* positions = nullptr, const util::normal_array* normals = nullptr, const util::color_array* color = nullptr, const util::uv_array* uv = nullptr, const util::uvw_array* uvw = nullptr, const int indexcount = 0, const uint32_t* indices = nullptr, const glm::vec3& offset = { 0, 0, 0 });
 	};
 }

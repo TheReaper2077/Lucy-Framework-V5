@@ -13,9 +13,9 @@ void process_node(const aiScene* ai_scene, aiNode* ai_node, const std::string& f
 		auto* ai_mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 		auto mesh_name = std::string(ai_mesh->mName.C_Str());
 
-		auto* mesh = new lucy::Mesh{ai_mesh};
+		// auto* mesh = new lucy::Mesh{ai_mesh};
 
-		registry.store<lucy::MeshRegistry>().Add(mesh, mesh_name, filepath);
+		// registry.store<lucy::MeshRegistry>().Add(mesh, mesh_name, filepath);
 	}
 
 	for (int i = 0; i < ai_node->mNumChildren; i++) {

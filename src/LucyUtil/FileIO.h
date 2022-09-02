@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <stdint.h>
 
-namespace lutil {
+namespace util {
 	bool write_bytes_to_file(const char* filename, const uint8_t* data, std::size_t size);
 	bool write_string_to_file(const char* filename, const char* data);
 

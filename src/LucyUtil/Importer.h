@@ -7,7 +7,7 @@
 #include <array>
 #include <algorithm>
 
-namespace lutil {
+namespace util {
 	typedef glm::vec3 position_array;
 	typedef glm::vec3 normal_array;
 	typedef glm::vec4 color_array;
@@ -26,4 +26,6 @@ namespace lutil {
 
 	TYPE_MESH LoadMesh(const std::string& filename, const std::string& mesh_name);
 	std::vector<std::pair<std::string, TYPE_MESH>> LoadMeshAll(const std::string& filename);
+
+	void Free(TYPE_MESH& mesh);
 }

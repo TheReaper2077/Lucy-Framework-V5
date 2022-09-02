@@ -6,6 +6,6 @@
 #endif
 #include <stduuid/uuid.h>
 
-#define LUTIL_UUID uint64_t
-#define LUTIL_NULL_UUID (LUTIL_UUID)0
-#define LUTIL_GENERATE_UUID *(LUTIL_UUID*)uuids::uuid_system_generator{}().as_bytes().data()
+#define UTIL_UUID uint64_t
+#define UTIL_NULL_UUID (UTIL_UUID)0
+#define UTIL_GENERATE_UUID *(UTIL_UUID*)uuids::uuid_system_generator{}().as_bytes().data()

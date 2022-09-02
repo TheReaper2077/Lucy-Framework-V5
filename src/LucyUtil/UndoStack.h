@@ -3,10 +3,10 @@
 #include "UUID.h"
 #include <string>
 
-namespace lutil::undo {
+namespace util::undo {
 	struct Data {
 		std::string type = "";
-		LUTIL_UUID id = 0;
+		UTIL_UUID id = 0;
 		uint32_t temp_data;
 		void* data = nullptr;
 		uint32_t size = 0;

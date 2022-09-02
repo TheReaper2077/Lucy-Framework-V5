@@ -1,6 +1,6 @@
 #include "FileIO.h"
 
-bool lutil::write_bytes_to_file(const char* filename, const uint8_t* data, std::size_t size) {
+bool util::write_bytes_to_file(const char* filename, const uint8_t* data, std::size_t size) {
 	std::ofstream ofs{ filename };
 
 	if (ofs.is_open()) {
@@ -13,17 +13,17 @@ bool lutil::write_bytes_to_file(const char* filename, const uint8_t* data, std::
 	return false;
 }
 
-bool lutil::write_string_to_file(const char* filename, const char* data) {
+bool util::write_string_to_file(const char* filename, const char* data) {
 	return write_bytes_to_file(filename, (uint8_t*)data, strlen(data));
 }
 
-std::pair<uint8_t*, std::size_t> lutil::read_bytes_from_file(const char* filename) {
+std::pair<uint8_t*, std::size_t> util::read_bytes_from_file(const char* filename) {
 	std::size_t size;
 	uint8_t* read_buffer = read_bytes_from_file(filename, size);
 	return { read_buffer, size };
 }
 
-uint8_t* lutil::read_bytes_from_file(const char* filename, std::size_t& size) {
+uint8_t* util::read_bytes_from_file(const char* filename, std::size_t& size) {
 	struct stat stat_buf;
     int rc = stat(filename, &stat_buf);
     size = (rc == 0) ? stat_buf.st_size : -1;
@@ -43,14 +43,14 @@ uint8_t* lutil::read_bytes_from_file(const char* filename, std::size_t& size) {
 	return read_buffer;
 }
 
-std::pair<char*, std::size_t> lutil::read_string_from_file(const char* filename) {
+std::pair<char*, std::size_t> util::read_string_from_file(const char* filename) {
 	std::size_t size;
 	char* read_buffer = read_string_from_file(filename, size);
 
 	return { read_buffer, size };
 }
 
-char* lutil::read_string_from_file(const char* filename, std::size_t& size) {
+char* util::read_string_from_file(const char* filename, std::size_t& size) {
 	char* read_buffer = (char*)read_bytes_from_file(filename, size);
 	if (read_buffer != nullptr)
 		read_buffer[size - 1] = '\0';
